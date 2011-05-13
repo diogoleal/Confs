@@ -22,12 +22,11 @@ SAVEHIST=1000
 alias ls='ls --color'
 alias site='ssh diogo@diogoleal.com -p 2222'
 
-
 XDG_CONFIG_DIRS="/etc/xdg:$HOME/.local/etc/xdg"
 XDG_DATA_DIRS="/usr/share:/usr/local/share:$HOME/.local/share"
 
 export XDG_CONFIG_DIRS XDG_DATA_DIRS
 
-PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%1~ %{$reset_color%}%#"
+PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m%{$fg[yellow]%}%1~%{$reset_color%}%# "
 #RPROMPT="[%{$fg[yellow]%}%?%{$reset_color%}]"
 
