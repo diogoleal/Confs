@@ -30,3 +30,4 @@ export XDG_CONFIG_DIRS XDG_DATA_DIRS
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m%{$fg[yellow]%}%1~%{$reset_color%}%# "
 #RPROMPT="[%{$fg[yellow]%}%?%{$reset_color%}]"
 
+source ~/perl5/perlbrew/etc/bashrc
