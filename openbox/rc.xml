@@ -25,7 +25,7 @@ this many milliseconds (1000 = 1 sec) before moving focus to it -->
 mouse into it, also raise the window -->
   </focus>
   <placement>
-    <policy>Smart</policy>
+    <policy>UnderMouse</policy>
     <!-- 'Smart' or 'UnderMouse' -->
     <center>yes</center>
     <!-- whether to place windows in the center of the free area found or
@@ -36,7 +36,7 @@ on: 'Any' - any monitor, 'Mouse' - where the mouse is, 'Active' - where
 the active window is -->
   </placement>
   <theme>
-    <name>Onyx-Citrus</name>
+    <name>Surreal</name>
     <titleLayout>NLDSIMC</titleLayout>
     <!--
 available characters are NDSLIMC, each can occur at most once.
@@ -52,11 +52,11 @@ D: omnipresent (on all desktops).
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
       <name>Inconsolata</name>
-      <size>8</size>
+      <size>10</size>
       <!-- font size in points -->
-      <weight>bold</weight>
+      <weight>Bold</weight>
       <!-- 'bold' or 'normal' -->
-      <slant>normal</slant>
+      <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="InactiveWindow">
@@ -97,13 +97,19 @@ D: omnipresent (on all desktops).
     </font>
   </theme>
   <desktops>
-    <number>10</number>
+    <number>5</number>
     <firstdesk>1</firstdesk>
     <names>
       <name>Desktop 1</name>
       <name>Desktop 2</name>
       <name>Desktop 3</name>
       <name>Desktop 4</name>
+      <name>Desktop 5</name>
+      <name>Desktop 6</name>
+      <name>Desktop 7</name>
+      <name>Desktop 8</name>
+      <name>Desktop 9</name>
+      <name>Desktop 10</name>
     </names>
     <popupTime>875</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -130,7 +136,7 @@ they are maximized, or when they are initially placed.
 Many programs reserve space automatically, but you can use this in other
 cases. -->
   <margins>
-    <top>10</top>
+    <top>0</top>
     <bottom>0</bottom>
     <left>0</left>
     <right>0</right>
@@ -275,14 +281,14 @@ cases. -->
         <execute>xchat</execute>
       </action>
     </keybind>
-   <keybind key="C-A-f">
+    <keybind key="C-A-f">
       <action name="Execute">
         <execute>firefox</execute>
       </action>
     </keybind>
-   <keybind key="C-A-g">
+    <keybind key="C-A-e">
       <action name="Execute">
-        <execute>gmusicbrowser</execute>
+        <execute>exaile</execute>
       </action>
     </keybind>
     <keybind key="W-space">
@@ -290,7 +296,14 @@ cases. -->
         <execute>dmenu_run</execute>
       </action>
     </keybind>
-    <!-- keybinding for the screen lock -->
+
+    <keybind key="C-space">
+      <action name="Execute">
+        <execute>gmrun</execute>
+      </action>
+    </keybind>
+
+<!-- keybinding for the screen lock -->
     <keybind key="C-A-l">
       <action name="Execute">
         <execute>xlock</execute>

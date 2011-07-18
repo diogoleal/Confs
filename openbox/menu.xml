@@ -5,7 +5,7 @@
 <menu id="apps-accessories-menu" label="Accessories">
   <item label="Calculator">
     <action name="Execute">
-      <command>gnome-calculator</command>
+      <command>xcalc</command>
       <startupnotify>
         <enabled>yes</enabled>
       </startupnotify>
@@ -21,7 +21,7 @@
   </item>
   <item label="Ark File Archiver">
     <action name="Execute">
-      <command>ark</command>
+      <command>xarchive</command>
       <startupnotify>
         <enabled>yes</enabled>
       </startupnotify>
@@ -64,16 +64,28 @@
         <wmclass>Firefox</wmclass>
       </startupnotify>
     </action>
-  </item>
-  <item label="Pidgin Instant Messenger">
+    </item>
+    
+    <item label="chromium">
+    <action name="Execute">
+      <command>chrome</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>chrome</wmclass>
+      </startupnotify>
+    </action>
+    </item>
+    
+    <item label="Pidgin Instant Messenger">
     <action name="Execute">
       <command>pidgin</command>
       <startupnotify>
         <enabled>yes</enabled>
       </startupnotify>
     </action>
-  </item>
-  <item label="XChat">
+    </item>
+    
+    <item label="XChat">
     <action name="Execute">
       <command>xchat</command>
       <startupnotify>
@@ -89,17 +101,8 @@
       </startupnotify>
     </action>
   </item>
-<item label="Liferea">
-    <action name="Execute">
-      <command>Liferea</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-      </startupnotify>
-    </action>
-  </item>
-
-
-</menu>
+  
+  </menu>
 
 <menu id="apps-office-menu" label="Office">
   <item label="OpenOffice Base">
@@ -140,9 +143,9 @@
 </menu>
 
 <menu id="apps-multimedia-menu" label="Multimedia">
-  <item label="Rhythmbox">
+  <item label="exaile">
     <action name="Execute">
-      <command>rhythmbox</command>
+      <command>exaile</command>
       <startupnotify>
         <enabled>yes</enabled>
       </startupnotify>
