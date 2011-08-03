@@ -27,8 +27,8 @@ show_graph_scale no
 show_graph_range no
 
 TEXT
-${color #969495}$nodename - $sysname ${execi 100000 uname -r | cut -d . -f1-4} $machine 
-$desktop_name
+$desktop_name 
+$nodename - $sysname ${execi 100000 uname -r | cut -d . -f1-4} $machine 
 $hr
 ${color grey}Uptime:$color $uptime
 ${color grey}Frequency (in GHz):$color $freq_g
@@ -37,10 +37,11 @@ ${color grey}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
 ${color grey}CPU Usage:$color $cpu% ${cpubar 4}
 ${color grey}Processes:$color $processes  ${color grey}Running:$color $running_processes
 $hr
-${color grey}File systems:
 Disk I/O: $color $diskio
-/ $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
-/home $color${fs_used /home}/${fs_size /home} ${fs_bar 6 /home}
+/     $color${fs_size /} - ${fs_free /} ${fs_bar 6 /}
+/home $color${fs_size /home} - ${fs_free /home} ${fs_bar 6 /home}
+/opt  $color${fs_size /opt} - ${fs_free /opt} ${fs_bar 6 /opt}
+/tmp  $color${fs_size /tmp} - ${fs_free /tmp} ${fs_bar 6 /tmp}
 $hr
 ${color #969495}Network: ${color lightgrey}${addr eth0}
 ${color #969495}Down:${color lightgrey} ${downspeed eth0} k/s $alignr${color #969495} Up:${color lightgrey} ${upspeed eth0} k/s
@@ -52,15 +53,16 @@ ${color #969495}Down:${color lightgrey} ${downspeed wlan0} k/s $alignr${color #9
 ${color #969495}${downspeedgraph wlan0 27,120 000000 969495 180} $alignr${color #969495}${upspeedgraph wlan0 27,120 000000 969495 25}
 ${color lightgrey}${totaldown wlan0} $alignr${color lightgrey}${totalup wlan0}
 $hr
-${color #969495}ppp0: ${color lightgrey}${addr ppp0}
-${color #969495}Down:${color lightgrey} ${downspeed ppp0} k/s $alignr${color #969495} Up:${color lightgrey} ${upspeed ppp0} k/s
-${color #969495}${downspeedgraph ppp0 27,120 000000 969495 180} $alignr${color #969495}${upspeedgraph ppp0 27,120 000000 969495 25}
-${color lightgrey}${totaldown ppp0} $alignr${color lightgrey}${totalup ppp0}
-$hr
-${color grey}Name              PID   CPU%   MEM%
+#${color #969495}ppp0: ${color lightgrey}${addr ppp0}
+#${color #969495}Down:${color lightgrey} ${downspeed ppp0} k/s $alignr${color #969495} Up:${color lightgrey} ${upspeed ppp0} k/s
+#${color #969495}${downspeedgraph ppp0 27,120 000000 969495 180} $alignr${color #969495}${upspeedgraph ppp0 27,120 000000 969495 25}
+#${color lightgrey}${totaldown ppp0} $alignr${color lightgrey}${totalup ppp0}
+#$hr
+ Name              PID    CPU%   MEM%
 ${color lightgrey} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
 ${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
 ${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
 ${color lightgrey} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
 $hr
-Battery: $battery_percent
+Battery: $battery_percent%
+$battery_bar

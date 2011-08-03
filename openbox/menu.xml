@@ -160,26 +160,9 @@
       </startupnotify>
     </action>
   </item>
-  <item label="gmusicbrowser">
-    <action name="Execute">
-      <command>gmusicbrowser</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-      </startupnotify>
-    </action>
-  </item>
 </menu>
 
 <menu id="apps-fileman-menu" label="File Managers">
-    <item label="Rox">
-    <action name="Execute">
-      <command>rox</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-        <wmclass>ROX-Filer</wmclass>
-      </startupnotify>
-    </action>
-  </item>
   <item label="XFE File Manager">
     <action name="Execute">
       <command>xfe</command>
@@ -232,15 +215,6 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-   <item label="Manage Cups Printers">
-    <action name="Execute">
-      <command>xdg-open http://localhost:631/</command>
-      <startupnotify>
-        <enabled>no</enabled>
-        <icon>cups</icon>
-      </startupnotify>
-    </action>
-  </item>
   <separator />
   <item label="Reconfigure Openbox">
     <action name="Reconfigure" />
@@ -257,10 +231,9 @@
   <menu id="apps-multimedia-menu"/>
   <menu id="apps-term-menu"/>
   <menu id="apps-fileman-menu"/>
-  <separator label="System" />
   <menu id="system-menu"/>
   <separator />
-  <item label="Log Out">
+  <item label="Exit">
     <action name="Exit">
       <prompt>yes</prompt>
     </action>

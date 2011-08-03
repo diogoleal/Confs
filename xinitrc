@@ -1,10 +1,11 @@
 #!/bin/sh
 
 /usr/bin/terminator  &
-/usr/bin/xscreensaver -no-splash &
+#/usr/bin/xscreensaver -no-splash &
 /usr/bin/conky &
 /usr/bin/pidgin &
-
+/usr/bin/tint2 &
+/usr/bin/skype &
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -16,8 +17,9 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 [ -f $userresources ] && /usr/bin/xrdb -merge $userresources
 [ -f $usermodmap ] && /usr/bin/xmodmap $usermodmap
 
-if [ -z "$DESKTOP_SESSION" -a -x /usr/bin/ck-launch-session ]; then
-  exec ck-launch-session openbox-session
-else
+#exec dwm
+#if [ -z "$DESKTOP_SESSION" -a -x /usr/bin/ck-launch-session ]; then
+#  exec ck-launch-session openbox-session
+#else
   exec openbox-session
-fi
+#fi
