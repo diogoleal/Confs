@@ -5,7 +5,9 @@
 /usr/bin/conky &
 /usr/bin/pidgin &
 /usr/bin/tint2 &
-/usr/bin/skype &
+#/usr/bin/skype &
+/usr/lib/SpiderOak/SpiderOak &
+
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
