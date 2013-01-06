@@ -1,0 +1,14 @@
+[user]
+        name = Diogo Leal
+        email = diogo@diogoleal.com
+
+[color]
+        branch = auto
+        diff = auto
+        interactive = auto
+        status = auto
+[core]
+        editor = vim
+        pager = less -FXRS
+[merge]
+        tool = vimdiff
