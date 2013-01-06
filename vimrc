@@ -3,7 +3,7 @@
 set nocompatible
 set background=dark
 colorscheme wombat
-set guifont=inconsolata\ 11
+set guifont=inconsolata\ 14
 
 set guioptions-=T " desabilita barra de ferramentas
 set guioptions-=t " desabilita tear-off
