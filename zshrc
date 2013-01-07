@@ -29,10 +29,8 @@ SAVEHIST=1000
 #Alias
 alias ls='ls --color'
 alias site='ssh diogo@diogoleal.com -p 22'
-alias it='cd ~/Stuff/Intelie/itsm'
 alias gp='git pull'
 alias gh='git push'
-alias rackspace='ssh root@173.203.59.21'
 alias slides='cd ~/Stuff/Slides/'
 alias l='less'
 alias gc='git clone'
