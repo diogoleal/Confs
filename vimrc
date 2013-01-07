@@ -1,10 +1,10 @@
 "Diogo Leal - diogo@diogoleal.com
 
 set nocompatible
-set background=dark
-colorscheme wombat
-set guifont=inconsolata\ 14
-
+"set background=light
+colorscheme xemacs
+set guifont=inconsolata\ 13
+  
 set guioptions-=T " desabilita barra de ferramentas
 set guioptions-=t " desabilita tear-off
 set guioptions-=m " desabilita menu
