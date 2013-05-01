@@ -1,44 +1,45 @@
-XDG_CONFIG_DIRS="/etc/xdg:$HOME/.local/etc/xdg"
-XDG_DATA_DIRS="/usr/share:/usr/local/share:$HOME/.local/share"
-export XDG_CONFIG_DIRS XDG_DATA_DIRS
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-#Define variavel de screen para vim
-export SCREENSIZE=$(xdpyinfo 2>/dev/null 2>/dev/null | grep 'dimensions' | sed -e 's/x.*//g' -e 's/^.*[a-z]: *//g')
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="sunaku"
 
-# The following lines were added by compinstall
-zstyle ':completion:*' completer _expand _complete _ignored
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle :compinstall filename '/home/diogo/.zshrc'
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
 
-#The function will not be run in future, but you can run
-#it yourself as follows:
-#  autoload zsh-newuser-install
-#    zsh-newuser-install -f
+# Comment this out to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
 
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000000
-SAVEHIST=1000
-# End of lines configured by zsh-newuser-install
+# Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
+ export UPDATE_ZSH_DAYS=13
 
-#Alias
-alias ls='ls --color'
-alias site='ssh diogo@diogoleal.com -p 22'
-alias gp='git pull'
-alias gh='git push'
-alias slides='cd ~/Stuff/Slides/'
-alias l='less'
-alias gc='git clone'
-alias gk='gitk &'
-alias g='gvim '
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
 
-#bindkey
-bindkey    "^[[3~"          delete-char
-bindkey    "^[3;5~"         delete-char
+# Uncomment following line if you want to disable autosetting terminal title.
+ DISABLE_AUTO_TITLE="true"
 
-PROMPT="%n@%m % %~ %# "
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+# COMPLETION_WAITING_DOTS="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git, perl)
+
+source $ZSH/oh-my-zsh.sh
+
+
+export EDITOR='vim'
+
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+# Customize to your needs...
+export PATH=/home/diogo/perl5/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/lib/java/bin:/usr/lib/kde4/libexec:/usr/lib/qt/bin:.:/home/diogo/.rvm/bin:~/bin
