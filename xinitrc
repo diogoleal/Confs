@@ -1,27 +1,29 @@
-#!/bin/sh
+#!/usr/bin/sh
 
-/usr/bin/terminator  &
+/usr/bin/terminator &
 #/usr/bin/xscreensaver -no-splash &
-/usr/bin/conky &
+#/usr/bin/conky &
 /usr/bin/pidgin &
 /usr/bin/tint2 &
-#/usr/bin/skype &
-/usr/lib/SpiderOak/SpiderOak &
+/usr/bin/owncloud &
+/usr/bin/emacs --daemon 
+
+# layout keyboard 
+setxkbmap -layout br -model "abnt2"
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
-sysresources=/etc/X11/xinit/.Xresources
-sysmodmap=/etc/X11/xinit/.Xmodmap
-
+#sysresources=/etc/X11/xinit/.Xresources
+#sysmodmap=/etc/X11/xinit/.Xmodmap
+#
 # merge in defaults and keymaps
-[ -f $sysresources ] && /usr/bin/xrdb -merge $sysresources
-[ -f $sysmodmap ] && /usr/bin/xmodmap $sysmodmap
-[ -f $userresources ] && /usr/bin/xrdb -merge $userresources
-[ -f $usermodmap ] && /usr/bin/xmodmap $usermodmap
+#[ -f $sysresources ] && /usr/bin/xrdb -merge $sysresources
+#[ -f $sysmodmap ] && /usr/bin/xmodmap $sysmodmap
+#[ -f $userresources ] && /usr/bin/xrdb -merge $userresources
+#[ -f $usermodmap ] && /usr/bin/xmodmap $usermodmap
 
-#exec dwm
-#if [ -z "$DESKTOP_SESSION" -a -x /usr/bin/ck-launch-session ]; then
-#  exec ck-launch-session openbox-session
-#else
-  exec openbox-session
-#fi
+exec openbox-session
+#exec i3
+#exec gnome-session
+#exec startlxde
+
