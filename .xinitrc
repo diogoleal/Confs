@@ -1,12 +1,33 @@
 #!/usr/bin/sh
 
-/usr/bin/emacs --daemon 
+# pidgin ofline
 /usr/bin/pidgin --nologin  &
-/usr/bin/nm-applet &
 
-# layout keyboard 
+# agent Copy.com
+~/bin/CopyAgent &
+
+# network wicd
+/usr/bin/wicd-gtk --tray &
+
+# daemon urxvt
+urxvtd --quiet --opendisplay --fork
+
+# layout keyboard
 setxkbmap -layout br -model "abnt2"
-/usr/bin/xmodmap ~/.Xmodmap 
+# custom X settings
+xrdb -merge ~/.Xresources
 
-exec qtile
+/usr/bin/xmodmap ~/.Xmodmap
 
+# set cursor
+xsetroot -cursor_name left_ptr
+
+# Volume
+/usr/bin/volumeicon &
+
+# set wallpaper
+feh --bg-fill /home/diogo/Pictures/Wallpapers/wallpaper-2306118.jpg
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+
+exec /usr/bin/qtile
