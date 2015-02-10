@@ -14,6 +14,7 @@ urxvtd --quiet --opendisplay --fork
 
 # layout keyboard
 setxkbmap -layout br -model "abnt2"
+
 # custom X settings
 xrdb -merge ~/.Xresources
 
@@ -22,12 +23,14 @@ xrdb -merge ~/.Xresources
 # set cursor
 xsetroot -cursor_name left_ptr
 
+# Turns off the terminal bell
+#/usr/bin/xset b off
+
 # Volume
-/usr/bin/volumeicon &
+#/usr/bin/volumeicon &
 
 # set wallpaper
-feh --bg-fill /home/diogo/Pictures/Wallpapers/wallpaper-2306118.jpg
+#feh --bg-fill /home/diogo/Pictures/Wallpapers/limbo_basic_lines_wallpaper_by_arand4-d5ozxbx.jpg
 
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
-
-exec /usr/bin/qtile
+#exec /usr/bin/qtile
+exec awesome
