@@ -8,7 +8,7 @@
         interactive = auto
         status = auto
 [core]
-        editor = nano
+        editor = vim
         pager = less -FXRS
 [merge]
         tool = vimdiff
