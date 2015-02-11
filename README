@@ -1,1 +1,10 @@
 My confs
+
+* Window manager: awesome
+* Editor: vim
+* Shell: zsh
+* Browser: Surf
+* Terminal Emulator: urxvt
+* Client IRC: irssi
+
+! I use caps lock changed as esc
