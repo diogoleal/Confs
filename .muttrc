@@ -1,0 +1,87 @@
+# GENERAL
+set realname = "Diogo Leal"
+set use_from = yes
+set editor = 'vim -c "set spell spelllang=pt_br,en_us"'
+set from = "diogo@diogoleal.com"
+
+# set edit_headers # see the headers when editing
+set sort = reverse-threads # sort by newest conversation first
+set sort_aux = last-date-received
+set strict_threads = yes
+
+set signature = "~/.signature"
+
+# brighten up stuff with colours, for more colouring examples see:
+# # http://aperiodic.net/phil/configs/mutt/colors
+color normal      white          black
+color hdrdefault  green          default
+color quoted      green          default
+color quoted1     yellow         default
+color quoted2     red            default
+color signature   cyan           default
+color indicator   brightyellow   red
+color error       brightred      default
+color status      brightwhite    blue
+color tree        brightmagenta  black
+color tilde       blue           default
+color attachment  brightyellow   default
+color markers     brightred      default
+color message     white          black
+color search      brightwhite    magenta
+color bold        brightyellow   default
+# # if you don't like the black progress bar at the bottom of the screen,
+# # comment out the following line
+color progress    white          black
+
+
+# Ignore all headers
+ignore *
+#
+# # Then un-ignore the ones I want to see
+unignore From:
+unignore To:
+unignore Reply-To:
+unignore Mail-Followup-To:
+unignore Subject:
+unignore Date:
+unignore Organization:
+unignore Newsgroups:
+unignore CC:
+unignore BCC:
+unignore Message-ID:
+unignore X-Mailer:
+unignore User-Agent:
+unignore X-Junked-Because:
+unignore X-SpamProbe:
+unignore X-Virus-hagbard:
+#
+# # Now order the visable header lines
+hdr_order From: Subject: To: CC: BCC: Reply-To: Mail-Followup-To: Date: Organization: User-Agent: X-Mailer:
+
+set mail_check = 60
+set imap_keepalive = 300
+set imap_user = "LOGIN"
+set imap_pass = "PASSWORD"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed ="+[Gmail]/Drafts"
+set trash = "imaps://imap.gmail.com/[Gmail]/Trash"
+
+set smtp_url = "smtp://LOGIN@smtp.gmail.com:587/"
+set smtp_pass = "PASSWORD"
+set record="+sent"
+#set copy = no
+#set move = no
+
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+
+set alias_file = "~/.mutt/aliases"
+set sort_alias = alias
+set reverse_alias = yes
+source $alias_file
+
+set mailcap_path 	= ~/.mutt/mailcap
+auto_view text/html
+
