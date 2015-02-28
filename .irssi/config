@@ -1,0 +1,57 @@
+servers = (
+  {
+    address = "irc.freenode.net";
+    chatnet = "freenode";
+    port = "7000";
+    use_ssl = "yes";
+    ssl_verify = "yes";
+    autoconnect = "yes";
+  },
+  {
+    address = "irc.oftc.net";
+    chatnet = "oftc";
+    port = "6697";
+    use_ssl = "yes";
+    ssl_verify = "yes";
+    autoconnect = "yes";
+  },
+
+);
+settings = {
+  core = {
+    real_name = "Diogo Leal";
+    user_name = "estranho";
+    nick = "estranho";
+  };
+  "irc/core" = { alternate_nick = "estranho"; };
+  "fe-common/core" = { term_charset = "utf-8"; theme = "BitchX"; };
+  "fe-text" = { actlist_sort = "refnum"; };
+};
+chatnets = {
+  freenode = {
+    type = "IRC";
+    nick = "estranho";
+    username = "estranho";
+    realname = "Diogo Leal";
+    autosendcmd = "/msg nickserv identify PASSWORD";
+  };
+
+  oftc = {
+    type = "IRC";
+    nick = "estranho";
+    username = "estranho";
+    realname = "Diogo Leal";
+    #	autosendcmd = "/msg nickserv identify PASSWORD";
+  };
+
+};
+aliases = { sv = "bang bang bang!!!"; };
+
+channels = (
+  { name = "#gentoo-br"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#gentoo"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#rudder"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#python-br"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#slackware-br"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#qtile"; chatnet = "oftc"; autojoin = "yes"; }
+);
