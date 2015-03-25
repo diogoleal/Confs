@@ -1,12 +1,46 @@
+! terminal colors
+!
+! ! tangoesque scheme
+ *background: #111111
+ *foreground: #babdb6
+! ! Black (not tango) + DarkGrey
+ *color0:  #000000
+ *color8:  #555753
+! ! DarkRed + Red
+ *color1:  #ff6565
+ *color9:  #ff8d8d
+! ! DarkGreen + Green
+ *color2:  #93d44f
+ *color10: #c8e7a8
+! ! DarkYellow + Yellow
+ *color3:  #eab93d
+ *color11: #ffc123
+! ! DarkBlue + Blue
+ *color4:  #204a87
+ *color12: #3465a4
+! ! DarkMagenta + Magenta
+ *color5:  #ce5c00
+ *color13: #f57900
+! !DarkCyan + Cyan (both not tango)
+ *color6:  #89b6e2
+ *color14: #46a4ff
+! ! LightGrey + White
+ *color7:  #cccccc
+ *color15: #ffffff
 
-! URxvt*font: -misc-fixed-medium-r-semicondensed-*-12-90-100-*-c-60-iso8859-1
-URxvt.font: 9x15bold
-Xft*dpi:       96
-Xft*antialias: True
-Xft*hinting:   Full
-URxvt*depth: 32
-URxvt*foreground: green
+LURxvt.font: iberation Mono:size=12:antialias=true
 URxvt*scrollBar: off
+URxvt.shading: 65
 URxvt*.transparent: true
-URxvt*.shading: 65
+! URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
+URxvt*.shading: 60
+!URxvt*foreground: green
+
+
+! Render setting for cairo -> pango -> gtk
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.rgba:       rgb
+Xft.hintstyle:  hintslight
 
