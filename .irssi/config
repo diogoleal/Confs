@@ -24,7 +24,7 @@ settings = {
     nick = "estranho";
   };
   "irc/core" = { alternate_nick = "estranho"; };
-  "fe-common/core" = { term_charset = "utf-8"; theme = "BitchX"; };
+  "fe-common/core" = { term_charset = "utf-8"; theme = "furry"; };
   "fe-text" = { actlist_sort = "refnum"; };
 };
 chatnets = {
@@ -48,10 +48,10 @@ chatnets = {
 aliases = { sv = "bang bang bang!!!"; };
 
 channels = (
-  { name = "#gentoo-br"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#gentoo"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#rudder"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#python-br"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#slackware-br"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#qtile"; chatnet = "oftc"; autojoin = "yes"; }
+  { name = "#xbps"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#suckless"; chatnet = "oftc"; autojoin = "yes"; }
+  { name = "#awesome"; chatnet = "oftc"; autojoin = "yes"; }
 );
