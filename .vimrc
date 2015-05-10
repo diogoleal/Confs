@@ -1,6 +1,8 @@
 
+set shell=/usr/bin/sh
 " Vundle
 " set the runtime path to include Vundle and initialize
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -8,10 +10,16 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'L9'
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'Valloric/YouCompleteMe'
 
-Bundle 'scrooloose/syntastic'
-let g:syntastic_python_checkers=['pyflakes']
+Plugin 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd  guibg=red   ctermbg=3
+hi IndentGuidesEven guibg=green ctermbg=4
+
+Plugin 'scrooloose/syntastic'
+"let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_python_checkers=['python', 'flake8']
+let g:syntastic_python_flake8_post_args='--ignore=W391'
 
 Plugin 'SirVer/ultisnips'
 " Trigger configuration. Do not use <tab> if you use
@@ -19,11 +27,43 @@ Plugin 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-Plugin 'honza/vim-snippets'
+Plugin 'davidhalter/jedi-vim'
+let g:jedi#popup_on_dot = 0
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#rename_command = "<leader>r"
+let g:jedi#show_call_signatures = "0"
+let g:jedi#completions_command = "<C-Space>"
+
+Plugin 'majutsushi/tagbar'
+nmap <silent> <F4> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [  'p:package', 'i:imports:1', 'c:constants', 'v:variables',
+        \ 't:types',  'n:interfaces', 'w:fields', 'e:embedded', 'm:methods',
+        \ 'r:constructor', 'f:functions' ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' },
+    \ 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
+
+
+Plugin 'ervandew/supertab'
 Plugin 'Yggdroot/indentLine'
+Plugin 'honza/vim-snippets'
+" => snipMate (beside <TAB> support <CTRL-j>)
+ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
+snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
+
+Plugin 'junegunn/goyo.vim'
 
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeChDirMode=2
@@ -38,6 +78,7 @@ nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
 
 Plugin 'xolox/vim-shell'
+Plugin 'xolox/vim-session'
 Plugin 'xolox/vim-misc'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
@@ -52,22 +93,52 @@ let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
 Plugin 'bling/vim-airline'
 let g:airline_theme="luna"
+"let g:airline_theme = 'powerlineish'
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+
+if !exists('g:airline_powerline_fonts')
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '|'
+else
+  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#left_alt_sep = ''
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
+endif
+
 
 Plugin 'airblade/vim-gitgutter'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'vim-scripts/CSApprox'
+"Plugin 'vim-scripts/CSApprox'
 Plugin 'bronson/vim-trailing-whitespace'
 
 Plugin 'itchyny/lightline.vim'
 "let g:lightline = { 'colorscheme': 'gruvbox' }
 set t_Co=256
 
+
 syntax enable
 set background=dark
 
 " https://github.com/morhetz/gruvbox
-colorscheme gruvbox
+"colorscheme gruvboX
+"colorscheme relaxed
 
+Plugin 'junegunn/seoul256.vim'
+colo seoul256
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -301,18 +372,9 @@ map <leader>f :MRU<CR>
 " Enable all functions in all modes
 let g:user_zen_mode='a'
 
-" => snipMate (beside <TAB> support <CTRL-j>)
-ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
-snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 
 " => vim-multiple-cursors
 let g:multi_cursor_next_key="\<C-s>"
-
-" => Vimroom
-let g:goyo_width=100
-let g:goyo_margin_top = 2
-let g:goyo_margin_bottom = 2
-nnoremap <silent> <leader>z :Goyo<cr>
 
 " Map auto complete of (, ", ', [
 inoremap $1 ()<esc>i
