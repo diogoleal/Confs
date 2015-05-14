@@ -1,8 +1,7 @@
 
 set shell=/usr/bin/sh
-" Vundle
-" set the runtime path to include Vundle and initialize
 
+" Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -55,13 +54,16 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
-
 Plugin 'ervandew/supertab'
 Plugin 'Yggdroot/indentLine'
 Plugin 'honza/vim-snippets'
 " => snipMate (beside <TAB> support <CTRL-j>)
 ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
 snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
+
+Plugin 'yegappan/mru'
+let MRU_Max_Entries = 400
+map <leader>f :MRU<CR>
 
 Plugin 'junegunn/goyo.vim'
 
@@ -82,14 +84,6 @@ Plugin 'xolox/vim-session'
 Plugin 'xolox/vim-misc'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
-
-Plugin 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_map = '<c-f>'
-map <leader>j :CtrlP<cr>
-map <c-b> :CtrlPBuffer<cr>
-let g:ctrlp_max_height = 20
-let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
 Plugin 'bling/vim-airline'
 let g:airline_theme="luna"
@@ -119,6 +113,13 @@ else
   let g:airline_symbols.linenr = ''
 endif
 
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/unite.vim'
+nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
+nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+let g:unite_source_history_yank_enable = 1
+nnoremap <space>y :Unite -auto-preview history/yank<cr>
+nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
 
 Plugin 'airblade/vim-gitgutter'
 Plugin 'sheerun/vim-polyglot'
@@ -128,7 +129,6 @@ Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'itchyny/lightline.vim'
 "let g:lightline = { 'colorscheme': 'gruvbox' }
 set t_Co=256
-
 
 syntax enable
 set background=dark
@@ -140,17 +140,16 @@ set background=dark
 Plugin 'junegunn/seoul256.vim'
 colo seoul256
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call vundle#end()
+
+filetype plugin on
+filetype indent on
 
 set history=700
 set number
 set ruler
 set autoread
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -161,13 +160,11 @@ let g:mapleader = ","
 nmap <leader>w :w!<cr>
 
 " :W sudo saves the file
-" (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
-" Avoid garbled characters in Chinese language windows OS
 let $LANG='en'
 set langmenu=en
 set encoding=utf8
@@ -231,7 +228,6 @@ set foldcolumn=1
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
 set noswapfile
@@ -253,7 +249,6 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
-
 
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
@@ -357,39 +352,12 @@ function! HasPaste()
     return ''
 endfunction
 
-" => bufExplorer plugin
+" bufExplorer plugin
 let g:bufExplorerDefaultHelp=0
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerFindActive=1
 let g:bufExplorerSortBy='name'
 map <leader>o :BufExplorer<cr>
-
-" => MRU plugin
-let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
-
-" => ZenCoding
-" Enable all functions in all modes
-let g:user_zen_mode='a'
-
-
-" => vim-multiple-cursors
-let g:multi_cursor_next_key="\<C-s>"
-
-" Map auto complete of (, ", ', [
-inoremap $1 ()<esc>i
-inoremap $2 []<esc>i
-inoremap $3 {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
-inoremap $t <><esc>i
-
-" => General abbreviations
-iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
-
-" => Omni complete functions
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
 " Python
 let python_highlight_all = 1
