@@ -15,11 +15,6 @@ let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  guibg=red   ctermbg=3
 hi IndentGuidesEven guibg=green ctermbg=4
 
-Plugin 'scrooloose/syntastic'
-"let g:syntastic_python_checkers=['pyflakes']
-let g:syntastic_python_checkers=['python', 'flake8']
-let g:syntastic_python_flake8_post_args='--ignore=W391'
-
 Plugin 'SirVer/ultisnips'
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
@@ -56,6 +51,7 @@ let g:tagbar_type_go = {
 
 Plugin 'ervandew/supertab'
 Plugin 'Yggdroot/indentLine'
+Plugin 'junegunn/goyo.vim'
 Plugin 'honza/vim-snippets'
 " => snipMate (beside <TAB> support <CTRL-j>)
 ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
@@ -65,7 +61,10 @@ Plugin 'yegappan/mru'
 let MRU_Max_Entries = 400
 map <leader>f :MRU<CR>
 
-Plugin 'junegunn/goyo.vim'
+Plugin 'scrooloose/syntastic'
+"let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_python_checkers=['python', 'flake8']
+let g:syntastic_python_flake8_post_args='--ignore=W391'
 
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeChDirMode=2
@@ -121,10 +120,12 @@ let g:unite_source_history_yank_enable = 1
 nnoremap <space>y :Unite -auto-preview history/yank<cr>
 nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
 
+"Plugin 'fholgado/minibufexpl.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'sheerun/vim-polyglot'
 "Plugin 'vim-scripts/CSApprox'
 Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'tomtom/tcomment_vim'
 
 Plugin 'itchyny/lightline.vim'
 "let g:lightline = { 'colorscheme': 'gruvbox' }
@@ -149,7 +150,6 @@ set history=700
 set number
 set ruler
 set autoread
-
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -342,7 +342,9 @@ map <leader>q :e ~/buffer<cr>
 map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+nnoremap <f5> :set invpaste paste?<CR>
+set pastetoggle=<F5>
+set showmode
 
 " Returns true if paste mode is enabled
 function! HasPaste()
