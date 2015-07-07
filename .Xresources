@@ -1,46 +1,75 @@
-! terminal colors
-!
-! ! tangoesque scheme
- *background: #111111
- *foreground: #babdb6
-! ! Black (not tango) + DarkGrey
- *color0:  #000000
- *color8:  #555753
-! ! DarkRed + Red
- *color1:  #ff6565
- *color9:  #ff8d8d
-! ! DarkGreen + Green
- *color2:  #93d44f
- *color10: #c8e7a8
-! ! DarkYellow + Yellow
- *color3:  #eab93d
- *color11: #ffc123
-! ! DarkBlue + Blue
- *color4:  #204a87
- *color12: #3465a4
-! ! DarkMagenta + Magenta
- *color5:  #ce5c00
- *color13: #f57900
-! !DarkCyan + Cyan (both not tango)
- *color6:  #89b6e2
- *color14: #46a4ff
-! ! LightGrey + White
- *color7:  #cccccc
- *color15: #ffffff
+! seoul256 (dark) theme adapted for URxvt
+! ! append the content of this file to your .Xresources
+URxvt*background: #3a3a3a
+URxvt*foreground: #d0d0d0
+URxvt*color0: #4e4e4e
+URxvt*color1: #d68787
+URxvt*color2: #5f865f
+URxvt*color3: #d8af5f
+URxvt*color4: #85add4
+URxvt*color5: #d7afaf
+URxvt*color6: #87afaf
+URxvt*color7: #d0d0d0
+URxvt*color8: #626262
+URxvt*color9: #d75f87
+URxvt*color10: #87af87
+URxvt*color11: #ffd787
+URxvt*color12: #add4fb
+URxvt*color13: #ffafaf
+URxvt*color14: #87d7d7
+URxvt*color15: #e4e4e4
+URxvt*cursorColor: #d0d0d0
+URxvt*cursorColor2: #3a3a3a
+URxvt*colorBD: #e4e4e4
 
-LURxvt.font: iberation Mono:size=12:antialias=true
+!LURxvt.font: liberation Mono:size=14:antialias=true
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+!URxvt.letterSpace: -1
 URxvt*scrollBar: off
-URxvt.shading: 65
-URxvt*.transparent: true
-! URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
-URxvt*.shading: 60
+!URxvt.shading: 65
+!URxvt*.transparent: true
+!URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
 !URxvt*foreground: green
 
+xterm*faceName:           Terminus:style=Regular:size=10
+xterm*font:              -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
+!XTerm*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+XTerm*background: #3a3a3a
+XTerm*foreground: #d0d0d0
+XTerm*tcolor0: #4e4e4e
+XTerm*color1: #d68787
+XTerm*color2: #5f865f
+XTerm*color3: #d8af5f
+XTerm*color4: #85add4
+XTerm*color5: #d7afaf
+XTerm*color6: #87afaf
+XTerm*color7: #d0d0d0
+XTerm*color8: #626262
+XTerm*color9: #d75f87
+XTerm*color10: #87af87
+XTerm*color11: #ffd787
+XTerm*color12: #add4fb
+Xterm*color13: #ffafaf
+XTerm*color14: #87d7d7
+XTerm*color15: #e4e4e4
+XTerm*cursorColor: #d0d0d0
+XTerm*cursorColor2: #3a3a3a
+XTerm*colorBD: #e4e4e4
+
+XTerm*internalBorder: 3
+XTerm*loginShell: true
+XTerm*scrollBar: false
+XTerm*scrollKey: true
+XTerm*saveLines: 10000
+XTerm*multiClickTime: 250
 
 ! Render setting for cairo -> pango -> gtk
+!*font: -*-gomme-medium-*-*--18-*-*-*-*-*-*-*
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.hinting:    true
 Xft.rgba:       rgb
 Xft.hintstyle:  hintslight
+Xft.size:		16
 
+*url-launcher: firefox
