@@ -1,5 +1,5 @@
 ZSHA_BASE=$HOME/.zsh-antigen
-source $ZSHA_BASE/antigen/antigen.zsh
+source $ZSHA_BASE/antigen.zsh
 
 antigen-use oh-my-zsh
 antigen-bundle git
