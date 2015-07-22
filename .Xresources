@@ -31,9 +31,7 @@ URxvt*scrollBar: off
 !URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
 !URxvt*foreground: green
 
-xterm*faceName:           Terminus:style=Regular:size=10
-xterm*font:              -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
-!XTerm*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+!xterm*faceName: Inconsolata:size=11:antialias=false
 XTerm*background: #3a3a3a
 XTerm*foreground: #d0d0d0
 XTerm*tcolor0: #4e4e4e
@@ -56,6 +54,8 @@ XTerm*cursorColor: #d0d0d0
 XTerm*cursorColor2: #3a3a3a
 XTerm*colorBD: #e4e4e4
 
+XTerm*utf8: 1
+XTerm*selectToClipboard: true
 XTerm*internalBorder: 3
 XTerm*loginShell: true
 XTerm*scrollBar: false
