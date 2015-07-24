@@ -13,6 +13,13 @@ antigen-bundle zsh-users/zsh-history-substring-search
 #antigen theme zenorocha/dracula-theme
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure
-
+#antigen bundle sindresorhus/pure
+antigen theme kolo
 antigen-apply
+
+# virtualenvwrapper lazy
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Workspace
+export VIRTUALENVWRAPPER_SCRIPT=/usr//bin/virtualenvwrapper.sh
+source /usr/bin/virtualenvwrapper_lazy.sh
+
