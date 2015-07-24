@@ -10,6 +10,10 @@ Plugin 'L9'
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
+" Theme
+Plugin 'tomasr/molokai'
+let g:molokai_original = 1
+
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  guibg=red   ctermbg=3
@@ -127,6 +131,12 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'tomtom/tcomment_vim'
 
+Plugin 'ryanss/vim-hackernews'
+Plugin 'jmcantrell/vim-virtualenv'
+
+Plugin 'mrtazz/simplenote.vim'
+source ~/.simplenoterc
+
 Plugin 'itchyny/lightline.vim'
 "let g:lightline = { 'colorscheme': 'gruvbox' }
 set t_Co=256
@@ -134,12 +144,6 @@ set t_Co=256
 syntax enable
 set background=dark
 
-" https://github.com/morhetz/gruvbox
-"colorscheme gruvboX
-"colorscheme relaxed
-
-Plugin 'junegunn/seoul256.vim'
-colo seoul256
 " All of your Plugins must be added before the following line
 call vundle#end()
 
