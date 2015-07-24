@@ -1,11 +1,11 @@
 My confs
-i
+
 * Distro: Void Linux
 * Window manager: awesome
 * Editor: vim
-* Shell: zsh
+* Shell: zsh + antigen
 * Browser: xombrero
 * Terminal Emulator: xterm
 * Client IRC: irssi
 
-! I use caps lock changed as esc
+```I use caps lock changed as esc```
