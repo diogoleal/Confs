@@ -1,6 +1,9 @@
 ZSHA_BASE=$HOME/.zsh-antigen
 source $ZSHA_BASE/antigen.zsh
 
+# Alias
+alias dv='DVTM_TERM=urxvtc dvtm'
+
 antigen-use oh-my-zsh
 antigen-bundle git
 
