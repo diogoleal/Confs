@@ -1,36 +1,85 @@
-! seoul256 (dark) theme adapted for URxvt
-! ! append the content of this file to your .Xresources
-URxvt*background: #3a3a3a
-URxvt*foreground: #d0d0d0
-URxvt*color0: #4e4e4e
-URxvt*color1: #d68787
-URxvt*color2: #5f865f
-URxvt*color3: #d8af5f
-URxvt*color4: #85add4
-URxvt*color5: #d7afaf
-URxvt*color6: #87afaf
-URxvt*color7: #d0d0d0
-URxvt*color8: #626262
-URxvt*color9: #d75f87
-URxvt*color10: #87af87
-URxvt*color11: #ffd787
-URxvt*color12: #add4fb
-URxvt*color13: #ffafaf
-URxvt*color14: #87d7d7
-URxvt*color15: #e4e4e4
-URxvt*cursorColor: #d0d0d0
-URxvt*cursorColor2: #3a3a3a
-URxvt*colorBD: #e4e4e4
+! -- urxvt
+! special
+*.foreground:   #cecfd1
+*.background:   #111113
+*.cursorColor:  #cecfd1
 
-!LURxvt.font: liberation Mono:size=14:antialias=true
-URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+! black
+*.color0:       #111113
+*.color8:       #606163
+
+! red
+*.color1:       #d54a56
+*.color9:       #f66a79
+
+! green
+*.color2:       #84bd3f
+*.color10:      #a4e35a
+
+! yellow
+*.color3:       #cb873d
+*.color11:      #f4aa5c
+
+! blue
+*.color4:       #6f67e6
+*.color12:      #8c86fc
+
+! magenta
+*.color5:       #d753a4
+*.color13:      #ea75bc
+
+! cyan
+*.color6:       #45b791
+*.color14:      #68e0b8
+
+! white
+*.color7:       #aaabad
+*.color15:      #cecfd1
+
+! font
+URxvt.font: xft:Liberation Mono:size=12
+URxvt.boldFont:
+URxvt*letterSpace: -1
+!!URxvt*lineSpace: 2
+
+URxvt.keysym.Shift-Up: command:\033]720;1\007
+URxvt.keysym.Shift-Down: command:\033]721;1\007
+
 !URxvt.letterSpace: -1
 URxvt*scrollBar: off
-!URxvt.shading: 65
-!URxvt*.transparent: true
+URxvt.shading: 30
+URxvt*.transparent: true
 !URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
-!URxvt*foreground: green
 
+urxvt*.perl-lib: /usr/lib/urxvt/perl
+urxvt*.perl-ext-common: default,matcher,clipboard
+urxvt*.perl-matcher: 1
+urxvt*.matcher-button: 3
+
+!urxvt*.dynamicColors: on
+urxvt*.urgentOnBell: true
+
+!cursor
+URxvt*depth: 24
+URxvt*geometry: 100x25
+URxvt.borderColor: #111113
+URxvt.internalBorder: 8
+URxvt.cursorUnderline: true
+URxvt.cursorBlink: true
+
+!Scrollbar
+URxvt.scrollstyle: plain
+URxvt.scrollBar: false
+URxvt*scrollTtyOuput: false
+URxvt*scrollWidthBuffer: true
+URxvt*scrollTtyKeypress: true
+
+!login shell
+URxvt*loginShell: false
+
+! -- Xterm
+
+! Color
 !xterm*faceName: Inconsolata:size=11:antialias=false
 XTerm*background: #3a3a3a
 XTerm*foreground: #d0d0d0
