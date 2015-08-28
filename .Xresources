@@ -1,86 +1,8 @@
-! -- urxvt
-! special
-*.foreground:   #cecfd1
-*.background:   #111113
-*.cursorColor:  #cecfd1
-
-! black
-*.color0:       #111113
-*.color8:       #606163
-
-! red
-*.color1:       #d54a56
-*.color9:       #f66a79
-
-! green
-*.color2:       #84bd3f
-*.color10:      #a4e35a
-
-! yellow
-*.color3:       #cb873d
-*.color11:      #f4aa5c
-
-! blue
-*.color4:       #6f67e6
-*.color12:      #8c86fc
-
-! magenta
-*.color5:       #d753a4
-*.color13:      #ea75bc
-
-! cyan
-*.color6:       #45b791
-*.color14:      #68e0b8
-
-! white
-*.color7:       #aaabad
-*.color15:      #cecfd1
-
-! font
-URxvt.font: xft:Liberation Mono:size=12
-URxvt.boldFont:
-URxvt*letterSpace: -1
-!!URxvt*lineSpace: 2
-
-URxvt.keysym.Shift-Up: command:\033]720;1\007
-URxvt.keysym.Shift-Down: command:\033]721;1\007
-
-!URxvt.letterSpace: -1
-URxvt*scrollBar: off
-URxvt.shading: 30
-URxvt*.transparent: true
-!URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
-
-urxvt*.perl-lib: /usr/lib/urxvt/perl
-urxvt*.perl-ext-common: default,matcher,clipboard
-urxvt*.perl-matcher: 1
-urxvt*.matcher-button: 3
-
-!urxvt*.dynamicColors: on
-urxvt*.urgentOnBell: true
-
-!cursor
-URxvt*depth: 24
-URxvt*geometry: 100x25
-URxvt.borderColor: #111113
-URxvt.internalBorder: 8
-URxvt.cursorUnderline: true
-URxvt.cursorBlink: true
-
-!Scrollbar
-URxvt.scrollstyle: plain
-URxvt.scrollBar: false
-URxvt*scrollTtyOuput: false
-URxvt*scrollWidthBuffer: true
-URxvt*scrollTtyKeypress: true
-
-!login shell
-URxvt*loginShell: false
-
 ! -- Xterm
-
 ! Color
-!xterm*faceName: Inconsolata:size=11:antialias=false
+xterm*faceName: Terminus:size=12:antialias=false
+!Mono:size=12
+XTerm.letterSpace: -1
 XTerm*background: #3a3a3a
 XTerm*foreground: #d0d0d0
 XTerm*tcolor0: #4e4e4e
@@ -112,8 +34,6 @@ XTerm*scrollKey: true
 XTerm*saveLines: 10000
 XTerm*multiClickTime: 250
 
-! Render setting for cairo -> pango -> gtk
-!*font: -*-gomme-medium-*-*--18-*-*-*-*-*-*-*
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.hinting:    true
