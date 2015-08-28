@@ -61,6 +61,12 @@ Plugin 'honza/vim-snippets'
 ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
 snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 
+
+Plugin 'ConradIrwin/vim-bracketed-paste'
+
+Plugin 'lambdalisue/vim-manpager'
+
+
 Plugin 'yegappan/mru'
 let MRU_Max_Entries = 400
 map <leader>f :MRU<CR>
@@ -382,3 +388,5 @@ au FileType python map <buffer> <leader>2 /def
 au FileType python map <buffer> <leader>C ?class
 au FileType python map <buffer> <leader>D ?def
 
+
+let g:session_autoload = 'no'
