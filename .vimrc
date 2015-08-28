@@ -67,6 +67,9 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'lambdalisue/vim-manpager'
 
 
+Plugin 'tommcdo/vim-exchange'
+
+
 Plugin 'yegappan/mru'
 let MRU_Max_Entries = 400
 map <leader>f :MRU<CR>
