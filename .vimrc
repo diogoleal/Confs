@@ -10,9 +10,12 @@ Plugin 'L9'
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
-" Theme
-Plugin 'tomasr/molokai'
-let g:molokai_original = 1
+" Colors
+colors gruvbox
+Plugin 'morhetz/gruvbox'
+
+"Plugin 'tomasr/molokai'
+"let g:molokai_original = 1
 
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_auto_colors = 0
@@ -61,11 +64,9 @@ Plugin 'honza/vim-snippets'
 ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
 snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 
-
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
 Plugin 'lambdalisue/vim-manpager'
-
 
 Plugin 'tommcdo/vim-exchange'
 
@@ -145,6 +146,13 @@ Plugin 'jmcantrell/vim-virtualenv'
 
 Plugin 'mrtazz/simplenote.vim'
 source ~/.simplenoterc
+
+Plugin 'terryma/vim-multiple-cursors'
+" Default mapping
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
 
 Plugin 'itchyny/lightline.vim'
 "let g:lightline = { 'colorscheme': 'gruvbox' }
@@ -390,6 +398,5 @@ au FileType python map <buffer> <leader>1 /class
 au FileType python map <buffer> <leader>2 /def
 au FileType python map <buffer> <leader>C ?class
 au FileType python map <buffer> <leader>D ?def
-
 
 let g:session_autoload = 'no'
