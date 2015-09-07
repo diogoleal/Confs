@@ -3,25 +3,24 @@
 # agent Copy.com
 #~/bin/CopyAgent &
 
+# Start mpd
+mpd ~/.mpd.conf
+
 # network wicd
 #/usr/bin/wicd-gtk --tray &
 
-# network-manager
-#/usr/bin/nm-applet &
-
-# daemon urxvt
-urxvtd --quiet --opendisplay --fork
-
 # layout keyboard
 setxkbmap -layout br -model "abnt2"
+xmodmap ~/.Xmodmap
 
 # custom X settings
 xrdb -merge ~/.Xresources
 
-/usr/bin/xmodmap ~/.Xmodmap
-
 # set cursor
 xsetroot -cursor_name left_ptr
+
+# daemon urxvt
+urxvtd --quiet --opendisplay --fork
 
 #use syndaemon to disable touchpad while typing if it is installed!
 syndaemon=`which syndaemon`
@@ -34,11 +33,8 @@ synclient TapButton1=1
 # Turns off the terminal bell
 /usr/bin/xset b off
 
-# Volume
-#/usr/bin/volumeicon &
-
 # brightness
 xbacklight -set 30
 
+# start awesome
 exec awesome
-
