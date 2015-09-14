@@ -1,6 +1,10 @@
 ! -- Xterm
 ! Color
-xterm*faceName: Terminus:size=12:antialias=false
+!xterm*faceName: Terminus:size=12:antialias=false
+xterm*faceName: Hack-Regular:size=11
+!:antialias=false
+!xterm*faceName: Hack-Regular.ttf -misc-hack-medium-r-normal--0-0-0-0-m-0-ascii-0
+
 !Mono:size=12
 XTerm.letterSpace: -1
 XTerm*background: #3a3a3a
