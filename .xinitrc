@@ -9,6 +9,10 @@ mpd ~/.mpd.conf
 # network wicd
 #/usr/bin/wicd-gtk --tray &
 
+# Fonts
+xset +fp ~/.fonts/
+xset fp rehash
+
 # layout keyboard
 setxkbmap -layout br -model "abnt2"
 xmodmap ~/.Xmodmap
@@ -20,7 +24,7 @@ xrdb -merge ~/.Xresources
 xsetroot -cursor_name left_ptr
 
 # daemon urxvt
-urxvtd --quiet --opendisplay --fork
+#urxvtd --quiet --opendisplay --fork
 
 #use syndaemon to disable touchpad while typing if it is installed!
 syndaemon=`which syndaemon`
@@ -31,10 +35,12 @@ fi
 synclient TapButton1=1
 
 # Turns off the terminal bell
-/usr/bin/xset b off
+#/usr/bin/xset b off
+xset m 1 0 &
 
 # brightness
 xbacklight -set 30
 
-# start awesome
-exec awesome
+#exec awesome
+exec i3
+
