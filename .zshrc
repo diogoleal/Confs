@@ -12,23 +12,24 @@ antigen-bundle zsh-users/zsh-history-substring-search
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle mafredri/zsh-async
 
-#theme
+# theme
 #antigen bundle sindresorhus/pure
 antigen theme kolo
 
 antigen-apply
 
-#Alias
+# Alias
 ## xbps / Void Linux
-alias xi='sudo xbps-install'
 alias xq='xbps-query -Rs'
+alias xl='xbps-query -l'
+alias xi='sudo xbps-install'
 alias xu='sudo xbps-install -Su'
 alias xr='sudo xbps-remove'
-## shutdown 
+## shutdown
 alias tchau='sudo poweroff'
 
 alias v='vim'
-
+alias n='ncmpcpp'
 # virtualenvwrapper lazy
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Workspace
@@ -37,3 +38,7 @@ source /usr/bin/virtualenvwrapper_lazy.sh
 
 # vim-manpager
 export MANPAGER="vim -c MANPAGER -"
+
+# RVM
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
