@@ -1,5 +1,5 @@
 
-set shell=/usr/bin/sh
+set shell=/usr/bin/zsh
 
 " Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -11,16 +11,20 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " Colors
-colors gruvbox
-Plugin 'morhetz/gruvbox'
+Plugin 'dylanaraps/crayon-theme'
+colors crayon
+set t_Co=256
+syntax enable
+"set background=dark
+hi Normal ctermfg=252 ctermbg=none
 
-"Plugin 'tomasr/molokai'
-"let g:molokai_original = 1
-
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'Yggdroot/indentLine'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  guibg=red   ctermbg=3
-hi IndentGuidesEven guibg=green ctermbg=4
+hi IndentGuidesOdd ctermbg = 3
+hi IndentGuidesEven ctermbg = 4
 
 Plugin 'SirVer/ultisnips'
 " Trigger configuration. Do not use <tab> if you use
@@ -30,15 +34,19 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
-Plugin 'davidhalter/jedi-vim'
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
+"Plugin 'davidhalter/jedi-vim'
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#goto_assignments_command = "<leader>g"
+"let g:jedi#goto_definitions_command = "<leader>d"
+"let g:jedi#documentation_command = "K"
+"let g:jedi#usages_command = "<leader>n"
+"let g:jedi#rename_command = "<leader>r"
+"let g:jedi#show_call_signatures = "0"
+"let g:jedi#completions_command = "<C-Space>"
+
+" Auto complete
+Plugin 'Shougo/neocomplete.vim'
+
 
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -56,20 +64,60 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
-Plugin 'ervandew/supertab'
-Plugin 'Yggdroot/indentLine'
-Plugin 'junegunn/goyo.vim'
-Plugin 'honza/vim-snippets'
-" => snipMate (beside <TAB> support <CTRL-j>)
-ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
-snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
+Plugin 'ktonga/vim-follow-my-lead'
+
+"HackNews
+"Plugin 'ryanss/vim-hackernews'
+
+" Python
+Plugin 'jmcantrell/vim-virtualenv'
+
+" Shell
+Plugin 'xolox/vim-shell'
+
+Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-session'
+"let g:session_autoload = 'no'
+
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
+
+" task warrior
+"Plugin 'blindFS/vim-taskwarrior'
+
+" git
+Plugin 'tpope/vim-fugitive'
+Plugin 'gregsexton/gitv'
+
+" Github
+"Plugin 'junegunn/vim-github-dashboard'
 
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
+" Manpage on vim
 Plugin 'lambdalisue/vim-manpager'
 
 Plugin 'tommcdo/vim-exchange'
 
+" Insert mode completions
+Plugin 'ervandew/supertab'
+
+" Productive
+Plugin 'junegunn/limelight.vim'
+Plugin 'junegunn/goyo.vim'
+Plugin 'reedes/vim-pencil'
+
+set nocompatible
+augroup pencil
+    autocmd!
+    autocmd FileType markdown,mkd call pencil#init()
+    autocmd FileType text         call pencil#init()
+augroup END
+
+Plugin 'honza/vim-snippets'
+" => snipMate (beside <TAB> support <CTRL-j>)
+ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
+snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 
 Plugin 'yegappan/mru'
 let MRU_Max_Entries = 400
@@ -92,38 +140,14 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
 
-Plugin 'xolox/vim-shell'
-Plugin 'xolox/vim-session'
-Plugin 'xolox/vim-misc'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-
 Plugin 'bling/vim-airline'
-let g:airline_theme="luna"
-"let g:airline_theme = 'powerlineish'
+"let g:airline_theme = ''
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
-endif
-
-if !exists('g:airline_powerline_fonts')
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-else
-  let g:airline#extensions#tabline#left_sep = ''
-  let g:airline#extensions#tabline#left_alt_sep = ''
-
-  " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
 endif
 
 Plugin 'Shougo/vimproc.vim'
@@ -136,14 +160,12 @@ nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
 
 "Plugin 'fholgado/minibufexpl.vim'
 Plugin 'airblade/vim-gitgutter'
+
+" Language pack
 Plugin 'sheerun/vim-polyglot'
 "Plugin 'vim-scripts/CSApprox'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'tomtom/tcomment_vim'
 
-Plugin 'ryanss/vim-hackernews'
-Plugin 'jmcantrell/vim-virtualenv'
-
+" Simplenote
 Plugin 'mrtazz/simplenote.vim'
 source ~/.simplenoterc
 
@@ -154,13 +176,11 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-Plugin 'itchyny/lightline.vim'
-"let g:lightline = { 'colorscheme': 'gruvbox' }
-set t_Co=256
-
-syntax enable
-set background=dark
-
+"Plugin 'yuratomo/gmail.vim'
+"let g:gmail_imap = 'imap.gmail.com:993'
+"let g:gmail_smtp = 'smtp.gmail.com:465'
+"let g:gmail_user_name = 'me@diogoleal.com'
+"
 " All of your Plugins must be added before the following line
 call vundle#end()
 
@@ -262,6 +282,9 @@ set smarttab
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
+
+" Using tabs for indentation
+"set noet ci pi sts=0 sw=4 ts=4
 
 " Linebreak on 500 characters
 set lbr
@@ -399,4 +422,3 @@ au FileType python map <buffer> <leader>2 /def
 au FileType python map <buffer> <leader>C ?class
 au FileType python map <buffer> <leader>D ?def
 
-let g:session_autoload = 'no'
