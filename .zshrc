@@ -25,11 +25,17 @@ alias xl='xbps-query -l'
 alias xi='sudo xbps-install'
 alias xu='sudo xbps-install -Su'
 alias xr='sudo xbps-remove'
+alias xo='xbps-query -O'
 ## shutdown
 alias tchau='sudo poweroff'
 
+# SSH
+alias S='ssh -l dandrade'
+alias SR='ssh -l root'
+
 alias v='vim'
 alias n='ncmpcpp'
+
 # virtualenvwrapper lazy
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Workspace
