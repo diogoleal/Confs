@@ -11,8 +11,7 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " Colors
-Plugin 'dylanaraps/crayon-theme'
-colors crayon
+colors maui
 set t_Co=256
 syntax enable
 "set background=dark
@@ -47,6 +46,13 @@ let g:UltiSnipsEditSplit="vertical"
 " Auto complete
 Plugin 'Shougo/neocomplete.vim'
 
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/unite.vim'
+nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
+nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+let g:unite_source_history_yank_enable = 1
+nnoremap <space>y :Unite -auto-preview history/yank<cr>
+nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
 
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -88,6 +94,7 @@ Plugin 'tpope/vim-surround'
 " git
 Plugin 'tpope/vim-fugitive'
 Plugin 'gregsexton/gitv'
+Plugin 'airblade/vim-gitgutter'
 
 " Github
 "Plugin 'junegunn/vim-github-dashboard'
@@ -100,19 +107,19 @@ Plugin 'lambdalisue/vim-manpager'
 Plugin 'tommcdo/vim-exchange'
 
 " Insert mode completions
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 
 " Productive
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/goyo.vim'
-Plugin 'reedes/vim-pencil'
+"Plugin 'reedes/vim-pencil'
 
-set nocompatible
-augroup pencil
-    autocmd!
-    autocmd FileType markdown,mkd call pencil#init()
-    autocmd FileType text         call pencil#init()
-augroup END
+"set nocompatible
+"augroup pencil
+"    autocmd!
+"    autocmd FileType markdown,mkd call pencil#init()
+"    autocmd FileType text         call pencil#init()
+"augroup END
 
 Plugin 'honza/vim-snippets'
 " => snipMate (beside <TAB> support <CTRL-j>)
@@ -150,16 +157,8 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
-nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
-nnoremap <space>/ :Unite -auto-preview grep:.<cr>
-let g:unite_source_history_yank_enable = 1
-nnoremap <space>y :Unite -auto-preview history/yank<cr>
-nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
 
 "Plugin 'fholgado/minibufexpl.vim'
-Plugin 'airblade/vim-gitgutter'
 
 " Language pack
 Plugin 'sheerun/vim-polyglot'
@@ -211,7 +210,7 @@ set langmenu=en
 set encoding=utf8
 
 " Turn on the WiLd menu
-set wildmenu
+"set wildmenu
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc,*.git\*,.hg\*,.svn\*
@@ -264,7 +263,7 @@ set t_vb=
 set tm=500
 
 " Add a bit extra margin to the left
-set foldcolumn=1
+set foldcolumn=0
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
