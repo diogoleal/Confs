@@ -25,13 +25,13 @@ let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg = 3
 hi IndentGuidesEven ctermbg = 4
 
-Plugin 'SirVer/ultisnips'
+"Plugin 'SirVer/ultisnips'
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsEditSplit="vertical"
 
 "Plugin 'davidhalter/jedi-vim'
 "let g:jedi#popup_on_dot = 0
@@ -44,7 +44,10 @@ let g:UltiSnipsEditSplit="vertical"
 "let g:jedi#completions_command = "<C-Space>"
 
 " Auto complete
-Plugin 'Shougo/neocomplete.vim'
+"Plugin 'Shougo/neocomplete.vim'
+Plugin 'Valloric/YouCompleteMe'
+
+
 
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
