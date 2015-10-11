@@ -1,6 +1,13 @@
 ZSHA_BASE=$HOME/.zsh-antigen
 source $ZSHA_BASE/antigen.zsh
 
+export EDITOR='vim'
+
+# vim-manpager
+export MANPAGER="vim -c MANPAGER -"
+
+LS_COLORS='*.png=96:*.aux=90:*.bib=94:*.log=1;90:*.pdf=1;93:*.tex=93:*.zip=91:di=1;94'
+
 antigen-use oh-my-zsh
 
 antigen-bundle git
@@ -26,6 +33,8 @@ alias xi='sudo xbps-install'
 alias xu='sudo xbps-install -Su'
 alias xr='sudo xbps-remove'
 alias xo='xbps-query -O'
+alias xS='xbps-query -RS'
+
 ## shutdown
 alias tchau='sudo poweroff'
 
@@ -42,9 +51,7 @@ export PROJECT_HOME=$HOME/Workspace
 export VIRTUALENVWRAPPER_SCRIPT=/usr//bin/virtualenvwrapper.sh
 source /usr/bin/virtualenvwrapper_lazy.sh
 
-# vim-manpager
-export MANPAGER="vim -c MANPAGER -"
-
 # RVM
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export PATH="$PATH:$HOME/.rvm/bin"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
