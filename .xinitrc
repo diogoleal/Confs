@@ -6,9 +6,6 @@
 # Start mpd
 mpd ~/.mpd.conf
 
-# network wicd
-#/usr/bin/wicd-gtk --tray &
-
 # Fonts
 xset +fp ~/.fonts/
 xset fp rehash
@@ -23,8 +20,14 @@ xrdb -merge ~/.Xresources
 # set cursor
 xsetroot -cursor_name left_ptr
 
+# start xbanish
+xbanish &
+
+# Define background
+feh --bg-center ~/Pictures/cave-story_00404484.jpg
+
 # daemon urxvt
-#urxvtd --quiet --opendisplay --fork
+urxvtd --quiet --opendisplay --fork
 
 #use syndaemon to disable touchpad while typing if it is installed!
 syndaemon=`which syndaemon`
@@ -34,13 +37,7 @@ fi
 
 synclient TapButton1=1
 
-# Turns off the terminal bell
-#/usr/bin/xset b off
-xset m 1 0 &
-
 # brightness
 xbacklight -set 30
 
-#exec awesome
 exec i3
-
