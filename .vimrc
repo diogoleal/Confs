@@ -25,29 +25,8 @@ let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg = 3
 hi IndentGuidesEven ctermbg = 4
 
-"Plugin 'SirVer/ultisnips'
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"let g:UltiSnipsEditSplit="vertical"
-
-"Plugin 'davidhalter/jedi-vim'
-"let g:jedi#popup_on_dot = 0
-"let g:jedi#goto_assignments_command = "<leader>g"
-"let g:jedi#goto_definitions_command = "<leader>d"
-"let g:jedi#documentation_command = "K"
-"let g:jedi#usages_command = "<leader>n"
-"let g:jedi#rename_command = "<leader>r"
-"let g:jedi#show_call_signatures = "0"
-"let g:jedi#completions_command = "<C-Space>"
-
 " Auto complete
-"Plugin 'Shougo/neocomplete.vim'
 Plugin 'Valloric/YouCompleteMe'
-
-
 
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
@@ -75,9 +54,6 @@ let g:tagbar_type_go = {
 
 Plugin 'ktonga/vim-follow-my-lead'
 
-"HackNews
-"Plugin 'ryanss/vim-hackernews'
-
 " Python
 Plugin 'jmcantrell/vim-virtualenv'
 
@@ -85,22 +61,15 @@ Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'xolox/vim-shell'
 
 Plugin 'xolox/vim-misc'
-"Plugin 'xolox/vim-session'
-"let g:session_autoload = 'no'
 
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
-
-" task warrior
-"Plugin 'blindFS/vim-taskwarrior'
 
 " git
 Plugin 'tpope/vim-fugitive'
 Plugin 'gregsexton/gitv'
 Plugin 'airblade/vim-gitgutter'
 
-" Github
-"Plugin 'junegunn/vim-github-dashboard'
 
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
@@ -109,20 +78,10 @@ Plugin 'lambdalisue/vim-manpager'
 
 Plugin 'tommcdo/vim-exchange'
 
-" Insert mode completions
-"Plugin 'ervandew/supertab'
-
 " Productive
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/goyo.vim'
-"Plugin 'reedes/vim-pencil'
 
-"set nocompatible
-"augroup pencil
-"    autocmd!
-"    autocmd FileType markdown,mkd call pencil#init()
-"    autocmd FileType text         call pencil#init()
-"augroup END
 
 Plugin 'honza/vim-snippets'
 " => snipMate (beside <TAB> support <CTRL-j>)
@@ -160,12 +119,8 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-
-"Plugin 'fholgado/minibufexpl.vim'
-
 " Language pack
 Plugin 'sheerun/vim-polyglot'
-"Plugin 'vim-scripts/CSApprox'
 
 " Simplenote
 Plugin 'mrtazz/simplenote.vim'
@@ -178,11 +133,6 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-"Plugin 'yuratomo/gmail.vim'
-"let g:gmail_imap = 'imap.gmail.com:993'
-"let g:gmail_smtp = 'smtp.gmail.com:465'
-"let g:gmail_user_name = 'me@diogoleal.com'
-"
 " All of your Plugins must be added before the following line
 call vundle#end()
 
@@ -295,19 +245,16 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
+set textwidth=79
 
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
-
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
-" Smart way to move between windows
+"" Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -375,17 +322,11 @@ func! DeleteTrailingWS()
     %s/\s\+$//ge
     exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
+"autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.py *.c *.sh :call DeleteTrailingWS()
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Quickly open a buffer for scribble
-map <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 nnoremap <f5> :set invpaste paste?<CR>
@@ -406,21 +347,4 @@ let g:bufExplorerShowRelativePath=1
 let g:bufExplorerFindActive=1
 let g:bufExplorerSortBy='name'
 map <leader>o :BufExplorer<cr>
-
-" Python
-let python_highlight_all = 1
-au FileType python syn keyword pythonDecorator True None False self
-
-au BufNewFile,BufRead *.jinja set syntax=htmljinja
-au BufNewFile,BufRead *.mako set ft=mako
-
-au FileType python map <buffer> F :set foldmethod=indent<cr>
-au FileType python inoremap <buffer> $r return
-au FileType python inoremap <buffer> $i import
-au FileType python inoremap <buffer> $p print
-au FileType python inoremap <buffer> $f #--- PH ----------------------------------------------<esc>FP2xi
-au FileType python map <buffer> <leader>1 /class
-au FileType python map <buffer> <leader>2 /def
-au FileType python map <buffer> <leader>C ?class
-au FileType python map <buffer> <leader>D ?def
 
