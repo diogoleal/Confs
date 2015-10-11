@@ -1,43 +1,3 @@
-! -- Xterm
-! Color
-!xterm*faceName: Terminus:size=12:antialias=false
-xterm*faceName: Hack-Regular:size=11
-!:antialias=false
-!xterm*faceName: Hack-Regular.ttf -misc-hack-medium-r-normal--0-0-0-0-m-0-ascii-0
-
-!Mono:size=12
-XTerm.letterSpace: -1
-XTerm*background: #3a3a3a
-XTerm*foreground: #d0d0d0
-XTerm*tcolor0: #4e4e4e
-XTerm*color1: #d68787
-XTerm*color2: #5f865f
-XTerm*color3: #d8af5f
-XTerm*color4: #85add4
-XTerm*color5: #d7afaf
-XTerm*color6: #87afaf
-XTerm*color7: #d0d0d0
-XTerm*color8: #626262
-XTerm*color9: #d75f87
-XTerm*color10: #87af87
-XTerm*color11: #ffd787
-XTerm*color12: #add4fb
-Xterm*color13: #ffafaf
-XTerm*color14: #87d7d7
-XTerm*color15: #e4e4e4
-XTerm*cursorColor: #d0d0d0
-XTerm*cursorColor2: #3a3a3a
-XTerm*colorBD: #e4e4e4
-
-XTerm*utf8: 1
-XTerm*selectToClipboard: true
-XTerm*internalBorder: 3
-XTerm*loginShell: true
-XTerm*scrollBar: false
-XTerm*scrollKey: true
-XTerm*saveLines: 10000
-XTerm*multiClickTime: 250
-
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.hinting:    true
@@ -45,4 +5,47 @@ Xft.rgba:       rgb
 Xft.hintstyle:  hintslight
 Xft.size:		16
 
-*url-launcher: firefox
+*.background: #282828
+*.foreground: #ebdbb2
+! Black + DarkGrey
+*.color0: #282828
+*.color8: #373B41
+! DarkRed + Red
+*.color1: #cc241d
+*.color9: #fb4934
+! DarkGreen + Green
+*.color2: #98971a
+*.color10: #b8bb26
+! DarkYellow + Yellow
+*.color3: #d79921
+*.color11: #fabd2f
+! DarkBlue + Blue
+*.color4: #458588
+*.color12: #83a598
+! DarkMagenta + Magenta
+*.color5: #b16286
+*.color13: #d3869b
+! DarkCyan + Cyan
+*.color6: #689d6a
+*.color14: #8ec07c
+! LightGrey + White
+*.color7: #bdae93
+*.color15: #ebdbb2
+
+URxvt.font: xft:Hack:style=Regular:size=10, -*-Symbola-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt.shading: 30
+URxvt.transparent: true
+URxvt.scrollstyle: next
+URxvt.scrollBar: false
+URxvt.letterSpace: 0
+
+URxvt.perl-ext: default,url-select
+URxvt.perl-ext-common: default,clipboard
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.clipboard.copycmd:  xsel -ib
+URxvt.clipboard.pastecmd: xsel -ob
+URxvt.url-select.underline: true
+URxvt.url-launcher: xombrero
+
