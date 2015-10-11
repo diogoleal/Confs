@@ -29,13 +29,13 @@ feh --bg-center ~/Pictures/cave-story_00404484.jpg
 # daemon urxvt
 urxvtd --quiet --opendisplay --fork
 
-#use syndaemon to disable touchpad while typing if it is installed!
-syndaemon=`which syndaemon`
-if [ ! -z "${syndaemon}" ];then
-	$syndaemon -t -k -i 1 -d
-fi
-
+#use syndaemon to disable touchpad while typing
+syndaemon -t -k -i 1 -d
 synclient TapButton1=1
+
+# Turns off the terminal bell
+#/usr/bin/xset b off
+#xset m 1 0 &
 
 # brightness
 xbacklight -set 30
