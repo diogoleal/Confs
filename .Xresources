@@ -1,43 +1,22 @@
-Xft.dpi:        96
-Xft.antialias:  true
-Xft.hinting:    true
-Xft.rgba:       rgb
-Xft.hintstyle:  hintslight
-Xft.size:		16
+!#URxvt*background: [100]#3b3b4b
+!#URxvt*background: #3b3b3b
+!#URxvt*foreground: #cce8d4
 
-*.background: #282828
-*.foreground: #ebdbb2
-! Black + DarkGrey
-*.color0: #282828
-*.color8: #373B41
-! DarkRed + Red
-*.color1: #cc241d
-*.color9: #fb4934
-! DarkGreen + Green
-*.color2: #98971a
-*.color10: #b8bb26
-! DarkYellow + Yellow
-*.color3: #d79921
-*.color11: #fabd2f
-! DarkBlue + Blue
-*.color4: #458588
-*.color12: #83a598
-! DarkMagenta + Magenta
-*.color5: #b16286
-*.color13: #d3869b
-! DarkCyan + Cyan
-*.color6: #689d6a
-*.color14: #8ec07c
-! LightGrey + White
-*.color7: #bdae93
-*.color15: #ebdbb2
+URxvt*background: #1b1b1b
+URxvt*foreground: #A0A0A0
 
-URxvt.font: xft:Hack:style=Regular:size=10, -*-Symbola-*-*-*-*-*-*-*-*-*-*-*-*
-URxvt.shading: 30
-URxvt.transparent: true
-URxvt.scrollstyle: next
-URxvt.scrollBar: false
-URxvt.letterSpace: 0
+URxvt*transparent: false
+URxvt*.shading: 20
+URxvt*.depth: 32
+
+URxvt*scrollBar: false
+URxvt*scrollstyle: plain
+URxvt*scrollBar_right: true
+URxvt*scrollBar_floating: true
+URxvt*scrollColor: #CCE8D4
+URxvt*.thickness: 0.1
+
+URxvt*iso14755: false
 
 URxvt.perl-ext: default,url-select
 URxvt.perl-ext-common: default,clipboard
@@ -47,5 +26,34 @@ URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.clipboard.copycmd:  xsel -ib
 URxvt.clipboard.pastecmd: xsel -ob
 URxvt.url-select.underline: true
-URxvt.url-launcher: xombrero
+URxvt.url-launcher: qutebrowser
 
+URxvt.font: xft:Hack:style=Regular:size=10, -*-Symbola-*-*-*-*-*-*-*-*-*-*-*-*
+
+URxvt*letterSpace: 0
+URxvt*internalBorder: 10
+URxvt*color0: #33313c
+URxvt*color1: #354169
+URxvt*color2: #4c596c
+URxvt*color3: #5d6383
+URxvt*color4: #6f838e
+URxvt*color5: #83989b
+URxvt*color6: #7b7277
+URxvt*color7: #a3a0a7
+URxvt*color8: #6fa6ab
+URxvt*color9: #a8bac4
+URxvt*color10: #606e5f
+URxvt*color11: #808452
+URxvt*color12: #b7a462
+URxvt*color13: #5a5349
+URxvt*color14: #8bb5b4
+URxvt*color15: #d2c173
+
+!rofi.terminal:	urxvt
+!rofi.lines:	10
+!rofi.eh:	2
+!rofi.width:	100
+!rofi.padding:	800
+!rofi.opacity:	95
+!rofi.bw:	0
+!rofi.bc:	#032c36
