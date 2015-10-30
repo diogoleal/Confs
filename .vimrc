@@ -1,6 +1,3 @@
-
-set shell=/usr/bin/zsh
-
 " Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -8,13 +5,13 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'L9'
 Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 " Colors
 colors maui
 set t_Co=256
 syntax enable
-"set background=dark
+"set background=light
 hi Normal ctermfg=252 ctermbg=none
 
 Plugin 'bronson/vim-trailing-whitespace'
@@ -29,12 +26,6 @@ hi IndentGuidesEven ctermbg = 4
 Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
-nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
-nnoremap <space>/ :Unite -auto-preview grep:.<cr>
-let g:unite_source_history_yank_enable = 1
-nnoremap <space>y :Unite -auto-preview history/yank<cr>
-nnoremap <space>s :Unite -quick-match -auto-preview buffer<cr>
 
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -49,27 +40,35 @@ let g:tagbar_type_go = {
     \ 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' },
     \ 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' },
     \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-    \ }
+    \ 'ctagsargs' : '-sort -silent'}
 
-Plugin 'ktonga/vim-follow-my-lead'
+"Plugin 'ktonga/vim-follow-my-lead'
 
 " Python
 Plugin 'jmcantrell/vim-virtualenv'
 
+" c
+Plugin 'vim-scripts/c.vim'
+
+"" make/cmake
+augroup vimrc-make-cmake
+  autocmd!
+  autocmd FileType make setlocal noexpandtab
+  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+augroup END
+
 " Shell
 Plugin 'xolox/vim-shell'
-
+set shell=/usr/bin/zsh
 Plugin 'xolox/vim-misc'
 
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-commentary'
+"Plugin 'tpope/vim-surround'
 
 " git
 Plugin 'tpope/vim-fugitive'
-Plugin 'gregsexton/gitv'
+"Plugin 'gregsexton/gitv'
 Plugin 'airblade/vim-gitgutter'
-
 
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
@@ -82,18 +81,8 @@ Plugin 'tommcdo/vim-exchange'
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/goyo.vim'
 
-
-Plugin 'honza/vim-snippets'
-" => snipMate (beside <TAB> support <CTRL-j>)
-ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
-snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
-
-Plugin 'yegappan/mru'
-let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
-
 Plugin 'scrooloose/syntastic'
-"let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_python_checkers=['pyflakes']
 let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_python_flake8_post_args='--ignore=W391'
 
@@ -109,16 +98,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
 
-Plugin 'bling/vim-airline'
-"let g:airline_theme = ''
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
-
 " Language pack
 Plugin 'sheerun/vim-polyglot'
 
@@ -126,14 +105,6 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'mrtazz/simplenote.vim'
 source ~/.simplenoterc
 
-Plugin 'terryma/vim-multiple-cursors'
-" Default mapping
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-
-" All of your Plugins must be added before the following line
 call vundle#end()
 
 filetype plugin on
@@ -144,19 +115,11 @@ set number
 set ruler
 set autoread
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
-
-" Fast saving
-nmap <leader>w :w!<cr>
-
 " :W sudo saves the file
-command W w !sudo tee % > /dev/null
+"command W w !sudo tee % > /dev/null
 
 " Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+"set so=7
 
 let $LANG='en'
 set langmenu=en
@@ -172,11 +135,11 @@ set wildignore=*.o,*~,*.pyc,*.git\*,.hg\*,.svn\*
 set cmdheight=1
 
 " A buffer becomes hidden when it is abandoned
-set hid
+"set hid
 
 " Configure backspace so it acts as it should act
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
+"set backspace=eol,start,indent
+"set whichwrap+=<,>,h,l
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -187,7 +150,7 @@ endif
 set ignorecase
 
 " When searching try to be smart about cases
-set smartcase
+"set smartcase
 
 " Highlight search results
 set hlsearch
@@ -205,15 +168,15 @@ set lazyredraw
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch
+"set showmatch
 " How many tenths of a second to blink when matching brackets
-set mat=2
+"set mat=2
 
 " No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
+"set noerrorbells
+"set novisualbell
+"set t_vb=
+"set tm=500
 
 " Add a bit extra margin to the left
 set foldcolumn=0
@@ -245,7 +208,7 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
-set textwidth=79
+"set textwidth=79
 
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
@@ -278,34 +241,21 @@ let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" Specify the behavior when switching between buffers
-try
-    set switchbuf=useopen,usetab,newtab
-    set stal=2
-catch
-endtry
-
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \ exe "normal! g`\"" |
     \ endif
+
 " Remember info about open buffers on close
-set viminfo^=%
+"set viminfo^=%
 
 " Always show the status line
 set laststatus=2
 
 " Format the status line
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+"set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -322,8 +272,9 @@ func! DeleteTrailingWS()
     %s/\s\+$//ge
     exe "normal `z"
 endfunc
-"autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.py *.c *.sh :call DeleteTrailingWS()
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.c :call DeleteTrailingWS()
+autocmd BufWrite *.sh :call DeleteTrailingWS()
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
@@ -340,11 +291,4 @@ function! HasPaste()
     en
     return ''
 endfunction
-
-" bufExplorer plugin
-let g:bufExplorerDefaultHelp=0
-let g:bufExplorerShowRelativePath=1
-let g:bufExplorerFindActive=1
-let g:bufExplorerSortBy='name'
-map <leader>o :BufExplorer<cr>
 
