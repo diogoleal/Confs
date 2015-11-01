@@ -33,6 +33,10 @@ urxvtd --quiet --opendisplay --fork
 syndaemon -t -k -i 1 -d
 synclient TapButton1=1
 
+
+# SSH Agent
+eval "$(ssh-agent -s)"
+
 # Turns off the terminal bell
 #/usr/bin/xset b off
 #xset m 1 0 &
