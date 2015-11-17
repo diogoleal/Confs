@@ -23,7 +23,7 @@ hi IndentGuidesOdd ctermbg = 3
 hi IndentGuidesEven ctermbg = 4
 
 " Auto complete
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'Shougo/vimproc.vim'
 
@@ -43,6 +43,10 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'}
 
 "Plugin 'ktonga/vim-follow-my-lead'
+
+"Supertab
+Plugin 'ervandew/supertab'
+
 
 " Python
 Plugin 'jmcantrell/vim-virtualenv'
