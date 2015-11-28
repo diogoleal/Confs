@@ -24,7 +24,8 @@ xsetroot -cursor_name left_ptr
 xbanish &
 
 # Define background
-feh --bg-center ~/Pictures/cave-story_00404484.jpg
+#feh --bg-center ~/Pictures/cave-story_00404484.jpg
+feh --bg-fill ~/Pictures/Wallpapers/ctrl+esc.png
 
 # daemon urxvt
 urxvtd --quiet --opendisplay --fork
@@ -33,15 +34,10 @@ urxvtd --quiet --opendisplay --fork
 syndaemon -t -k -i 1 -d
 synclient TapButton1=1
 
-
-# SSH Agent
-eval "$(ssh-agent -s)"
-
 # Turns off the terminal bell
 #/usr/bin/xset b off
 #xset m 1 0 &
 
 # brightness
 xbacklight -set 30
-
 exec i3
