@@ -24,7 +24,6 @@ xsetroot -cursor_name left_ptr
 xbanish &
 
 # Define background
-#feh --bg-center ~/Pictures/cave-story_00404484.jpg
 feh --bg-fill ~/Pictures/Wallpapers/ctrl+esc.png
 
 # daemon urxvt
@@ -38,6 +37,10 @@ synclient TapButton1=1
 #/usr/bin/xset b off
 #xset m 1 0 &
 
+#compton -cCf -D2 -e 0.4 -o1 -r8 -l-12 -t-1
+
 # brightness
 xbacklight -set 30
-exec i3
+
+exec bspwm
+#exec i3

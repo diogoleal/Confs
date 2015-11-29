@@ -3,6 +3,9 @@ source $ZSHA_BASE/antigen.zsh
 
 export EDITOR='vim'
 
+export PANEL_FIFO="/tmp/panel-fifo"
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin:~/bin
+
 # vim-manpager
 export MANPAGER="vim -c MANPAGER -"
 
@@ -48,10 +51,5 @@ alias n='ncmpcpp'
 # virtualenvwrapper lazy
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Workspace
-export VIRTUALENVWRAPPER_SCRIPT=/usr//bin/virtualenvwrapper.sh
-source /usr/bin/virtualenvwrapper_lazy.sh
-
-# RVM
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+export VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
 
