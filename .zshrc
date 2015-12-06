@@ -15,16 +15,18 @@ antigen-use oh-my-zsh
 
 antigen-bundle git
 antigen-bundle djui/alias-tips
-antigen-bundle vagrant
+#antigen-bundle vagrant
 antigen-bundle zsh-users/zsh-syntax-highlighting
 antigen-bundle zsh-users/zsh-history-substring-search
 #antigen-bundle $ZSHA_BASE/bundles/stv
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle mafredri/zsh-async
+antigen bundle Tarrasch/zsh-autoenv
 
 # theme
 #antigen bundle sindresorhus/pure
-antigen theme kolo
+#antigen theme kolo
+antigen theme afowler
 
 antigen-apply
 
@@ -47,6 +49,9 @@ alias SR='ssh -l root'
 
 alias v='vim'
 alias n='ncmpcpp'
+
+# sprunge
+alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 
 # virtualenvwrapper lazy
 export WORKON_HOME=$HOME/.virtualenvs
