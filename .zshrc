@@ -2,8 +2,6 @@ ZSHA_BASE=$HOME/.zsh-antigen
 source $ZSHA_BASE/antigen.zsh
 
 export EDITOR='vim'
-
-export PANEL_FIFO="/tmp/panel-fifo"
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin:~/bin
 
 # vim-manpager
@@ -22,6 +20,8 @@ antigen-bundle zsh-users/zsh-history-substring-search
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle mafredri/zsh-async
 antigen bundle Tarrasch/zsh-autoenv
+antigen bundle rupa/z
+antigen-bundle sharat87/zsh-vim-mode
 
 # theme
 #antigen bundle sindresorhus/pure
