@@ -23,7 +23,7 @@ xsetroot -cursor_name left_ptr
 # start xbanish
 xbanish &
 
-# Define background
+# set background
 feh --bg-fill ~/Pictures/Wallpapers/ctrl+esc.png
 
 # daemon urxvt
@@ -37,10 +37,18 @@ synclient TapButton1=1
 #/usr/bin/xset b off
 #xset m 1 0 &
 
-#compton -cCf -D2 -e 0.4 -o1 -r8 -l-12 -t-1
+compton -cCf -D2 -e 0.4 -o1 -r8 -l-12 -t-1 &
 
 # brightness
 xbacklight -set 30
 
-exec bspwm
+# panel for snapwm
+while true; do xsetroot -name "\
+    wifi:  $(iwconfig wlp2s0 | grep 'Bit Rate=' | awk '{gsub(/[=/]/," "); print $3}') Mb/s \
+    | $(battery -p /sys/class/power_supply/BAT1/uevent) % \
+    | $(date +%H:%M:%S) " ;sleep 1; done &
+
+exec snapwm
+
+#exec bspwm
 #exec i3
