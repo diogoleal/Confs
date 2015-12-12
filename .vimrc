@@ -7,7 +7,8 @@ Plugin 'L9'
 Plugin 'git://git.wincent.com/command-t.git'
 
 " Colors
-colors maui
+colorscheme apprentice
+"colors maui
 set t_Co=256
 syntax enable
 "set background=light
@@ -20,8 +21,6 @@ Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg = 3
 hi IndentGuidesEven ctermbg = 4
-
-Plugin 'Shougo/vimproc.vim'
 
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -44,12 +43,19 @@ Plugin 'ervandew/supertab'
 " c
 Plugin 'vim-scripts/c.vim'
 
-"" make/cmake
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/vimfiler.vim'
+
+" make/cmake
 augroup vimrc-make-cmake
   autocmd!
   autocmd FileType make setlocal noexpandtab
   autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 augroup END
+
+" Puppet
+Plugin 'rodjek/vim-puppet'
 
 " Shell
 Plugin 'xolox/vim-shell'
@@ -76,18 +82,6 @@ let g:syntastic_python_checkers=['pyflakes']
 let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_python_flake8_post_args='--ignore=W391'
 
-Plugin 'scrooloose/nerdtree'
-let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 20
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-noremap <F3> :NERDTreeToggle<CR>
-
 " Language pack
 Plugin 'sheerun/vim-polyglot'
 
@@ -108,7 +102,6 @@ set autoread
 let $LANG='en'
 set langmenu=en
 set encoding=utf8
-
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc,*.git\*,.hg\*,.svn\*
@@ -159,8 +152,10 @@ set smarttab
 set shiftwidth=4
 set tabstop=4
 
-" Using tabs for indentation
-"set noet ci pi sts=0 sw=4 ts=4
+" Set F3 for using tabs for indentation and F2
+" using 4 spaces
+noremap <F3> :set noet ci pi sts=0 sw=4 ts=4<CR>
+nnoremap <silent> <F2>set shiftwidth=4 tabstop=4 <CR>
 
 " Linebreak on 500 characters
 set lbr
