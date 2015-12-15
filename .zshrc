@@ -7,6 +7,8 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin:~/bin
 # vim-manpager
 export MANPAGER="vim -c MANPAGER -"
 
+export TERM='xterm-256color'
+
 LS_COLORS='*.png=96:*.aux=90:*.bib=94:*.log=1;90:*.pdf=1;93:*.tex=93:*.zip=91:di=1;94'
 
 antigen-use oh-my-zsh
@@ -20,8 +22,8 @@ antigen-bundle zsh-users/zsh-history-substring-search
 antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle mafredri/zsh-async
 antigen bundle Tarrasch/zsh-autoenv
-antigen bundle rupa/z
-antigen-bundle sharat87/zsh-vim-mode
+#antigen bundle rupa/z
+#antigen-bundle sharat87/zsh-vim-mode
 
 # theme
 #antigen bundle sindresorhus/pure
@@ -49,6 +51,8 @@ alias SR='ssh -l root'
 
 alias v='vim'
 alias n='ncmpcpp'
+alias t='task'
+alias p='pass'
 
 # sprunge
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
