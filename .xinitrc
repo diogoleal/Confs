@@ -1,8 +1,5 @@
 #!/usr/bin/sh
 
-# agent Copy.com
-#~/bin/CopyAgent &
-
 # Start mpd
 mpd ~/.mpd.conf
 
@@ -24,7 +21,7 @@ xsetroot -cursor_name left_ptr
 xbanish &
 
 # set background
-feh --bg-fill ~/Pictures/Wallpapers/ctrl+esc.png
+#feh --bg-fill ~/Pictures/Wallpapers/ctrl+esc.png
 
 # daemon urxvt
 urxvtd --quiet --opendisplay --fork
@@ -44,11 +41,10 @@ xbacklight -set 30
 
 # panel for snapwm
 while true; do xsetroot -name "\
-    wifi:  $(iwconfig wlp2s0 | grep 'Bit Rate=' | awk '{gsub(/[=/]/," "); print $3}') Mb/s \
-    | $(battery -p /sys/class/power_supply/BAT1/uevent) % \
-    | $(date +%H:%M:%S) " ;sleep 1; done &
+    wifi: $(iwconfig  wlp2s0 |grep ESSID |awk '{print $4,$5}') \
+    |$(battery -p /sys/class/power_supply/BAT1/uevent) % \
+    |$(date +%H:%M:%S) " ;sleep 1; done &
 
 exec snapwm
-
-#exec bspwm
+#exec herbstluftwm --locked
 #exec i3

@@ -7,12 +7,13 @@ Plugin 'L9'
 Plugin 'git://git.wincent.com/command-t.git'
 
 " Colors
-colorscheme apprentice
-"colors maui
-set t_Co=256
+Plugin 'nanotech/jellybeans.vim'
+if &t_Co <= 16
+    let g:jellybeans_use_lowcolor_black=0
+endif
+colorscheme jellybeans
 syntax enable
-"set background=light
-hi Normal ctermfg=252 ctermbg=none
+"hi Normal ctermfg=252 ctermbg=none
 
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'Yggdroot/indentLine'
@@ -41,21 +42,18 @@ let g:tagbar_type_go = {
 Plugin 'ervandew/supertab'
 
 " c
-Plugin 'vim-scripts/c.vim'
+"Plugin 'vim-scripts/c.vim'
 
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimfiler.vim'
 
 " make/cmake
-augroup vimrc-make-cmake
-  autocmd!
-  autocmd FileType make setlocal noexpandtab
-  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-augroup END
-
-" Puppet
-Plugin 'rodjek/vim-puppet'
+"augroup vimrc-make-cmake
+"  autocmd!
+"  autocmd FileType make setlocal noexpandtab
+"  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+"augroup END
 
 " Shell
 Plugin 'xolox/vim-shell'
@@ -88,6 +86,8 @@ Plugin 'sheerun/vim-polyglot'
 " Simplenote
 Plugin 'mrtazz/simplenote.vim'
 source ~/.simplenoterc
+
+Plugin 'matze/vim-move'
 
 call vundle#end()
 
@@ -207,7 +207,29 @@ autocmd BufReadPost *
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+" Status line {{{1
+set statusline=
+set statusline+=%1*\ [%2*%2n%1*]  " Buffer number
+set statusline+=%<  " Truncate the path if needed
+set statusline+=%3*\ %f  " File name
+set statusline+=%4*%5r  " ReadOnly flag
+set statusline+=%5*\ %y  " File type
+set statusline+=%6*\ %m  " Modified flag
+
+set statusline+=%=  " Separation
+
+set statusline+=%1*\ [col\ %3*%v%1*]  " Virtual column number
+set statusline+=%1*\ [row\ %2*%l%1*/%2*%L%1*\ %p%%]  " Current/total line
+set statusline+=%1*\ [byte\ %5*%o%1*]  " Byte number in file
+
+hi User1 ctermfg=255 guifg=#eeeeee ctermbg=235 guibg=#262626
+hi User2 ctermfg=167 guifg=#d75757 ctermbg=235 guibg=#262626
+hi User3 ctermfg=107 guifg=#87af5f ctermbg=235 guibg=#262626
+hi User4 ctermfg=33 guifg=#0087ff ctermbg=235 guibg=#262626
+hi User5 ctermfg=221 guifg=#ffd75f ctermbg=235 guibg=#262626
+hi User6 ctermfg=133 guifg=#af5faf ctermbg=235 guibg=#262626
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -243,4 +265,3 @@ function! HasPaste()
     en
     return ''
 endfunction
-
