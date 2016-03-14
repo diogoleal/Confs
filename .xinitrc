@@ -16,6 +16,7 @@ xrdb -merge ~/.Xresources
 
 # set cursor
 xsetroot -cursor_name left_ptr
+xset r rate 200 20
 
 # start xbanish
 xbanish &
@@ -45,7 +46,7 @@ xbacklight -set 30
 #    wifi: $(iwconfig  wlp2s0 |grep ESSID |awk '{print $4,$5}') \
 #    |$(battery -p /sys/class/power_supply/BAT1/uevent) % \
 #    |$(date +%H:%M:%S) " ;sleep 1; done &
-
+#exec uwm
 #exec snapwm
 exec herbstluftwm --locked
 #exec i3
