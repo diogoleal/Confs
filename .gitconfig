@@ -1,14 +1,19 @@
 [user]
-        name = Diogo Leal
-        email = diogo@diogoleal.com
+    name = Diogo Leal
+    email = diogo@diogoleal.com
+    signingkey = 4D7CF362
 
 [color]
-        branch = auto
-        diff = auto
-        interactive = auto
-        status = auto
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+
 [core]
-        editor = vim
-        pager = less -FXRS
+    editor = vim
+    pager = less -FXRS
+
 [merge]
-        tool = vimdiff
+    tool = vimdiff
+[push]
+	default = simple
