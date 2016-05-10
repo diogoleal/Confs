@@ -1,13 +1,36 @@
-" Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
-Plugin 'L9'
-Plugin 'git://git.wincent.com/command-t.git'
+" Make sure you use single quotes
 
-" Colors
-Plugin 'nanotech/jellybeans.vim'
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Group dependencies, vim-snippets depends on ultisnips
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-master branch
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Plugin options
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+Plug '~/my-prototype-plugin'
+
+Plug 'nanotech/jellybeans.vim'
 if &t_Co <= 16
     let g:jellybeans_use_lowcolor_black=0
 endif
@@ -15,15 +38,20 @@ colorscheme jellybeans
 syntax enable
 "hi Normal ctermfg=252 ctermbg=none
 
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'Yggdroot/indentLine'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'nathanaelkane/vim-indent-guides'
+" Add plugins to &runtimepath
+
+Plug 'L9'
+Plug 'git://git.wincent.com/command-t.git'
+
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'Yggdroot/indentLine'
+Plug 'tomtom/tcomment_vim'
+Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg = 3
 hi IndentGuidesEven ctermbg = 4
 
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
@@ -39,57 +67,52 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'}
 
 "Supertab
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 
 " c
 "Plugin 'vim-scripts/c.vim'
 
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/vimfiler.vim'
-
-" make/cmake
-"augroup vimrc-make-cmake
-"  autocmd!
-"  autocmd FileType make setlocal noexpandtab
-"  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-"augroup END
+Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
 
 " Shell
-Plugin 'xolox/vim-shell'
+Plug 'xolox/vim-shell'
 set shell=/usr/bin/zsh
-Plugin 'xolox/vim-misc'
+Plug 'xolox/vim-misc'
 
 " git
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
-Plugin 'ConradIrwin/vim-bracketed-paste'
+Plug 'ConradIrwin/vim-bracketed-paste'
 
 " Manpage on vim
-Plugin 'lambdalisue/vim-manpager'
+Plug 'lambdalisue/vim-manpager'
 
-Plugin 'tommcdo/vim-exchange'
+Plug 'tommcdo/vim-exchange'
 
 " Productive
-Plugin 'junegunn/limelight.vim'
-Plugin 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
 
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 let g:syntastic_python_checkers=['pyflakes']
 let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_python_flake8_post_args='--ignore=W391'
 
 " Language pack
-Plugin 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
 " Simplenote
-Plugin 'mrtazz/simplenote.vim'
+Plug 'mrtazz/simplenote.vim'
 source ~/.simplenoterc
 
-Plugin 'matze/vim-move'
+Plug 'matze/vim-move'
 
-call vundle#end()
+Plug 'vim-ctrlspace/vim-ctrlspace'
+
+call plug#end()
 
 filetype plugin on
 filetype indent on
@@ -222,7 +245,7 @@ set statusline+=%=  " Separation
 
 set statusline+=%1*\ [col\ %3*%v%1*]  " Virtual column number
 set statusline+=%1*\ [row\ %2*%l%1*/%2*%L%1*\ %p%%]  " Current/total line
-set statusline+=%1*\ [byte\ %5*%o%1*]  " Byte number in file
+"set statusline+=%1*\ [byte\ %5*%o%1*]  " Byte number in file
 
 hi User1 ctermfg=255 guifg=#eeeeee ctermbg=235 guibg=#262626
 hi User2 ctermfg=167 guifg=#d75757 ctermbg=235 guibg=#262626
