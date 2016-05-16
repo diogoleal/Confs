@@ -72,6 +72,7 @@ alias p='pass'
 alias z='zathura'
 alias f='feh'
 alias am='alsamixer'
+alias tempo='curl -4 http://wttr.in/RiodeJaneiro'
 
 # sprunge
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
