@@ -1,3 +1,6 @@
+set nocompatible
+
+
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
@@ -9,10 +12,29 @@ Plug 'junegunn/vim-easy-align'
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
 " Group dependencies, vim-snippets depends on ultisnips
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
+
+Plug 'scrooloose/nerdcommenter'
+
+Plug 'Xuyuanp/nerdtree-git-plugin'
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-master branch
@@ -30,13 +52,21 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Unmanaged plugin (manually installed and updated)
 Plug '~/my-prototype-plugin'
 
-Plug 'nanotech/jellybeans.vim'
-if &t_Co <= 16
-    let g:jellybeans_use_lowcolor_black=0
-endif
-colorscheme jellybeans
+"Plug 'nanotech/jellybeans.vim'
+"if &t_Co <= 16
+"    let g:jellybeans_use_lowcolor_black=0
+"endif
+
+Plug 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+
+Plug 'flazz/vim-colorschemes'
+
+"colorscheme jellybeans
 syntax enable
-"hi Normal ctermfg=252 ctermbg=none
+hi Normal ctermfg=252 ctermbg=none
 
 " Add plugins to &runtimepath
 
@@ -70,7 +100,7 @@ let g:tagbar_type_go = {
 Plug 'ervandew/supertab'
 
 " c
-"Plugin 'vim-scripts/c.vim'
+Plug 'vim-scripts/c.vim'
 
 Plug 'Shougo/vimproc.vim'
 Plug 'Shougo/unite.vim'
@@ -97,20 +127,36 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
 Plug 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 let g:syntastic_python_checkers=['pyflakes']
 let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_python_flake8_post_args='--ignore=W391'
+
+
+Plug 'maxbrunsfeld/vim-yankstack'
 
 " Language pack
 Plug 'sheerun/vim-polyglot'
 
 " Simplenote
-Plug 'mrtazz/simplenote.vim'
-source ~/.simplenoterc
+"Plug 'mrtazz/simplenote.vim'
+"source ~/.simplenoterc
 
 Plug 'matze/vim-move'
 
+Plug 'mbbill/undotree'
+
 Plug 'vim-ctrlspace/vim-ctrlspace'
+set hidden
+
 
 call plug#end()
 
