@@ -7,18 +7,18 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 
-Plug 'Xuyuanp/nerdtree-git-plugin'
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
+"Plug 'Xuyuanp/nerdtree-git-plugin'
+"let g:NERDTreeIndicatorMapCustom = {
+"    \ "Modified"  : "✹",
+"    \ "Staged"    : "✚",
+"    \ "Untracked" : "✭",
+"    \ "Renamed"   : "➜",
+"    \ "Unmerged"  : "═",
+"    \ "Deleted"   : "✖",
+"    \ "Dirty"     : "✗",
+"    \ "Clean"     : "✔︎",
+"    \ "Unknown"   : "?"
+"    \ }
 
 Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
@@ -26,7 +26,7 @@ let g:ctrlp_cmd = 'CtrlP'
 
 Plug 'L9'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
 
 Plug 'majutsushi/tagbar'
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -44,30 +44,30 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'}
 
 " c
-Plug 'vim-scripts/c.vim'
-Plug 'Shougo/vimproc.vim'
+"Plug 'vim-scripts/c.vim'
+"Plug 'Shougo/vimproc.vim'
 
 " Shell
-Plug 'xolox/vim-shell'
-Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-shell'
+"Plug 'xolox/vim-misc'
 
 " git
 Plug 'mhinz/vim-signify'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 Plug 'tpope/vim-fugitive'
 
 " Language pack
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 
 " Simplenote
 "Plug 'mrtazz/simplenote.vim'
@@ -87,6 +87,9 @@ set history=700
 set number
 set ruler
 set autoread
+
+set list
+set listchars=tab:>-
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc,*.git\*,.hg\*,.svn\*
@@ -276,7 +279,6 @@ function! s:Median(nums)
         return (nums[l/2] + nums[(l/2)-1]) / 2
     endif
 endfunction
-
 
 function! StatuslineTrailingSpaceWarning()
     if !exists("b:statusline_trailing_space_warning")
