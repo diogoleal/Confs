@@ -1,0 +1,17 @@
+session_name: default
+windows:
+- window_name: void
+  layout: tiled
+  shell_command_before:
+    - cd ~/
+  panes:
+    - shell_command:
+        - cd ~/Workspace/void/void-packages
+        - gco master
+        - glum
+    - cd ~/Workspace/void/pkgs_source
+
+- window_name: irssi
+  panes:
+    - shell_command:
+        - irssi
