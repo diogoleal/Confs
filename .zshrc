@@ -5,11 +5,12 @@ export EDITOR='vim'
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin:~/bin
 
 # vim-manpager
-export MANPAGER="vim -c MANPAGER -"
+#export MANPAGER="vim -c MANPAGER -"
 
 #export TERM='xterm-256color'
+export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-LS_COLORS='*.png=96:*.aux=90:*.bib=94:*.log=1;90:*.pdf=1;93:*.tex=93:*.zip=91:di=1;94'
+#LS_COLORS='*.png=96:*.aux=90:*.bib=94:*.log=1;90:*.pdf=1;93:*.tex=93:*.zip=91:di=1;94'
 
 antigen-use oh-my-zsh
 
@@ -24,12 +25,11 @@ antigen bundle srijanshetty/zsh-pip-completion
 antigen bundle mafredri/zsh-async
 antigen bundle Tarrasch/zsh-autoenv
 
-antigen bundle python
-antigen bundle virtualenvwrapper
-antigen bundle pip
-antigen bundle rsync
+#antigen bundle python
+#antigen bundle virtualenvwrapper
+#antigen bundle pip
+#antigen bundle rsync
 
-antigen bundle virtualenvwrapper
 antigen bundle rvm
 antigen bundle bundler
 antigen bundle command-not-found
@@ -43,8 +43,8 @@ antigen bundle fabric
 
 # theme
 #antigen bundle sindresorhus/pure
-#antigen theme kolo
-antigen theme afowler
+antigen theme kolo
+#antigen theme afowler
 
 antigen-apply
 
@@ -84,6 +84,7 @@ alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Workspace
 export VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
+export PATH="$PATH:$HOME/.rvm/bin"
 
 # added by travis gem
 #[ -f /home/diogo/.travis/travis.sh ] && source /home/diogo/.travis/travis.sh
