@@ -1,10 +1,10 @@
 My confs
 
 * Distro: [Void Linux](http://voidlinux.eu)
-* Window manager: [i3](http://i3wm.org)
+* Window manager: [dwm](http://dwm.suckless.org)
 * Editor: [vim](http://vim.org)
 * Shell: zsh + antigen
-* Browser: qutebrowser
+* Browser: Firefox with [Twily's Powerline Firefox CSS](https://userstyles.org/styles/102262/twily-s-powerline-firefox-css)
 * Terminal Emulator: urxvt
 * Client IRC: irssi
 
