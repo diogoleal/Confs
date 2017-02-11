@@ -24,7 +24,8 @@ st:
 	@wget http://dl.suckless.org/st/st-0.7.tar.gz
 	@tar zxf st-0.7.tar.gz
 	cd st-0.7 && wget http://st.suckless.org/patches/st-scrollback-0.7.diff
-	cd st-0.7 &&patch -p1 < st-scrollback-0.7.diff
+	cd st-0.7 && patch -p1 < st-scrollback-0.7.diff
+	cd st-0.7 && sed -i s/pixelsize=12/pixelsize=14/g config.def.h
 	cd st-0.7 && make
 	@cp st-0.7/st ~/bin
 	cp st-0.7/st.info /usr/share/terminfo/s/st.terminfo
