@@ -20,6 +20,16 @@ dwm: ${OBJ}
 	@make INCS="-I. -I/usr/include/freetype2" LIBS="-lX11 -lXinerama -lXft -lfontconfig"
 	@cp dwm ~/bin/ -f
 
+st:
+	@wget http://dl.suckless.org/st/st-0.7.tar.gz
+	@tar zxf st-0.7.tar.gz
+	cd st-0.7 && wget http://st.suckless.org/patches/st-scrollback-0.7.diff
+	cd st-0.7 &&patch -p1 < st-scrollback-0.7.diff
+	cd st-0.7 && make
+	@cp st-0.7/st ~/bin
+	cp st-0.7/st.info /usr/share/terminfo/s/st.terminfo
+	rm -rf st-0.7.tar.gz st-0.7
+
 tmux:
 	@git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux/themepack
 	@cp -v .tmux.conf ~/.tmux.conf
