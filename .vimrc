@@ -74,6 +74,10 @@ endif
 Plug 'fatih/vim-go'
 set autowrite
 
+" simplenote
+Plug 'mrtazz/simplenote.vim'
+source ~/.simplenoterc
+
 " vim simple complete
 "Plug 'maxboisvert/vim-simple-complete'
 Plug 'Raimondi/delimitMate'
@@ -88,17 +92,31 @@ Plug 'junegunn/vim-easy-align'
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
 "Theme
-Plug 'tomasr/molokai'
-
+"Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
 syntax enable
+"set background=light
+colorscheme solarized
+
+let g:solarized_termcolors=256
+let g:solarized_termtrans = 1
+let g:solarized_degrade = 1
+let g:solarized_bold = 0
+let g:solarized_underline = 0
+let g:solarized_italic = 0
+let g:solarized_contrast = "high"
+let g:solarized_visibility= "high"
+
 filetype plugin indent on
 set t_Co=256
-"set background=dark
+set background=dark
 set encoding=utf-8
-colorscheme molokai
+"colorscheme molokai
+"colorscheme solarized
 
+set cursorline
 set laststatus=2
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
@@ -128,6 +146,16 @@ set ignorecase
 
 " Highlight search results
 set hlsearch
+
+"" Switching windows
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+
+"copy to clipboard
+noremap YY "+y<CR>
+
 
 " clean hightlight search
 set hlsearch!
