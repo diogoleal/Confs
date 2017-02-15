@@ -1,4 +1,3 @@
-"set nocompatible
 
 "hi Normal ctermbg=none
 
@@ -82,6 +81,19 @@ source ~/.simplenoterc
 "Plug 'maxboisvert/vim-simple-complete'
 Plug 'Raimondi/delimitMate'
 
+
+Plug 'w0rp/ale'
+
+set nocompatible
+filetype off
+
+let &runtimepath.=',~/.vim/bundle/ale'
+
+filetype plugin on
+
+"winresizer
+Plug 'simeji/winresizer'
+
 " git
 Plug 'mhinz/vim-signify'
 Plug 'ConradIrwin/vim-bracketed-paste'
@@ -109,7 +121,7 @@ let g:solarized_italic = 0
 let g:solarized_contrast = "high"
 let g:solarized_visibility= "high"
 
-filetype plugin indent on
+filetype indent on
 set t_Co=256
 set background=dark
 set encoding=utf-8
