@@ -41,8 +41,9 @@ tmux:
 vim:
 	@mkdir ~/.vim
 	@cp -v .vimrc ~/
-	@git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-	@vim +PluginInstall +qall
+	@touch ~/.simplenoterc
+	@curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	@vim +PlugInstall +qall
 
 xbps:
 	@cp -rfv usr/share/xbps.d/xbps.conf /usr/share/xbps.d/xbps.conf
