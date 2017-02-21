@@ -190,8 +190,10 @@ set expandtab
 set smarttab
 
 " 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
+
+au FileType python setl sw=4 sts=4 et
 
 " Set F3 for using tabs for indentation and F2
 " using 4 spaces
