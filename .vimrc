@@ -73,22 +73,30 @@ endif
 Plug 'fatih/vim-go'
 set autowrite
 
+" Ruby
+Plug 'vim-ruby/vim-ruby'
+
 " simplenote
-Plug 'mrtazz/simplenote.vim'
-source ~/.simplenoterc
+"Plug 'mrtazz/simplenote.vim'
+"source ~/.simplenoterc
 
 " vim simple complete
 "Plug 'maxboisvert/vim-simple-complete'
-Plug 'Raimondi/delimitMate'
+"Plug 'Raimondi/delimitMate'
 
+" Autocomplete
+"Plug 'Valloric/YouCompleteMe'
+Plug 'Shougo/neocomplete'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 
+"Lint
 Plug 'w0rp/ale'
 
 set nocompatible
 filetype off
 
 let &runtimepath.=',~/.vim/bundle/ale'
-
 filetype plugin on
 
 "winresizer
@@ -98,7 +106,7 @@ Plug 'simeji/winresizer'
 Plug 'mhinz/vim-signify'
 Plug 'ConradIrwin/vim-bracketed-paste'
 
-Plug 'junegunn/vim-easy-align'
+"Plug 'junegunn/vim-easy-align'
 
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
@@ -109,8 +117,11 @@ Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
 syntax enable
+filetype indent on
+set t_Co=256
+set background=dark
 "set background=light
-colorscheme solarized
+set encoding=utf-8
 
 let g:solarized_termcolors=256
 let g:solarized_termtrans = 1
@@ -120,13 +131,6 @@ let g:solarized_underline = 0
 let g:solarized_italic = 0
 let g:solarized_contrast = "high"
 let g:solarized_visibility= "high"
-
-filetype indent on
-set t_Co=256
-set background=dark
-set encoding=utf-8
-"colorscheme molokai
-"colorscheme solarized
 
 set cursorline
 set laststatus=2
