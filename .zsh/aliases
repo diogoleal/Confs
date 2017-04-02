@@ -1,0 +1,43 @@
+# my Zsh Alias
+## xbps / Void Linux
+alias xq='sudo xbps-query -Rs'
+alias xl='sudo xbps-query -l'
+alias xi='sudo xbps-install'
+alias xu='sudo xbps-install -Su'
+alias xr='sudo xbps-remove'
+alias xo='sudo xbps-query -O'
+alias xS='sudo xbps-query -RS'
+alias xor='sudo xbps-query -O | sudo xargs xbps-remove -y'
+
+## shutdown
+alias tchau='sudo poweroff'
+
+alias v='vim'
+alias n='ncmpcpp'
+alias t='task'
+alias p='pass'
+alias z='zathura'
+alias f='feh'
+alias am='alsamixer'
+alias _='sudo'
+alias tempo='curl -4 http://wttr.in/RiodeJaneiro'
+
+#ls
+alias ls='ls --color'
+alias la='ls --color -a'
+# git
+alias g='git'
+alias ga='git add'
+alias glum='git pull upstream master'
+alias gb='git branch'
+alias gcmsg='git commit -m'
+alias gcam='git commit -a -m'
+alias gco='git checkout'
+alias gl='git pull'
+alias gp='git push'
+
+# my ip
+alias myip='curl httpbin.org/ip'
+
+# sprunge
+alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
