@@ -1,0 +1,23 @@
+URxvt*transparent: false
+!URxvt*.shading: 20
+!URxvt*.depth: 32
+
+URxvt*scrollBar: false
+!URxvt*scrollstyle: plain
+!URxvt*scrollBar_right: true
+!URxvt*scrollBar_floating: true
+!URxvt*scrollColor: #CCE8D4
+!URxvt*.thickness: 0.1
+
+URxvt*iso14755: false
+
+URxvt.perl-ext: default,url-select
+URxvt.perl-ext-common: default,clipboard
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.clipboard.copycmd:  xsel -ib
+URxvt.clipboard.pastecmd: xsel -ob
+URxvt.url-select.underline: true
+URxvt.url-launcher: firefox
+
