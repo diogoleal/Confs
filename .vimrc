@@ -4,99 +4,38 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"" NERDTree configuration
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
+let g:NERDTreeWinSize = 30
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-map <C-n> :NERDTreeToggle<CR>
+map <F2> :NERDTreeToggle<CR>
 
-Plug 'L9'
+"Plug 'L9'
 Plug 'bronson/vim-trailing-whitespace'
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" vim-airline
-let g:airline_theme = 'dark'
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline_skip_empty_sections = 1
-
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
-
-" vim-airline
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-if !exists('g:airline_powerline_fonts')
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-  let g:airline_left_sep          = '▶'
-  let g:airline_left_alt_sep      = '»'
-  let g:airline_right_sep         = '◀'
-  let g:airline_right_alt_sep     = '«'
-  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-  let g:airline#extensions#readonly#symbol   = '⊘'
-  let g:airline#extensions#linecolumn#prefix = '¶'
-  let g:airline#extensions#paste#symbol      = 'ρ'
-  let g:airline_symbols.linenr    = '␊'
-  let g:airline_symbols.branch    = '⎇'
-  let g:airline_symbols.paste     = 'ρ'
-  let g:airline_symbols.paste     = 'Þ'
-  let g:airline_symbols.paste     = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
-else
-  let g:airline#extensions#tabline#left_sep = ''
-  let g:airline#extensions#tabline#left_alt_sep = ''
-
-  " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
-endif
 
 " Go lang
 Plug 'fatih/vim-go'
 set autowrite
 
-" Ruby
-Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-endwise'
 
-" simplenote
-"Plug 'mrtazz/simplenote.vim'
-"source ~/.simplenoterc
+Plug 'terryma/vim-multiple-cursors'
 
 " vim simple complete
 "Plug 'maxboisvert/vim-simple-complete'
-"Plug 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
-" Autocomplete
-"Plug 'Valloric/YouCompleteMe'
-Plug 'Shougo/neocomplete'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-
-"Lint
 Plug 'w0rp/ale'
 
 set nocompatible
 filetype off
 
 let &runtimepath.=',~/.vim/bundle/ale'
+
 filetype plugin on
 
 "winresizer
@@ -106,33 +45,28 @@ Plug 'simeji/winresizer'
 Plug 'mhinz/vim-signify'
 Plug 'ConradIrwin/vim-bracketed-paste'
 
-"Plug 'junegunn/vim-easy-align'
+Plug 'mileszs/ack.vim'
+Plug 'wincent/ferret'
+
+Plug 'junegunn/vim-easy-align'
 
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
 "Theme
-"Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 syntax enable
-filetype indent on
-set t_Co=256
+
 set background=dark
-"set background=light
+colorscheme onedark
+filetype indent on
+"set t_Co=256
 set encoding=utf-8
 
-let g:solarized_termcolors=256
-let g:solarized_termtrans = 1
-let g:solarized_degrade = 1
-let g:solarized_bold = 0
-let g:solarized_underline = 0
-let g:solarized_italic = 0
-let g:solarized_contrast = "high"
-let g:solarized_visibility= "high"
-
-set cursorline
+"set termguicolors
+"set cursorline
 set laststatus=2
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
@@ -162,20 +96,19 @@ set ignorecase
 
 " Highlight search results
 set hlsearch
+" clean hightlight search
+set hlsearch!
+nnoremap <F8> :set hlsearch!<CR>
 
 "" Switching windows
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
+"noremap <C-j> <C-w>j
+"noremap <C-k> <C-w>k
+"noremap <C-l> <C-w>l
+"noremap <C-h> <C-w>h
 
 "copy to clipboard
 noremap YY "+y<CR>
 
-
-" clean hightlight search
-set hlsearch!
-nnoremap <F8> :set hlsearch!<CR>
 
 " Makes search act like search in modern browsers
 set incsearch
@@ -235,11 +168,8 @@ set showmode
 
 " Returns true if paste mode is enabled
 function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    en
-    return ''
+  if &paste
+    return 'PASTE MODE  '
+  en
+  return ''
 endfunction
-
-let g:python3_host_prog = '/usr/bin/python3'
-let g:python_host_prog = '/usr/bin/python2'
