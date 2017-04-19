@@ -109,7 +109,6 @@ nnoremap <F8> :set hlsearch!<CR>
 "copy to clipboard
 noremap YY "+y<CR>
 
-
 " Makes search act like search in modern browsers
 set incsearch
 
@@ -132,10 +131,10 @@ set tabstop=2
 
 au FileType python setl sw=4 sts=4 et
 
-" Set F3 for using tabs for indentation and F2
+" Set F3 for using tabs for indentation and F4
 " using 4 spaces
 noremap <F3> :set noet ci pi sts=0 sw=4 ts=4<CR>
-nnoremap <silent> <F2>set shiftwidth=4 tabstop=4 <CR>
+nnoremap <silent> <F4>set shiftwidth=4 tabstop=4 <CR>
 
 " Linebreak on 500 characters
 set lbr
