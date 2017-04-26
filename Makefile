@@ -119,7 +119,7 @@ zsh:
 	@git clone https://github.com/sindresorhus/pure ${ZSH_DIR}
 	@git clone git://github.com/zsh-users/zsh-autosuggestions ${ZSH_DIR}
 	@git clone git://github.com/zsh-users/zsh-completions.git ${ZSH_DIR}
-	cp -v .zshrc ~/
+	cp -v .zshrc .zshenv .zlogin ~/
 	source ~/.zshrc
 	chsh -s /bin/zsh ${USER}
 

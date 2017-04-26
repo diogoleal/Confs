@@ -1,0 +1,137 @@
+typeset -gx -U path
+path=( \
+    /usr/local/bin(N-/) \
+    ~/bin(N-/) \
+    ~/.zplug/bin(N-/) \
+    ~/.tmux/bin(N-/) \
+    "$path[@]" \
+    )
+
+# NOTE: set fpath before compinit
+typeset -gx -U fpath
+fpath=( \
+    ~/.zsh/Completion(N-/) \
+    ~/.zsh/functions(N-/) \
+    ~/.zsh/zsh-completions(N-/) \
+    /usr/local/share/zsh/site-functions(N-/) \
+    $fpath \
+    )
+
+# autoload
+autoload -Uz run-help
+autoload -Uz add-zsh-hook
+autoload -Uz colors && colors
+autoload -Uz compinit && compinit -u
+autoload -Uz is-at-least
+
+# LANGUAGE must be set by en_US
+export LANGUAGE="en_US.UTF-8"
+export LANG="${LANGUAGE}"
+export LC_ALL="${LANGUAGE}"
+export LC_CTYPE="${LANGUAGE}"
+
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_RUNTIME_DIR="${HOME}/.local/run"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+export LOCAL_ETC="${HOME}/.local/etc"
+export LOCAL_BIN="${HOME}/.local/bin"
+export LOCAL_LIB="${HOME}/.local/lib"
+export LOCAL_SRC="${HOME}/.local/src"
+export LOCAL_VAR="${HOME}/.local/var"
+
+export BSPWMRC="${LOCAL_ETC}/bspwm/bspwmrc"
+export BSPWM_STATE="${XDG_CACHE_HOME}/bspwm/state.json"
+export BSPWM_FIFO="${XDG_CACHE_HOME}/bspwm/wm_state"
+
+export SXHKD_SHELL="/usr/bin/dash"
+
+export POLYBAR_HOME="${XDG_CONFIG_HOME}/polybar"
+
+export BROWSER="qutebrowser"
+
+[ "$TERM" = "xterm" ] && {
+  export TERM="xterm-256color"
+}
+
+# GoLang Path
+export GOPATH=$HOME/Workspace/go
+export PATH=$PATH:$GOPATH/bin
+
+# Export ~/bin
+export PATH="$PATH:$HOME/bin"
+
+# Pyenv
+export PATH="/home/diogo/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+export WORKON_HOME=~/.ve
+export PROJECT_HOME=~/Workspace
+eval "$(pyenv init -)"
+
+#rbenv
+#~/.rbenv/bin/rbenv init
+export PATH="$HOME/.rbenv/bin:$PATH"
+
+PATH="/home/diogo/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/diogo/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/diogo/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/diogo/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/diogo/perl5"; export PERL_MM_OPT;
+
+#export PATH="$PATH:$HOME/.rvm/bin"
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Editor
+export EDITOR=vim
+export CVSEDITOR="${EDITOR}"
+export SVN_EDITOR="${EDITOR}"
+export GIT_EDITOR="${EDITOR}"
+
+# Pager
+export PAGER="less -R"
+# Less status line
+export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
+export LESSCHARSET='utf-8'
+
+# LESS man page colors (makes Man pages more readable).
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[00;44;37m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+# ls command colors
+export LSCOLORS=exfxcxdxbxegedabagacad
+export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+
+setopt no_global_rcs
+# Add ~/bin to PATH
+export PATH=~/bin:"$PATH"
+
+# Settings for golang
+export GOPATH="$HOME"
+export GOBIN="$GOPATH/bin"
+export PATH="$GOBIN:$PATH"
+
+# declare the environment variables
+export CORRECT_IGNORE='_*'
+export CORRECT_IGNORE_FILE='.*'
+
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+export WORDCHARS='*?.[]~&;!#$%^(){}<>'
+
+# History file and its size
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1000000
+export SAVEHIST=1000000
+
+# fzf - command-line fuzzy finder (https://github.com/junegunn/fzf)
+export FZF_DEFAULT_OPTS="--extended --ansi --multi"
+
+# available $INTERACTIVE_FILTER
+export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
