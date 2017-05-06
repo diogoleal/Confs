@@ -113,6 +113,11 @@ vim:
 xbps:
 	@cp -rfv usr/share/xbps.d/xbps.conf /usr/share/xbps.d/xbps.conf
 
+fish:
+	${XI} fish-shell
+	@curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+	fisher transfer eco
+
 zsh:
 	${XI} zsh
 	mkdir ${ZSH_DIR}
