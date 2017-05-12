@@ -1,0 +1,4 @@
+# update Tmux
+0 58 * * *  su -c '~/.tmux/plugins/tpm/bin/update_plugins all' diogo
+# update Vim
+0 59 * * *  su -c 'vim +PlugUpdate +qall@b.com' diogo
