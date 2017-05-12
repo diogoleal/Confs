@@ -1,9 +1,5 @@
 # Author: Diogo Leal - diogo@diogoleal.com
 
-ST_VERSION = 0.7
-ST_PATH = st-${ST_VERSION}
-DWM_VERSION = 6.1
-DWM_PATH = dwm-${DWM_VERSION}
 BIN = "~/bin/"
 ZSH_DIR = "~/.zsh"
 XI = sudo xbps-install --yes
@@ -15,6 +11,10 @@ pkgs:
 qutebrowser:
 	${XI} qutebrowser qt5-webengine
 	@cp -rv .config/qutebrowser ~/.config
+
+cron:
+	${XI} scron
+	@cp -rv etc/crontab /etc/
 
 irssi:
 	${XI} irssi irssi-perl
@@ -46,56 +46,23 @@ polybar:
 	@mkdir polybar/build
 	@cd polybar/build && cmake ..
 	@sudo make install
-	@cp -r .config/polybar ~/.config
+	@cp -r .config/polybar ~/.config/
 
 bspwm:
 	${XI} bspwm sxhkd
-	cp -rv .config/bspwm ~/.config
-	cp -rv .config/sxhkd ~/.config
+	cp -rv .config/bspwm ~/.config/
+	cp -rv .config/sxhkd ~/.config/
 
 rofi:
 	${XI} rofi
-	cp -r .config/rofi ~/.config
-
-dwm:
-#	@sudo xbps-install libXinerama-devel libXft-devel freetype-devel
-	@wget http://dl.suckless.org/dwm/dwm-${DWM_VERSION}.tar.gz
-	@tar zxvf dwm-${DWM_VERSION}.tar.gz
-	@cd dwm-${DWM_VERSION} && wget http://dwm.suckless.org/patches/dwm-6.1-systray.diff
-	@cd dwm-${DWM_VERSION} && wget http://dwm.suckless.org/patches/dwm-autoresize-6.1.diff
-	@wget http://dwm.suckless.org/patches/dwm-gridmode-5.8.2.diff -O ${DWM_PATH}/dwm-gridmode-5.8.2.diff
-	@wget http://dwm.suckless.org/patches/dwm-pertag-6.1.diff -O ${DWM_PATH}/dwm-pertag-6.1.diff
-	@cd dwm-${DWM_VERSION} && patch -p1 < dwm-6.1-systray.diff
-	@cd dwm-${DWM_VERSION} && patch -p1 < dwm-autoresize-6.1.diff
-	@cd dwm-${DWM_VERSION} && patch -p1 < dwm-gridmode-5.8.2.diff
-	@cd dwm-${DWM_VERSION} && patch -p1 < dwm-pertag-6.1.diff
-	@cp config.def.h.my.patch ${DWM_PATH}
-	@cd ${DWM_PATH} &&  patch -p1 config.def.h < config.def.h.my.patch
-#	@sed -i "/CFLAGS/s|\${CPPFLAGS}|& $CFLAGS|g" dwm-6.1/config.mk
-#	@sed -i "/CFLAGS/s|\${CPPFLAGS}|& $CFLAGS|g" ${DWM_VERSION}/config.mk
-#	@cd dwm-${DWM_VERSION} && sed -i "/LDFLAGS/s|\-s|$LDFLAGS|g" config.mk
-#	@cd dwm-${DWM_VERSION} && make INCS="-I. -I/usr/include/freetype2" LIBS="-lX11 -lXinerama -lXft -lfontconfig"
-#	@cd dwm-${DWM_VERSION} && cp dwm ~/bin/ -f
-
-st:
-	@sudo xbps-install fontconfig-devel libX11-devel libXft-devel
-	@wget http://dl.suckless.org/st/st-${ST_VERSION}.tar.gz
-	@tar zxf st-${ST_VERSION}.tar.gz
-	cd st-${ST_VERSION} && wget http://st.suckless.org/patches/st-scrollback-0.7.diff
-	cd st-${ST_VERSION} && patch -p1 < st-scrollback-0.7.diff
-	cd st-${ST_VERSION} && sed -i s/pixelsize=12/pixelsize=14/g config.def.h
-	cd st-${ST_VERSION} && wget http://st.suckless.org/patches/st-delkey-20160727-308bfbf.diff
-	cd st-${ST_VERSION} && patch -p1 < st-delkey-20160727-308bfbf.diff
-	cd st-${ST_VERSION} && make
-	@cp st-${ST_VERSION}/st ~/bin
-	cp -fv st-${ST_VERSION}/st.info /usr/share/terminfo/s/st.terminfo
-	rm -rf st-${ST_VERSION}.tar.gz st-${ST_VERSION}
+	cp -r .config/rofi ~/.config/
 
 noice:
-	sudo xbps-install ncurses-devel
-	git clone git://git.2f30.org/noice.git
-#	cd noice && patch -p1 config.def.h << ../patches/
-#	cp noice ~/bin/
+	${XI} ncurses-devel
+	@git clone git://git.2f30.org/noice.git
+	@cd noice && make && make install
+	@sudo cp noice/noice.1 /usr/share/man/
+	@cp noice ~/bin/
 
 tmux:
 	${XI} tmux
@@ -127,6 +94,3 @@ zsh:
 	cp -v .zshrc .zshenv .zlogin ~/
 	source ~/.zshrc
 	chsh -s /bin/zsh ${USER}
-
-clean:
-	@rm -rf ${DWM_PATH} ${DWM_PATH}.tar.gz ${ST_PATH}.tar.gz ${ST_PATH}
