@@ -1,5 +1,7 @@
 # Author: Diogo Leal - diogo@diogoleal.com
 
+ST_VERSION = 0.7
+ST_PATH = st-${ST_VERSION}
 BIN = "~/bin/"
 ZSH_DIR = "~/.zsh"
 XI = sudo xbps-install --yes
@@ -64,6 +66,20 @@ noice:
 	@sudo cp noice/noice.1 /usr/share/man/
 	@cp noice ~/bin/
 
+st:
+	#@sudo xbps-install fontconfig-devel libX11-devel libXft-devel
+	@wget http://dl.suckless.org/st/st-${ST_VERSION}.tar.gz
+	@tar zxf st-${ST_VERSION}.tar.gz
+	cd st-${ST_VERSION} && wget http://st.suckless.org/patches/st-scrollback-0.7.diff
+	cd st-${ST_VERSION} && patch -p1 < st-scrollback-0.7.diff
+	cd st-${ST_VERSION} && sed -i s/pixelsize=12/pixelsize=14/g config.def.h
+	cd st-${ST_VERSION} && wget http://st.suckless.org/patches/st-delkey-20160727-308bfbf.diff
+	cd st-${ST_VERSION} && patch -p1 < st-delkey-20160727-308bfbf.diff
+	cd st-${ST_VERSION} && make
+	@cp st-${ST_VERSION}/st ~/bin
+	sudo cp -fv st-${ST_VERSION}/st.info /usr/share/terminfo/s/st.terminfo
+	rm -rf st-${ST_VERSION}.tar.gz st-${ST_VERSION}
+
 tmux:
 	${XI} tmux
 	@git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux/themepack
@@ -94,3 +110,6 @@ zsh:
 	cp -v .zshrc .zshenv .zlogin ~/
 	source ~/.zshrc
 	chsh -s /bin/zsh ${USER}
+
+clean:
+	@rm -rf ${ST_PATH}.tar.gz ${ST_PATH}
