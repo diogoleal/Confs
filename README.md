@@ -10,12 +10,12 @@ My dotfiles
 
 I use caps lock changed as esc
 
-==My Vim keybindings
+My Vim keybindings
 
-F2 - nerdtree
-F8 - clean highlight search
-F3 - set for using tab for indentation
-F4 - set for using space for indentation
-F5  - toggle paste mode on and off
-C-e + h', 'j', 'k', 'l'  - winresize
-C-n - autocomplete
+* F2 - nerdtree
+* F8 - clean highlight search
+* F3 - set for using tab for indentation
+* F4 - set for using space for indentation
+* F5  - toggle paste mode on and off
+* C-e + h', 'j', 'k', 'l'  - winresize
+* C-n - autocomplete
