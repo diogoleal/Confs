@@ -1,7 +1,9 @@
-
-#include ".Xresources.d/colors"
+!#include ".Xresources.d/tomorrow_night"
+#include ".Xresources.d/base16"
 #include ".Xresources.d/urxvt"
 #include ".Xresources.d/font"
 
-xterm*faceName: Liberation Mono:size=10:antialias=false
-xterm*font: 7x13
+!xterm*faceName: Liberation Mono:size=10:antialias=false
+xterm*faceName: Iosevka:style=Regular:size=10:antialias=true
+!xterm*faceName: Liberation Mono:size=10:antialias=false
+!xterm*font: 7x13

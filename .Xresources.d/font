@@ -1,7 +1,7 @@
 
-!*.font: xft:tamsyn:style=Regular:size=10:antialias=false
-!, -*-Symbola-*-*-*-*-*-*-*-*-*-*-*-*
+*.font: xft:tamsyn:style=Regular:size=10:antialias=false
+! -*-Symbola-*-*-*-*-*-*-*-*-*-*-*-*
 !*.font:         xft:Hack-Regular:pixelsize=16,xft:Symbola
-!*.boldFont:     xft:Hack-Bold:pixelsize=14:weight=bold,xft:Symbola
-!*.italicFont:   xft:Hack-RegularOblique:pixelsize=14:slant=italic,xft:Symbola
+*.boldFont:     xft:Hack-Bold:pixelsize=14:weight=bold,xft:Symbola
+*.italicFont:   xft:Hack-RegularOblique:pixelsize=14:slant=italic,xft:Symbola
 
