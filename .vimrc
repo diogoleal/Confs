@@ -10,33 +10,45 @@ let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 30
+let g:NERDTreeWinSize = 20
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 map <F2> :NERDTreeToggle<CR>
 
 "Plug 'L9'
 Plug 'bronson/vim-trailing-whitespace'
 
+Plug 'https://github.com/baskerville/vim-sxhkdrc'
 " Go lang
 Plug 'fatih/vim-go'
 set autowrite
 
+"Ruby
 Plug 'tpope/vim-endwise'
 
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
+" Default mapping
+"let g:multi_cursor_use_default_mapping=0
+"let g:multi_cursor_next_key='<ALT-n>'
+"let g:multi_cursor_prev_key='<ALT-p>'
+"let g:multi_cursor_skip_key='<ALT-x>'
+"let g:multi_cursor_quit_key='<Esc>'
 
 " vim simple complete
-"Plug 'maxboisvert/vim-simple-complete'
-Plug 'Raimondi/delimitMate'
+Plug 'maxboisvert/vim-simple-complete'
+"Plug 'Raimondi/delimitMate'
 
 Plug 'w0rp/ale'
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 set nocompatible
 filetype off
+filetype plugin on
 
 let &runtimepath.=',~/.vim/bundle/ale'
-
-filetype plugin on
 
 "winresizer
 Plug 'simeji/winresizer'
@@ -65,8 +77,8 @@ filetype indent on
 "set t_Co=256
 set encoding=utf-8
 
-"set termguicolors
-"set cursorline
+set termguicolors
+set cursorline
 set laststatus=2
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
@@ -99,12 +111,6 @@ set hlsearch
 " clean hightlight search
 set hlsearch!
 nnoremap <F8> :set hlsearch!<CR>
-
-"" Switching windows
-"noremap <C-j> <C-w>j
-"noremap <C-k> <C-w>k
-"noremap <C-l> <C-w>l
-"noremap <C-h> <C-w>h
 
 "copy to clipboard
 noremap YY "+y<CR>
@@ -147,12 +153,6 @@ set wrap "Wrap lines
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
-
-" Close the current buffer
-map <leader>bd :Bclose<cr>
-
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
