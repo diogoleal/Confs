@@ -14,24 +14,37 @@ let g:NERDTreeWinSize = 20
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 map <F2> :NERDTreeToggle<CR>
 
+"Plug 'vim-ctrlspace/vim-ctrlspace'
+
 "Plug 'L9'
 Plug 'bronson/vim-trailing-whitespace'
-
-Plug 'https://github.com/baskerville/vim-sxhkdrc'
-" Go lang
-Plug 'fatih/vim-go'
-set autowrite
 
 "Ruby
 Plug 'tpope/vim-endwise'
 
-"Plug 'terryma/vim-multiple-cursors'
+" lightline
+Plug 'itchyny/lightline.vim'
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+" Underlines the word under the cursor
+Plug 'itchyny/vim-cursorword'
+
+Plug 'terryma/vim-multiple-cursors'
 " Default mapping
-"let g:multi_cursor_use_default_mapping=0
-"let g:multi_cursor_next_key='<ALT-n>'
-"let g:multi_cursor_prev_key='<ALT-p>'
-"let g:multi_cursor_skip_key='<ALT-x>'
-"let g:multi_cursor_quit_key='<Esc>'
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<ALT-n>'
+let g:multi_cursor_prev_key='<ALT-p>'
+let g:multi_cursor_skip_key='<ALT-x>'
+let g:multi_cursor_quit_key='<Esc>'
 
 " vim simple complete
 Plug 'maxboisvert/vim-simple-complete'
@@ -45,6 +58,7 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 set nocompatible
+set hidden
 filetype off
 filetype plugin on
 
@@ -53,9 +67,11 @@ let &runtimepath.=',~/.vim/bundle/ale'
 "winresizer
 Plug 'simeji/winresizer'
 
-" git
-Plug 'mhinz/vim-signify'
+" Git
+"Plug 'mhinz/vim-signify'
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'jreybert/vimagit'
+Plug 'tpope/vim-fugitive'
 
 Plug 'mileszs/ack.vim'
 Plug 'wincent/ferret'
@@ -80,12 +96,12 @@ set encoding=utf-8
 set termguicolors
 set cursorline
 set laststatus=2
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 set history=700
 set number
 set ruler
 set autoread
+set autowrite
 
 "if (exists('+colorcolumn'))
 "    set colorcolumn=120
