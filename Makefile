@@ -7,7 +7,7 @@ ZSH_DIR = "~/.zsh"
 XI = sudo xbps-install --yes
 
 pkgs:
-	${XI} xbacklight feh xbanish rtorrent firefox mpv sutils slock
+	${XI} xterm xorg xbacklight feh xbanish rtorrent firefox mpv sutils git xorg slock htop
 	@cp -rf bin/ ~/bin/
 
 qutebrowser:
@@ -31,11 +31,15 @@ git:
 	cp -rf .gitconfig ~/
 
 confs:
-	@cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc  ~/
+	@cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ ~/
 
 pulseaudio:
-	${XI} pulseaudio pavucontrol
-	ln -s /etc/sv/pulseaudio/ /var/service/
+	${XI} pulseaudio pavucontrol alsa-utils ConsoleKit2
+	sudo ln -s /etc/sv/alsa /var/service/
+	sudo ln -s /etc/sv/dbus /var/service/
+	sudo ln -s /etc/sv/cgmanager /var/service/
+	sudo ln -s /etc/sv/consolekit /var/service/
+	sudo usermod -a -G pulse-access ${USER}
 
 log:
 	${XI} socklog-void
@@ -100,16 +104,21 @@ fish:
 	${XI} fish-shell
 	@curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
 	fisher transfer eco
+	fisher install laughedelic/pisces
 
 zsh:
 	${XI} zsh
-	mkdir ${ZSH_DIR}
+	mkdir -p ${ZSH_DIR}
 	@git clone https://github.com/sindresorhus/pure ${ZSH_DIR}
 	@git clone git://github.com/zsh-users/zsh-autosuggestions ${ZSH_DIR}
 	@git clone git://github.com/zsh-users/zsh-completions.git ${ZSH_DIR}
 	cp -v .zshrc .zshenv .zlogin ~/
 	source ~/.zshrc
 	chsh -s /bin/zsh ${USER}
+
+#.PHONY? all
+	#sudo xbps-install --yes git
+	#all: $(pkgs) $(zsh) $(fish) $(xbps)
 
 clean:
 	@rm -rf ${ST_PATH}.tar.gz ${ST_PATH}
