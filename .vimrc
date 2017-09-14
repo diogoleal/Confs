@@ -38,6 +38,9 @@ let g:lightline = {
 " Underlines the word under the cursor
 Plug 'itchyny/vim-cursorword'
 
+" Start screen
+Plug 'mhinz/vim-startify'
+
 Plug 'terryma/vim-multiple-cursors'
 " Default mapping
 let g:multi_cursor_use_default_mapping=0
@@ -67,8 +70,12 @@ let &runtimepath.=',~/.vim/bundle/ale'
 "winresizer
 Plug 'simeji/winresizer'
 
+" vim-move set to <C-k> and <C-j>
+Plug 'matze/vim-move'
+let g:move_key_modifier = 'C'
+
 " Git
-"Plug 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
@@ -103,16 +110,18 @@ set ruler
 set autoread
 set autowrite
 
-"if (exists('+colorcolumn'))
-"    set colorcolumn=120
-"    highlight ColorColumn ctermbg=1
-"endif
+" Enabled color column
+if (exists('+colorcolumn'))
+    set colorcolumn=120
+    highlight ColorColumn ctermbg=1
+endif
 
 set list
 set listchars=tab:>-
+set showbreak=>>>
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc,*.git\*,.hg\*,.svn\*
+set wildignore=*.o,*~,*.pyc,*.git\*,.hg\*,.svn\*,*.lock
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -165,7 +174,7 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
-"set textwidth=79
+set textwidth=119
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
