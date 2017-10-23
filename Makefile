@@ -7,7 +7,7 @@ ZSH_DIR = "~/.zsh"
 XI = sudo xbps-install --yes
 
 pkgs:
-	${XI} xterm xorg xbacklight feh xbanish rtorrent firefox mpv sutils git xorg slock htop
+	${XI} xterm xorg xbacklight feh xbanish rtorrent firefox mpv sutils git xorg slock htop perf
 	@cp -rf bin/ ~/bin/
 
 qutebrowser:
@@ -94,6 +94,7 @@ vim:
 	@mkdir ~/.vim
 	@cp -v .vimrc ~/
 	@touch ~/.simplenoterc
+	@ln -s ~/.vimrc ~/.config/nvim/init.vim
 	@curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	@vim +PlugInstall +qall
 
