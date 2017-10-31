@@ -14,7 +14,23 @@ let g:NERDTreeWinSize = 20
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 map <F2> :NERDTreeToggle<CR>
 
+Plug 'Xuyuanp/nerdtree-git-plugin'
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
 "Plug 'vim-ctrlspace/vim-ctrlspace'
+
+Plug 'wikitopian/hardmode'
 
 "Plug 'L9'
 Plug 'bronson/vim-trailing-whitespace'
@@ -36,6 +52,10 @@ let g:lightline = {
       \ }
 
 " Underlines the word under the cursor
+Plug 'itchyny/vim-cursorword'
+
+Plug 'tpope/vim-commentary'
+
 Plug 'itchyny/vim-cursorword'
 
 " Start screen
@@ -70,12 +90,14 @@ let &runtimepath.=',~/.vim/bundle/ale'
 "winresizer
 Plug 'simeji/winresizer'
 
-Plug 'tpope/vim-commentary'
-
 Plug 'dag/vim-fish'
 " vim-move set to <C-k> and <C-j>
 Plug 'matze/vim-move'
 let g:move_key_modifier = 'C'
+
+Plug 'kien/ctrlp.vim'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
 " Git
 Plug 'mhinz/vim-signify'
@@ -87,6 +109,9 @@ Plug 'mileszs/ack.vim'
 Plug 'wincent/ferret'
 
 Plug 'junegunn/vim-easy-align'
+
+"Ansible
+Plug 'pearofducks/ansible-vim'
 
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
