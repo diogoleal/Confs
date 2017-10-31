@@ -70,6 +70,9 @@ let &runtimepath.=',~/.vim/bundle/ale'
 "winresizer
 Plug 'simeji/winresizer'
 
+Plug 'tpope/vim-commentary'
+
+Plug 'dag/vim-fish'
 " vim-move set to <C-k> and <C-j>
 Plug 'matze/vim-move'
 let g:move_key_modifier = 'C'
