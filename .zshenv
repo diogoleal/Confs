@@ -30,31 +30,6 @@ export LANG="${LANGUAGE}"
 export LC_ALL="${LANGUAGE}"
 export LC_CTYPE="${LANGUAGE}"
 
-export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_RUNTIME_DIR="${HOME}/.local/run"
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_CONFIG_HOME="${HOME}/.config"
-
-export LOCAL_ETC="${HOME}/.local/etc"
-export LOCAL_BIN="${HOME}/.local/bin"
-export LOCAL_LIB="${HOME}/.local/lib"
-export LOCAL_SRC="${HOME}/.local/src"
-export LOCAL_VAR="${HOME}/.local/var"
-
-export BSPWMRC="${LOCAL_ETC}/bspwm/bspwmrc"
-export BSPWM_STATE="${XDG_CACHE_HOME}/bspwm/state.json"
-export BSPWM_FIFO="${XDG_CACHE_HOME}/bspwm/wm_state"
-
-export SXHKD_SHELL="/usr/bin/dash"
-
-export POLYBAR_HOME="${XDG_CONFIG_HOME}/polybar"
-
-export BROWSER="qutebrowser"
-
-[ "$TERM" = "xterm" ] && {
-  export TERM="xterm-256color"
-}
-
 # GoLang Path
 export GOPATH=$HOME/Workspace/go
 export PATH=$PATH:$GOPATH/bin
@@ -63,29 +38,19 @@ export PATH=$PATH:$GOPATH/bin
 export PATH="$PATH:$HOME/bin"
 
 # Pyenv
-export PATH="/home/diogo/.pyenv/bin:$PATH"
+export PATH="$PATH:$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-export WORKON_HOME=~/.ve
-export PROJECT_HOME=~/Workspace
+export WORKON_HOME="${HOME}/.ve"
+export PROJECT_HOME="${HOME}/Workspace"
 eval "$(pyenv init -)"
 
-#rbenv
-#~/.rbenv/bin/rbenv init
-export PATH="$HOME/.rbenv/bin:$PATH"
-
-PATH="/home/diogo/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/diogo/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/diogo/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/diogo/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/diogo/perl5"; export PERL_MM_OPT;
-
-#export PATH="$PATH:$HOME/.rvm/bin"
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#pipenv
+export PATH="$PATH:$HOME/.local/bin:$PATH"
 
 # Editor
-export EDITOR=vim
+export EDITOR=nvim
 export CVSEDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
@@ -135,3 +100,6 @@ export FZF_DEFAULT_OPTS="--extended --ansi --multi"
 
 # available $INTERACTIVE_FILTER
 export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
+
+# jabba
+[ -s "/home/diogo/.jabba/jabba.sh" ] && source "/home/diogo/.jabba/jabba.sh"
