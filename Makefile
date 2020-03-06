@@ -26,13 +26,9 @@ htop:
 	${XI} htop
 	@cp -rf .config/htop ~/
 
-i3:     
+i3:
 	${XI} i3 i3status dmenu
 	@cp -rf .i3/ i3status.conf ~/
-
-${XI} htop
-	@cp -rf .config/htop ~/
-
 
 git:
 	${XI} git git-extras
@@ -99,10 +95,13 @@ tmux:
 
 vim:
 	${XI} neovim
-	@mkdir ~/.vim
+	@mkdir -p ~/.vim && true
+	@mkdir -p ~/.config/nvim && true
 	@cp -v .vimrc ~/
 	@touch ~/.simplenoterc
 	@ln -s ~/.vimrc ~/.config/nvim/init.vim
+	@curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	@curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	@vim +PlugInstall +qall
 
