@@ -7,7 +7,7 @@ ZSH_DIR = "~/.zsh"
 XI = sudo xbps-install --yes
 
 pkgs:
-	${XI} xterm xorg xbacklight feh xbanish rtorrent firefox mpv sutils git xorg slock htop perf
+	${XI} xterm xorg xbacklight feh xbanish rtorrent mpv sutils git xorg slock htop perf liberation-fonts-ttf font-tamsyn dmenu
 	@cp -rf bin/ ~/bin/
 
 qutebrowser:
@@ -26,12 +26,20 @@ htop:
 	${XI} htop
 	@cp -rf .config/htop ~/
 
+i3:     
+	${XI} i3 i3status dmenu
+	@cp -rf .i3/ i3status.conf ~/
+
+${XI} htop
+	@cp -rf .config/htop ~/
+
+
 git:
 	${XI} git git-extras
 	cp -rf .gitconfig ~/
 
 confs:
-	@cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ ~/
+	@cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ .Xresources.d ~/
 
 pulseaudio:
 	${XI} pulseaudio pavucontrol alsa-utils ConsoleKit2
