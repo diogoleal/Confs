@@ -90,7 +90,7 @@ let &runtimepath.=',~/.vim/bundle/ale'
 "winresizer
 Plug 'simeji/winresizer'
 
-Plug 'dag/vim-fish'
+"Plug 'dag/vim-fish'
 " vim-move set to <C-k> and <C-j>
 Plug 'matze/vim-move'
 let g:move_key_modifier = 'C'
@@ -116,19 +116,34 @@ Plug 'pearofducks/ansible-vim'
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
+"Nuake terminal
+Plug 'Lenovsky/nuake'
+nnoremap <F6> :Nuake<CR>
+inoremap <F6> <C-\><C-n>:Nuake<CR>
+tnoremap <F6> <C-\><C-n>:Nuake<CR>
+
 "Theme
+Plug 'junegunn/seoul256.vim'
+
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
 syntax enable
 
+
+" Unified color scheme (default: dark)
+colo seoul256
+
+
+" Switch
 set background=dark
-colorscheme onedark
+
+"colorscheme onedark
 filetype indent on
 "set t_Co=256
 set encoding=utf-8
 
-set termguicolors
+"set termguicolors
 set cursorline
 set laststatus=2
 
