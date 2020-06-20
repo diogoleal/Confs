@@ -1,14 +1,35 @@
-My dotfiles
+#My dotfiles#
 
-* Distro: [Void Linux](http://voidlinux.eu)
-* Window manager: [bspwm](http://github.com/baskerville/bspwm)
+* Distro: [Void Linux](http://voidlinux.org)
+* Window manager: [i3](https://i3wm.org/)
 * Editor: [vim](http://vim.org)
-* Shell: [fish](http://fishshell.com/)
-* Browser: Firefox with [Twily's Powerline Firefox CSS](https://userstyles.org/styles/102262/twily-s-powerline-firefox-css)
-* Terminal Emulator: xterm
-* Client IRC: irssi
+* Shell: [zsh + antigen](http://antigen.sharats.me/)
+* Browser: Google Chrome
+* Terminal Emulator: [rxvt-unicode](http://software.schmorp.de/pkg/rxvt-unicode.html)
 
-I use caps lock changed as esc
+
+##Keyboard##
+
+http://antigen.sharats.me/
+
+Despite using computers with the keyboard with the ABNT2 layout, I use
+
+
+```
+setxkbmap -layout us -variant intl
+```
+
+and key Caps Lock have the same functionality the Esc key and vice versa
+
+```
+! Swap caps lock and escape
+remove Lock = Caps_Lock
+keysym Escape = Caps_Lock
+keysym Caps_Lock = Escape
+add Lock = Caps_Lock
+```
+
+
 
 My Vim keybindings
 
