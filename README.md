@@ -1,4 +1,4 @@
-#My dotfiles#
+# My dotfiles
 
 * Distro: [Void Linux](http://voidlinux.org)
 * Window manager: [i3](https://i3wm.org/)
@@ -8,7 +8,7 @@
 * Terminal Emulator: [rxvt-unicode](http://software.schmorp.de/pkg/rxvt-unicode.html)
 
 
-##Keyboard##
+## Keyboard
 
 http://antigen.sharats.me/
 
@@ -28,8 +28,6 @@ keysym Escape = Caps_Lock
 keysym Caps_Lock = Escape
 add Lock = Caps_Lock
 ```
-
-
 
 My Vim keybindings
 
