@@ -94,7 +94,6 @@ tmux:
 	@cp -v .tmux.conf ~/.tmux.conf
 
 vim:
-	${XI} neovim
 	@mkdir -p ~/.vim && true
 	@mkdir -p ~/.config/nvim && true
 	@cp -v .vimrc ~/
