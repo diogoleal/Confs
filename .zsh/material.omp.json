@@ -1,0 +1,93 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#ffffff",
+          "properties": {
+            "prefix": "",
+            "postfix": "",
+            "text": "|"
+          }
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "#56B6C2",
+          "properties": {
+            "style": "agnoster_full"
+          }
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "#D0666F",
+          "properties": {
+            "branch_icon": "",
+            "display_status": true,
+            "display_stash_count": true,
+            "display_upstream_icon": true,
+            "prefix": "<#5FAAE8>git:(</>",
+            "postfix": "<#5FAAE8>)</>"
+          }
+        },
+        {
+          "type": "envvar",
+          "style": "plain",
+          "powerline_symbol": "",
+          "foreground": "#ffffff",
+          "background": "#0077c2",
+          "properties": {
+            "var_name": "ENV"
+          }
+        },
+        {
+          "type": "ytm",
+          "style": "plain",
+          "powerline_symbol": "",
+          "background": "#FF0000",
+          "properties": {
+            "prefix": "|  ",
+            "playing_icon": " ",
+            "paused_icon": " ",
+            "stopped_icon": " ",
+            "track_separator": " - "
+          }
+        },
+        {
+          "type": "executiontime",
+          "style": "plain",
+          "foreground": "#56B6C2",
+          "properties": {
+            "threshold": 500,
+            "style": "round"
+          }
+        },
+        {
+          "type": "exit",
+          "style": "plain",
+          "foreground": "#DCB977",
+          "properties": {
+            "prefix": "",
+            "display_exit_code": false
+          }
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#ffffff",
+          "properties": {
+            "prefix": "",
+            "postfix": "",
+            "text": "<#C591E8>❯</><#69FF94>❯ </>"
+          }
+        }
+      ]
+    }
+  ]
+}

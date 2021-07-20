@@ -1,3 +1,7 @@
+# Define Zim location
+: ${ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim}
+# }}} End configuration added by Zim install
+
 typeset -gx -U path
 path=( \
     /usr/local/bin(N-/) \
@@ -39,7 +43,6 @@ export PATH="$PATH:$HOME/bin"
 
 # Pyenv
 export PATH="$PATH:$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 export WORKON_HOME="${HOME}/.ve"
@@ -56,7 +59,7 @@ export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 
 # Pager
-export PAGER="less -R"
+export PAGER="less -R -N"
 # Less status line
 export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
 export LESSCHARSET='utf-8'
@@ -101,5 +104,5 @@ export FZF_DEFAULT_OPTS="--extended --ansi --multi"
 # available $INTERACTIVE_FILTER
 export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
 
-# jabba
-[ -s "/home/diogo/.jabba/jabba.sh" ] && source "/home/diogo/.jabba/jabba.sh"
+
+
