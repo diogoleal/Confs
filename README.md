@@ -1,9 +1,8 @@
 # My dotfiles
 
-* Distro: [Void Linux](http://voidlinux.org)
-* Window manager: [i3](https://i3wm.org/)
-* Editor: [vim](http://vim.org)
-* Shell: [zsh + antigen](http://antigen.sharats.me/)
+* Window manager: [GNOME](http://gnome.org/)
+* Editor: [neovim](https://neovim.io/)
+* Shell: [fish](https://fishshell.com)
 * Browser: Google Chrome
 * Terminal Emulator: [rxvt-unicode](http://software.schmorp.de/pkg/rxvt-unicode.html)
 
