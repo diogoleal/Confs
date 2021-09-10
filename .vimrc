@@ -1,5 +1,5 @@
 
-"hi Normal ctermbg=none
+hi Normal ctermbg=none
 
 call plug#begin('~/.vim/plugged')
 
@@ -30,13 +30,13 @@ let g:NERDTreeIndicatorMapCustom = {
 
 "Plug 'vim-ctrlspace/vim-ctrlspace'
 
-Plug 'wikitopian/hardmode'
+"Plug 'wikitopian/hardmode'
 
 "Plug 'L9'
 Plug 'bronson/vim-trailing-whitespace'
 
 "Ruby
-Plug 'tpope/vim-endwise'
+"Plug 'tpope/vim-endwise'
 
 " lightline
 Plug 'itchyny/lightline.vim'
@@ -54,12 +54,10 @@ let g:lightline = {
 " Underlines the word under the cursor
 Plug 'itchyny/vim-cursorword'
 
-Plug 'tpope/vim-commentary'
-
-Plug 'itchyny/vim-cursorword'
+"Plug 'tpope/vim-commentary'
 
 " Start screen
-Plug 'mhinz/vim-startify'
+"Plug 'mhinz/vim-startify'
 
 Plug 'terryma/vim-multiple-cursors'
 " Default mapping
@@ -70,7 +68,7 @@ let g:multi_cursor_skip_key='<ALT-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 " vim simple complete
-Plug 'maxboisvert/vim-simple-complete'
+"Plug 'maxboisvert/vim-simple-complete'
 "Plug 'Raimondi/delimitMate'
 
 Plug 'w0rp/ale'
@@ -91,9 +89,13 @@ let &runtimepath.=',~/.vim/bundle/ale'
 Plug 'simeji/winresizer'
 
 "Plug 'dag/vim-fish'
-" vim-move set to <C-k> and <C-j>
+
 Plug 'matze/vim-move'
 let g:move_key_modifier = 'C'
+"<C-k>   Move current line/selection up
+"<C-j>   Move current line/selection down
+"<C-h>   Move current character/selection left
+"<C-l>   Move current character/selection right
 
 Plug 'kien/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
@@ -108,10 +110,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'mileszs/ack.vim'
 Plug 'wincent/ferret'
 
-Plug 'junegunn/vim-easy-align'
+"Plug 'junegunn/vim-easy-align'
 
 "Ansible
-Plug 'pearofducks/ansible-vim'
+"Plug 'pearofducks/ansible-vim'
 
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
@@ -125,15 +127,13 @@ tnoremap <F6> <C-\><C-n>:Nuake<CR>
 "Theme
 Plug 'junegunn/seoul256.vim'
 
-Plug 'joshdick/onedark.vim'
+"Plug 'joshdick/onedark.vim'
 call plug#end()
 
 syntax enable
 
-
 " Unified color scheme (default: dark)
 colo seoul256
-
 
 " Switch
 set background=dark
@@ -203,7 +203,17 @@ set smarttab
 set shiftwidth=2
 set tabstop=2
 
-au FileType python setl sw=4 sts=4 et
+"au FileType python setl sw=4 sts=4 et
+
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
 
 " Set F3 for using tabs for indentation and F4
 " using 4 spaces
