@@ -28,15 +28,10 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
-"Plug 'vim-ctrlspace/vim-ctrlspace'
-
-"Plug 'wikitopian/hardmode'
-
 "Plug 'L9'
 Plug 'bronson/vim-trailing-whitespace'
 
-"Ruby
-"Plug 'tpope/vim-endwise'
+"Plug 'brooth/far.vim'
 
 " lightline
 Plug 'itchyny/lightline.vim'
@@ -54,11 +49,6 @@ let g:lightline = {
 " Underlines the word under the cursor
 Plug 'itchyny/vim-cursorword'
 
-"Plug 'tpope/vim-commentary'
-
-" Start screen
-"Plug 'mhinz/vim-startify'
-
 Plug 'terryma/vim-multiple-cursors'
 " Default mapping
 let g:multi_cursor_use_default_mapping=0
@@ -67,9 +57,6 @@ let g:multi_cursor_prev_key='<ALT-p>'
 let g:multi_cursor_skip_key='<ALT-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-" vim simple complete
-"Plug 'maxboisvert/vim-simple-complete'
-"Plug 'Raimondi/delimitMate'
 
 Plug 'w0rp/ale'
 let g:ale_sign_error = '>>'
@@ -89,6 +76,40 @@ let &runtimepath.=',~/.vim/bundle/ale'
 Plug 'simeji/winresizer'
 
 "Plug 'dag/vim-fish'
+
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+
+" Syntastic Config
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" (Optional)Remove Info(Preview) window
+set completeopt-=preview
+
+" (Optional)Hide Info(Preview) window after completions
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+" (Optional) Enable terraform plan to be include in filter
+let g:syntastic_terraform_tffilter_plan = 1
+
+" (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
+let g:terraform_completion_keys = 1
+
+" (Optional) Default: 1, enable(1)/disable(0) terraform module registry completion
+let g:terraform_registry_module_completion = 0
+
+Plug 'majutsushi/tagbar'
+nmap <F9> :TagbarToggle<CR>
+
+Plug 'juliosueiras/vim-terraform-completion'
 
 Plug 'matze/vim-move'
 let g:move_key_modifier = 'C'
@@ -110,10 +131,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'mileszs/ack.vim'
 Plug 'wincent/ferret'
 
-"Plug 'junegunn/vim-easy-align'
-
 "Ansible
-"Plug 'pearofducks/ansible-vim'
+Plug 'pearofducks/ansible-vim'
 
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
@@ -127,7 +146,6 @@ tnoremap <F6> <C-\><C-n>:Nuake<CR>
 "Theme
 Plug 'junegunn/seoul256.vim'
 
-"Plug 'joshdick/onedark.vim'
 call plug#end()
 
 syntax enable
