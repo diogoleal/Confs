@@ -1,39 +1,17 @@
 # My dotfiles
 
-* Window manager: [GNOME](http://gnome.org/)
 * Editor: [neovim](https://neovim.io/)
-* Shell: [fish](https://fishshell.com)
-* Browser: Google Chrome
-* Terminal Emulator: [rxvt-unicode](http://software.schmorp.de/pkg/rxvt-unicode.html)
-
-
-## Keyboard
-
-http://antigen.sharats.me/
-
-Despite using computers with the keyboard with the ABNT2 layout, I use
-
-
-```
-setxkbmap -layout us -variant intl
-```
-
-and key Caps Lock have the same functionality the Esc key and vice versa
-
-```
-! Swap caps lock and escape
-remove Lock = Caps_Lock
-keysym Escape = Caps_Lock
-keysym Caps_Lock = Escape
-add Lock = Caps_Lock
-```
+* Shell: [ZSH + ZIM ](https://zimfw.sh/)
 
 My Vim keybindings
 
 * F2 - nerdtree
-* F8 - clean highlight search
 * F3 - set for using tab for indentation
 * F4 - set for using space for indentation
-* F5  - toggle paste mode on and off
+* F5 - toggle paste mode on and off
+* F6 - Nuake Terminal
+* F8 - clean highlight search
+* F9 - Show/hide comments
+* F11 - tagbar
 * C-e + h', 'j', 'k', 'l'  - winresize
 * C-n - autocomplete

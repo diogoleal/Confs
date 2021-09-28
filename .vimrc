@@ -28,11 +28,6 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
-"Plug 'L9'
-Plug 'bronson/vim-trailing-whitespace'
-
-"Plug 'brooth/far.vim'
-
 " lightline
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
@@ -107,7 +102,7 @@ let g:terraform_completion_keys = 1
 let g:terraform_registry_module_completion = 0
 
 Plug 'majutsushi/tagbar'
-nmap <F9> :TagbarToggle<CR>
+nmap <F11> :TagbarToggle<CR>
 
 Plug 'juliosueiras/vim-terraform-completion'
 
@@ -186,7 +181,7 @@ set wildignore=*.o,*~,*.pyc,*.git\*,.hg\*,.svn\*,*.lock
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
-    set mouse=a
+  set mouse=a
 endif
 
 " Ignore case when searching
@@ -221,16 +216,16 @@ set smarttab
 set shiftwidth=2
 set tabstop=2
 
-"au FileType python setl sw=4 sts=4 et
+au FileType python setl sw=4 sts=4 et
 
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+"au BufNewFile,BufRead *.py
+"    \ set tabstop=4
+"    \ set softtabstop=4
+"    \ set shiftwidth=4
+"    \ set textwidth=79
+"    \ set expandtab
+"    \ set autoindent
+"    \ set fileformat=unix
 
 
 " Set F3 for using tabs for indentation and F4
@@ -260,6 +255,19 @@ autocmd BufReadPost *
 nnoremap <f5> :set invpaste paste?<CR>
 set pastetoggle=<F5>
 set showmode
+
+" Mostra os espacos em branco inuteis no final da linha
+au BufNewFile,BufRead * syn match brancomala '\s\+$' | hi brancomala ctermbg=red
+
+" show/hide comments
+   fu! CommOnOff()
+    if !exists('g:hiddcomm')
+     let g:hiddcomm=1 | hi Comment ctermfg=black guifg=black
+    else
+     unlet g:hiddcomm | hi Comment ctermfg=cyan  guifg=cyan term=bold
+    endif
+   endfu
+   map <F9> :call CommOnOff()<cr>
 
 " Returns true if paste mode is enabled
 function! HasPaste()
