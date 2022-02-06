@@ -1,6 +1,3 @@
-# Define Zim location
-: ${ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim}
-# }}} End configuration added by Zim install
 
 typeset -gx -U path
 path=( \
@@ -10,23 +7,6 @@ path=( \
     ~/.tmux/bin(N-/) \
     "$path[@]" \
     )
-
-# NOTE: set fpath before compinit
-typeset -gx -U fpath
-fpath=( \
-    ~/.zsh/Completion(N-/) \
-    ~/.zsh/functions(N-/) \
-    ~/.zsh/zsh-completions(N-/) \
-    /usr/local/share/zsh/site-functions(N-/) \
-    $fpath \
-    )
-
-# autoload
-autoload -Uz run-help
-autoload -Uz add-zsh-hook
-autoload -Uz colors && colors
-autoload -Uz compinit && compinit -u
-autoload -Uz is-at-least
 
 # LANGUAGE must be set by en_US
 export LANGUAGE="en_US.UTF-8"
@@ -42,15 +22,15 @@ export PATH=$PATH:$GOPATH/bin
 export PATH="$PATH:$HOME/bin"
 
 # Pyenv
-export PATH="$PATH:$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv virtualenv-init -)"
+#export PATH="$PATH:$HOME/.pyenv/bin:$PATH"
+#eval "$(pyenv virtualenv-init -)"
 
-export WORKON_HOME="${HOME}/.ve"
-export PROJECT_HOME="${HOME}/Workspace"
-eval "$(pyenv init -)"
+#export WORKON_HOME="${HOME}/.ve"
+#export PROJECT_HOME="${HOME}/Workspace"
+#eval "$(pyenv init -)"
 
 #pipenv
-export PATH="$PATH:$HOME/.local/bin:$PATH"
+#export PATH="$PATH:$HOME/.local/bin:$PATH"
 
 # Editor
 export EDITOR=nvim
@@ -103,6 +83,3 @@ export FZF_DEFAULT_OPTS="--extended --ansi --multi"
 
 # available $INTERACTIVE_FILTER
 export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
-
-
-
