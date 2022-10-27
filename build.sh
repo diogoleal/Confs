@@ -78,11 +78,36 @@ __f_asdf_plugins(){
 }
 
 __f_install_tools(){
-  echo "install fzf, direnv, neovim"
+  echo "install fzf, direnv, neovim, Docker, Discord, Telegram ... ;)"
   sudo dnf install fzf direnv neovim -y
+  __f_install_flatpak
+  flatpak install com.discordapp.Discord
+  flatpak install org.telegram.desktop
+  flatpak install com.microsoft.Teams
+  __f_install_sublime
+  __f_kubectl
+  curl -s "https://get.sdkman.io" | bash
+  dnf install docker docker-compose -y
+}
+  
+__f_fix_docker(){
+  sudo systemctl enable --now podman
+  sudo usermod -aG docker $USER
+  newgrp docker
 }
 
-__get_kubectl(){
+
+__f_install_flatpak(){
+  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+}
+
+__f_install_sublime(){
+  sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+  sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+  sudo dnf install sublime-text -y
+}
+
+__f_kubectl(){
   PATH_KUBECTL=/usr/local/bin/kubectl
 
   if [! -e "$PATH_KUBECTL" ]; then
@@ -127,8 +152,12 @@ case "${option}" in
     __f_zsh
     ;;
   "all")
+    __f_kind
+    __f_kubectl
+    __f_install_tools
     __f_vim
     __f_fish
+    __f_fix_docker
      ;;
    *)
      echo " build.sh vim | fish | zsh | all"
