@@ -110,10 +110,10 @@ __f_install_sublime(){
 __f_kubectl(){
   PATH_KUBECTL=/usr/local/bin/kubectl
 
-  if [! -e "$PATH_KUBECTL" ]; then
+  if [ ! -e "$PATH_KUBECTL" ]; then
     curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
   fi 
-  if [! -x "$PATH_KUBECTL" ]; then 
+  if [ ! -x "$PATH_KUBECTL" ]; then 
     chmod +x ./kubectl
     sudo mv ./kubectl ${PATH_KUBECTL}
     kubectl version --client
@@ -155,8 +155,6 @@ case "${option}" in
     __f_kind
     __f_kubectl
     __f_install_tools
-    __f_vim
-    __f_fish
     __f_fix_docker
      ;;
    *)
