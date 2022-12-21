@@ -4,17 +4,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="edvardm"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -70,7 +61,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages)
+plugins=(git colored-man-pages sublime dnf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -91,16 +82,10 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# aliases
 alias k="kubectl"
 alias mk="minikube kubectl --"
+alias pb='podman build -t $(basename "$PWD") .'
 
 # asdf
 source ${HOME}/.asdf/asdf.sh
@@ -112,30 +97,13 @@ source ${HOME}/.asdf/asdf.sh
 # source ${HOME}/.secrets
 #eval "$(pyenv virtualenv-init -)"
 
-#eval "$(pyenv init -)"
-#eval "$(pyenv virtualenv-init -)"
-
-# # source ${HOME}/.zsh/anaconda.zsh
-#eval $(thefuck --alias) 
-#eval "$(direnv hook zsh)"
-#eval "$(pyenv init -)"
-#export PYENV_ROOT="$HOME/.pyenv"
-#export PATH="$PYENV_ROOT/bin:$PATH"
-#
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   source /etc/profile.d/vte.sh
 fi
 
-
 # k8s
 source <(kubectl completion zsh)
 #export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-#export PATH="/home/diogo/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-#source '/home/diogo/lib/azure-cli/az.completion'
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /home/diogo/.asdf/installs/terraform/1.2.8/bin/terraform terraform
@@ -144,24 +112,12 @@ complete -o nospace -C /home/diogo/.asdf/installs/terraform/1.2.8/bin/terraform 
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-# -- START ACTIVESTATE INSTALLATION
-#export PATH="/home/diogo/.komodoide/12.0/XRE/state/bin:$PATH"
-# -- STOP ACTIVESTATE INSTALLATION
-# -- START ACTIVESTATE DEFAULT RUNTIME ENVIRONMENT
-#export PATH="/home/diogo/.cache/activestate/bin:$PATH"
-# -- STOP ACTIVESTATE DEFAULT RUNTIME ENVIRONMENT
-#
 export PATH="${PATH}:${HOME}/.krew/bin"
-
-# path ~/bin/
 export PATH="${HOME}/bin:$PATH"
-export PATH="${HOME}/emacs.d/bin:$PATH"
 
 # add Pulumi to the PATH
-#export PATH=$PATH:$HOME/.pulumi/bin
-#alias az="docker run -u $(id -u):$(id -g) -v ${HOME}:/home/az -e HOME=/home/az --rm -it mcr.microsoft.com/azure-cli:2.0.79 az"
+export PATH=$PATH:$HOME/.pulumi/bin
 
-alias pb='podman build -t $(basename "$PWD") .'
-source ~/.zsh_kind
+# Go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
