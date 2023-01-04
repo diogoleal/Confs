@@ -8,12 +8,11 @@
 #    interactive = auto
 #    status = auto
 [core]
-    editor = vim
+    editor = emacs-nox
     pager = less -FXRS
-
 [merge]
     tool = vimdiff
-    conflictstyle = diff3
+     conflictstyle = diff3
 [push]
     default = simple
 [init]
@@ -71,8 +70,8 @@
     l = log --oneline
     lb = log --left-right --graph --cherry-pick --decorate
     lbo = log --left-right --graph --cherry-pick --oneline --decorate
-        lg = log --oneline --graph --decorate
-        lgr = log --graph --full-history --decorate --all --pretty=format:"%h%x09%d%x20%s"
+    lg = log --oneline --graph --decorate
+    lgr = log --graph --full-history --decorate --all --pretty=format:"%h%x09%d%x20%s"
     ll = log --format=%B -n 1
     ls = ls-files
     lsf = "!git ls-files | grep -i"
