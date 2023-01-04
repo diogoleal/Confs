@@ -11,7 +11,7 @@
  ;; If there is more than one, they won't work right.
  '(display-battery-mode t)
  '(package-selected-packages
-   '(smart-tabs-mode bash-completion neotree k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode python yaml-mode))
+   '(jedi smart-tabs-mode bash-completion neotree k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode python yaml-mode))
  '(warning-suppress-types '((comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -49,8 +49,6 @@
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
 
-
-
 ;; credit: yorickvP on Github
 (setq wl-copy-process nil)
 (defun wl-copy (text)
@@ -67,7 +65,20 @@
 (setq interprogram-cut-function 'wl-copy)
 (setq interprogram-paste-function 'wl-paste)
 
+;; Python jedi
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+(add-hook 'python-mode-hook 'jedi:setup)
 
 ;; magit
 (setq magit-refresh-status-buffer nil)
+
+;; backup
+(setq backup-by-copying t      ; don't clobber symlinks
+     backup-directory-alist
+    '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
 
