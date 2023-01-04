@@ -86,6 +86,7 @@ source $ZSH/oh-my-zsh.sh
 alias k="kubectl"
 alias mk="minikube kubectl --"
 alias pb='podman build -t $(basename "$PWD") .'
+alias e="emacsclient -t"
 
 # asdf
 source ${HOME}/.asdf/asdf.sh
