@@ -123,6 +123,15 @@ __f_kubectl(){
   fi
 }
 
+
+__f_emacs() {
+    mkdir -p ~/.config/systemd/user/
+    cp .emacs ~/
+    cp .config/systemd/user/emacs.service ~/.config/systemd/user/emacs.service
+    systemctl enable --user emacs
+    systemctl start --user emacs
+}
+
 __f_zsh(){
   #mkdir -p "${ZSH_DIR}"
   sudo dnf install zsh -y
