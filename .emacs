@@ -5,19 +5,12 @@
 (package-initialize)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(display-battery-mode t)
  '(package-selected-packages
-   '(jedi smart-tabs-mode bash-completion neotree k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode python yaml-mode))
+   '(rainbow-delimiters flycheck auto-package-update bash-completion neotree k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
  '(warning-suppress-types '((comp) (comp))))
+
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(default ((t (:family "Hack" :foundry "SRC" :slant normal :weight normal :height 112 :width normal)))))
 (load-theme 'dracula t)
 (show-paren-mode t)
@@ -38,12 +31,11 @@
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 
-(require 'bash-completion)
-(bash-completion-setup)
-
+(global-set-key [f9] 'rainbow-delimiters-mode)
 (global-set-key (kbd "<mouse-2>") 'clipboard-yank)
 
-(smart-tabs-insinuate 'c 'javascript 'python)
+(require 'bash-completion)
+(bash-completion-setup)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
@@ -65,13 +57,14 @@
 (setq interprogram-cut-function 'wl-copy)
 (setq interprogram-paste-function 'wl-paste)
 
-;; Python jedi
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-(add-hook 'python-mode-hook 'jedi:setup)
+;; flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; magit
 (setq magit-refresh-status-buffer nil)
+
+;; autoupdate
+(require 'auto-package-update)
 
 ;; backup
 (setq backup-by-copying t      ; don't clobber symlinks
@@ -117,6 +110,12 @@ before we send our 'ok' to the SessionManager."
 ;; SessionManager.
 (dbus-call-method-asynchronously
  :session "org.gnome.SessionManager"
- "/org/gnome/SessionManager" 
+ "/org/gnome/SessionManager"
  "org.gnome.SessionManager" "RegisterClient" 'my-register-signals
  "Emacs server" (getenv "DESKTOP_AUTOSTART_ID"))
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+
