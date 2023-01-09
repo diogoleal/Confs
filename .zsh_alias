@@ -1,0 +1,5 @@
+# aliases
+alias k="kubectl"
+alias mk="minikube kubectl --"
+alias pb='podman build -t $(basename "$PWD") .'
+alias e="emacsclient -t"

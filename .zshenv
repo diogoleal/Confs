@@ -2,9 +2,7 @@
 typeset -gx -U path
 path=( \
     /usr/local/bin(N-/) \
-    ~/bin(N-/) \
-    ~/.zplug/bin(N-/) \
-    ~/.tmux/bin(N-/) \
+     ~/.tmux/bin(N-/) \
     "$path[@]" \
     )
 
@@ -14,9 +12,10 @@ export LANG="${LANGUAGE}"
 export LC_ALL="${LANGUAGE}"
 export LC_CTYPE="${LANGUAGE}"
 
-# GoLang Path
-export GOPATH=$HOME/Workspace/go
-export PATH=$PATH:$GOPATH/bin
+# Go
+export GOPATH=$HOME/go
+export GOBIN="$GOPATH/bin"
+export PATH="$GOBIN:$PATH"
 
 # Export ~/bin
 export PATH="$PATH:$HOME/bin"
@@ -54,32 +53,38 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 # ls command colors
-export LSCOLORS=exfxcxdxbxegedabagacad
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+# export lscolors=exfxcxdxbxegedabagacad
+# export ls_colors='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
 setopt no_global_rcs
-# Add ~/bin to PATH
-export PATH=~/bin:"$PATH"
-
-# Settings for golang
-export GOPATH="$HOME"
-export GOBIN="$GOPATH/bin"
-export PATH="$GOBIN:$PATH"
+# add ~/bin to path
+export path=~/bin:"$path"
 
 # declare the environment variables
-export CORRECT_IGNORE='_*'
-export CORRECT_IGNORE_FILE='.*'
+export correct_ignore='_*'
+export correct_ignore_file='.*'
 
-export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-export WORDCHARS='*?.[]~&;!#$%^(){}<>'
+export wordchars='*?_-.[]~=&;!#$%^(){}<>'
+export wordchars='*?.[]~&;!#$%^(){}<>'
 
-# History file and its size
-export HISTFILE=~/.zsh_history
-export HISTSIZE=1000000
-export SAVEHIST=1000000
+# history file and its size
+export histfile=~/.zsh_history
+export histsize=1000000
+export savehist=1000000
 
 # fzf - command-line fuzzy finder (https://github.com/junegunn/fzf)
-export FZF_DEFAULT_OPTS="--extended --ansi --multi"
+export fzf_default_opts="--extended --ansi --multi"
 
-# available $INTERACTIVE_FILTER
-export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
+# available $interactive_filter
+export interactive_filter="fzf:peco:percol:gof:pick"
+
+export sdkman_dir="$home/.sdkman"
+[[ -s "$home/.sdkman/bin/sdkman-init.sh" ]] && source "$home/.sdkman/bin/sdkman-init.sh"
+
+# k8s
+source <(kubectl completion zsh)
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# add pulumi to the path
+export path=$path:$home/.pulumi/bin
+

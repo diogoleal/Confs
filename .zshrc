@@ -82,11 +82,9 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# aliases
-alias k="kubectl"
-alias mk="minikube kubectl --"
-alias pb='podman build -t $(basename "$PWD") .'
-alias e="emacsclient -t"
+# Alias
+source ${HOME}/Workspace/Confs/.zsh_alias
+source ${HOME}/Workspace/Confs/.zshenv
 
 # asdf
 source ${HOME}/.asdf/asdf.sh
@@ -95,30 +93,11 @@ source ${HOME}/.asdf/asdf.sh
 # initialise completions with ZSH's compinit
 #autoload -Uz compinit && compinit
 
-# source ${HOME}/.secrets
-#eval "$(pyenv virtualenv-init -)"
-
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   source /etc/profile.d/vte.sh
 fi
-
-# k8s
-source <(kubectl completion zsh)
-#export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /home/diogo/.asdf/installs/terraform/1.2.8/bin/terraform terraform
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-export PATH="${PATH}:${HOME}/.krew/bin"
-export PATH="${HOME}/bin:$PATH"
-
-# add Pulumi to the PATH
-export PATH=$PATH:$HOME/.pulumi/bin
-
-# Go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
