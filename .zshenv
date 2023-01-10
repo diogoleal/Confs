@@ -58,8 +58,8 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 setopt no_global_rcs
 # add ~/bin to path
-export path=~/bin:"$path"
-
+#export path=~/bin:"$path"
+export PATH="$HOME/bin:$PATH"
 # declare the environment variables
 export correct_ignore='_*'
 export correct_ignore_file='.*'
@@ -84,7 +84,4 @@ export sdkman_dir="$home/.sdkman"
 # k8s
 source <(kubectl completion zsh)
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# add pulumi to the path
-export path=$path:$home/.pulumi/bin
 
