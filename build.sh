@@ -7,6 +7,7 @@ HELM_VERSION="latest"
 ASDF_VERSION=v0.9.0
 TERRAGRUNT_VERSION=0.35.4
 TERRAFORM_DOCS_VERSION=0.16.0
+DIR_CONF="$HOME/Workspace/Confs"
 
 __f_createbin(){
   mkdir ~/bin
@@ -15,8 +16,12 @@ __f_createbin(){
 __f_config(){
   cp -rf .config/htop .gitconfig ~/
   #cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ .Xresources.d ~/
+}
+
+__f_tmux(){
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux/themepack
-  cp -v .tmux.conf ~/.tmux.conf
+  ln -s $DIR_CONF/.tmux.conf ~/.tmux.conf
 }
 
 __f_vim(){
@@ -26,13 +31,22 @@ __f_vim(){
   ln -s ~/.vimrc ~/.config/nvim/init.vim
   curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   vim +PlugInstall +qall
 }
 
- __f_fish(){
+__f_python(){
+    # install to flycheck
+    pip install --upgrade pip
+    python3 -m pip install --user pipx
+    pip install pylint
+    pip install git+https://github.com/psf/black
+}
+
+__f_fish(){
   # curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-    fisher install laughedelic/pisces
+  fisher install laughedelic/pisces
   python3 -m pip install --user pipx
   register-python-argcomplete --shell fish pipx >~/.config/fish/completions/pipx.fish
   pipx install virtualfish
@@ -86,7 +100,7 @@ __f_install_tools(){
   sudo dnf install fzf direnv neovim gnome-tweaks util-linux-user -y
   __f_install_flatpak
 
-  for i in org.signal.Signal com.discordapp.Discord org.telegram.desktop com.microsoft.Teams org.mozilla.firefox com.spotify.Client com.github.micahflee.torbrowser-launcher io.podman_desktop.PodmanDesktop
+  for i in org.signal.Signal com.discordapp.Discord org.telegram.desktop org.mozilla.firefox com.spotify.Client com.github.micahflee.torbrowser-launcher io.podman_desktop.PodmanDesktop
    do
     flatpak -y --user install $i
   done
@@ -95,7 +109,8 @@ __f_install_tools(){
 
   curl -s "https://get.sdkman.io" | bash
 }
-  __f_install_podman(){
+
+__f_install_podman(){
   sudo dnf install podman
   sudo systemctl enable --now podman.socket
 }
@@ -123,10 +138,9 @@ __f_kubectl(){
   fi
 }
 
-
 __f_emacs() {
+    ln -s ~/Workspace/Confs/.emacs ~/.emacs
     mkdir -p ~/.config/systemd/user/
-    cp .emacs ~/
     cp .config/systemd/user/emacs.service ~/.config/systemd/user/emacs.service
     systemctl enable --user emacs
     systemctl start --user emacs
@@ -158,6 +172,9 @@ case "${option}" in
   "zsh")
     __f_zsh
     ;;
+  "tmux")
+    __f_tmux
+    ;;
   "all")
     __f_zsh
     # __f_kind
@@ -166,7 +183,7 @@ case "${option}" in
     __f_install_podman
      ;;
    *)
-     echo " build.sh vim | fish | zsh | all"
+     echo " build.sh vim | fish | zsh | all | emacs | tmux"
      exit 1
     ;;
 esac
