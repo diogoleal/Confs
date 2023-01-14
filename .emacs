@@ -29,7 +29,7 @@
 (add-hook 'minibuffer-setup-hook #'highlight-parentheses-minibuffer-setup)
 
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+(global-set-key [f2] 'neotree-toggle)
 
 (global-set-key [f9] 'rainbow-delimiters-mode)
 (global-set-key (kbd "<mouse-2>") 'clipboard-yank)

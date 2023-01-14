@@ -19,26 +19,26 @@ export PATH="$GOBIN:$PATH"
 
 # Export ~/bin
 export PATH="$PATH:$HOME/bin"
-
+# export PATH="$PATH:$HOME/.local/bin:$PATH"
 # Pyenv
-#export PATH="$PATH:$HOME/.pyenv/bin:$PATH"
-#eval "$(pyenv virtualenv-init -)"
 
-#export WORKON_HOME="${HOME}/.ve"
-#export PROJECT_HOME="${HOME}/Workspace"
-#eval "$(pyenv init -)"
-
-#pipenv
-#export PATH="$PATH:$HOME/.local/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PYTHON_BUILD_CACHE_PATH="$PYENV_ROOT/cache"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# export WORKON_HOME="${HOME}/.ve"
+# export PROJECT_HOME="${HOME}/Workspace"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # Editor
-export EDITOR=nvim
+export EDITOR="emacsclient -t"
 export CVSEDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 
 # Pager
-export PAGER="less -R -N"
+# export PAGER="less -R -N"
+
 # Less status line
 export LESS='-R -f -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
 export LESSCHARSET='utf-8'
@@ -57,13 +57,9 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # export ls_colors='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
 setopt no_global_rcs
-# add ~/bin to path
-#export path=~/bin:"$path"
-export PATH="$HOME/bin:$PATH"
-# declare the environment variables
+
 export correct_ignore='_*'
 export correct_ignore_file='.*'
-
 export wordchars='*?_-.[]~=&;!#$%^(){}<>'
 export wordchars='*?.[]~&;!#$%^(){}<>'
 
