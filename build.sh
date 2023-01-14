@@ -15,7 +15,7 @@ __f_createbin(){
 
 __f_config(){
   cp -rf .config/htop .gitconfig ~/
-  #cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ .Xresources.d ~/
+  # cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ .Xresources.d ~/
 }
 
 __f_tmux(){
@@ -39,7 +39,11 @@ __f_vim(){
 __f_python(){
     # install to flycheck
     pip install --upgrade pip
-    python3 -m pip install --user pipx
+    sudo dnf install openssl-libs zlib-devel clang clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel -y
+    # python3 -m pip install --user pipx
+    # pyenv
+    curl https://pyenv.run | bash
+    mkdir ~/.pyenv/cache/
     pip install pylint
     pip install git+https://github.com/psf/black
 }
@@ -111,7 +115,7 @@ __f_install_tools(){
 }
 
 __f_install_podman(){
-  sudo dnf install podman
+  sudo dnf install podman -y
   sudo systemctl enable --now podman.socket
 }
 
@@ -175,6 +179,9 @@ case "${option}" in
   "tmux")
     __f_tmux
     ;;
+  "python")
+    __f_python
+    ;;
   "all")
     __f_zsh
     # __f_kind
@@ -183,7 +190,7 @@ case "${option}" in
     __f_install_podman
      ;;
    *)
-     echo " build.sh vim | fish | zsh | all | emacs | tmux"
+     echo " build.sh vim | fish | zsh | all | emacs | tmux |python"
      exit 1
     ;;
 esac
