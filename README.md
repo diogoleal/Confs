@@ -1,10 +1,9 @@
 # My dotfiles
 
 ## Emacs
-<kbd>F9</kbd> rainbow-delimiters
-
-<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs
-<kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window
+<kbd>F9</kbd> rainbow-delimiters__
+- <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs
+- <kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>1</kbd> - treemacs-delete-other-windows
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory
