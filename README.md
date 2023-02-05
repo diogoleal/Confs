@@ -2,7 +2,11 @@
 
 ## Emacs
 <kbd>F9</kbd> rainbow-delimiters
-<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Space</kbd>
+
+
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs
+
+
 M-0       . treemacs-select-window
 C-x t 1   . treemacs-delete-other-windows
 C-x t t   . treemacs
