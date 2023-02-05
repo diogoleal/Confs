@@ -3,17 +3,14 @@
 ## Emacs
 <kbd>F9</kbd> rainbow-delimiters
 
-
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs
-
-
-M-0       . treemacs-select-window
-C-x t 1   . treemacs-delete-other-windows
-C-x t t   . treemacs
-C-x t d   . treemacs-select-directory
-C-x t B   . treemacs-bookmark
-C-x t C-t . treemacs-find-file
-C-x t M-t . treemacs-find-tag
+<kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>1</kbd> - treemacs-delete-other-windows
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>B</kbd> - treemacs-select-bookmark
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>C</kbd> + <kbd>t</kbd>- treemacs-select-find-file
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>M</kbd> + <kbd>t</kbd>- treemacs-select-find-tag
 
 ## Vim keybindings
 
