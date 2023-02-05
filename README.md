@@ -2,7 +2,9 @@
 
 ## Emacs
 <kbd>F9</kbd> rainbow-delimiters__
+
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs__
+
 <kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window__
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory__
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>1</kbd> - treemacs-delete-other-windows__
