@@ -1,9 +1,8 @@
 # My dotfiles
 
 ## Emacs
-
-F9 - rainbow-delimiters
-
+<kbd>F9</kbd> rainbow-delimiters
+<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Space</kbd>
 M-0       . treemacs-select-window
 C-x t 1   . treemacs-delete-other-windows
 C-x t t   . treemacs
