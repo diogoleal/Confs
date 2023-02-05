@@ -2,14 +2,14 @@
 
 ## Emacs
 <kbd>F9</kbd> rainbow-delimiters__
-- <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs
-- <kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window
-<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory
-<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>1</kbd> - treemacs-delete-other-windows
-<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory
-<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>B</kbd> - treemacs-select-bookmark
-<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>C</kbd> + <kbd>t</kbd>- treemacs-select-find-file
-<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>M</kbd> + <kbd>t</kbd>- treemacs-select-find-tag
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs__
+<kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window__
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory__
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>1</kbd> - treemacs-delete-other-windows__
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory__
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>B</kbd> - treemacs-select-bookmark__
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>C</kbd> + <kbd>t</kbd>- treemacs-select-find-file__
+<kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>M</kbd> + <kbd>t</kbd>- treemacs-select-find-tag__
 
 ## Vim keybindings
 
