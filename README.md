@@ -5,7 +5,7 @@
 
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs__
 
-<kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window__
+<kbd>M</kbd> + <kbd>0</kbd> - treemacs-select-window<br />
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory__
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>1</kbd> - treemacs-delete-other-windows__
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>d</kbd> - treemacs-select-directory__
