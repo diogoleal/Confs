@@ -1,5 +1,5 @@
 (setq initial-scratch-message nil)
-
+(setq inhibit-startup-message t)
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -9,7 +9,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(display-battery-mode t)
+ ;; '(display-battery-mode t)
  '(package-selected-packages
    '(treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
  '(warning-suppress-types '((comp) (comp))))
@@ -27,6 +27,13 @@
 (menu-bar-mode -1)
 (setq-default show-trailing-whitespace t)
 
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)))
+
 (require 'dockerfile-mode)
 (require 'k8s-mode)
 
@@ -35,9 +42,6 @@
 
 (require 'highlight-parentheses)
 (add-hook 'minibuffer-setup-hook #'highlight-parentheses-minibuffer-setup)
-
-;;(require 'neotree)
-;;(global-set-key [f2] 'neotree-toggle)
 
 (global-set-key [f9] 'rainbow-delimiters-mode)
 (global-set-key (kbd "<mouse-2>") 'clipboard-yank)

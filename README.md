@@ -1,9 +1,18 @@
 # My dotfiles
 
-* Editor: [neovim](https://neovim.io/)
-* Shell: [ZSH + ZIM ](https://zimfw.sh/)
+## Emacs
 
-My Vim keybindings
+F9 - rainbow-delimiters
+
+M-0       . treemacs-select-window
+C-x t 1   . treemacs-delete-other-windows
+C-x t t   . treemacs
+C-x t d   . treemacs-select-directory
+C-x t B   . treemacs-bookmark
+C-x t C-t . treemacs-find-file
+C-x t M-t . treemacs-find-tag
+
+## Vim keybindings
 
 * F2 - nerdtree
 * F3 - set for using tab for indentation
@@ -15,3 +24,5 @@ My Vim keybindings
 * F11 - tagbar
 * C-e + h', 'j', 'k', 'l'  - winresize
 * C-n - autocomplete
+
+
