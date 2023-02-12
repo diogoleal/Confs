@@ -9,9 +9,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(display-battery-mode t)
  '(package-selected-packages
-   '(treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
+   '(enclose flymake-shell flycheck-pyflakes flycheck-pkg-config flycheck-indicator flycheck-yamllint pyvenv treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
  '(warning-suppress-types '((comp) (comp))))
 
 (custom-set-faces
@@ -20,12 +19,17 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Hack" :foundry "SRC" :slant normal :weight normal :height 112 :width normal)))))
+
 (load-theme 'dracula t)
 (show-paren-mode t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(savehist-mode 1)
+
 (setq-default show-trailing-whitespace t)
+
+(setq-default enclose-mode t)
 
 (use-package auto-complete
   :ensure t
@@ -34,8 +38,10 @@
     (ac-config-default)
     (global-auto-complete-mode t)))
 
-(require 'dockerfile-mode)
 (require 'k8s-mode)
+
+(use-package dockerfile-mode
+  :ensure t)
 
 ;(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (global-display-line-numbers-mode)
@@ -45,6 +51,12 @@
 
 (global-set-key [f9] 'rainbow-delimiters-mode)
 (global-set-key (kbd "<mouse-2>") 'clipboard-yank)
+(global-set-key [f2] 'neotree-toggle)
+(global-set-key (kbd "C-<tab>") 'other-window)
+(global-set-key (kbd "M-<down>") 'enlarge-window)
+(global-set-key (kbd "M-<up>") 'shrink-window)
+(global-set-key (kbd "M-<left>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-<right>") 'shrink-window-horizontally)
 
 (require 'bash-completion)
 (bash-completion-setup)
@@ -69,8 +81,30 @@
 (setq interprogram-cut-function 'wl-copy)
 (setq interprogram-paste-function 'wl-paste)
 
+
+; Python
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package pyvenv
+  :ensure t
+  :config
+  (pyvenv-mode t)
+;; https://fredrikmeyer.net/2020/08/26/emacs-python-venv.html
+;; Set correct Python interpreter
+  (setq pyvenv-post-activate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+  (setq pyvenv-post-deactivate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter "python3")))))
+
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:setup-keys t)
+;; (setq jedi:complete-on-dot t)
+
+;; shelll
+(require 'flymake-shell)
+(add-hook 'sh-set-shell-hook 'flymake-shell-load)
 
 ;; magit
 (setq magit-refresh-status-buffer nil)
@@ -245,3 +279,4 @@ before we send our 'ok' to the SessionManager."
   :after (treemacs)
   :ensure t
   :config (treemacs-set-scope-type 'Tabs))
+
