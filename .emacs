@@ -13,14 +13,8 @@
    '(enclose flymake-shell flycheck-pyflakes flycheck-pkg-config flycheck-indicator flycheck-yamllint pyvenv treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
  '(warning-suppress-types '((comp) (comp))))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Hack" :foundry "SRC" :slant normal :weight normal :height 112 :width normal)))))
-
-(load-theme 'dracula t)
+(set-face-attribute 'default nil :font "Hack" :height 100)
+(load-theme 'tsdh-dark t)
 (show-paren-mode t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -57,6 +51,14 @@
 (global-set-key (kbd "M-<up>") 'shrink-window)
 (global-set-key (kbd "M-<left>") 'enlarge-window-horizontally)
 (global-set-key (kbd "M-<right>") 'shrink-window-horizontally)
+
+;; multiple-cursors
+(use-package multiple-cursors
+  :bind (("<f4>" . mc/mark-previous-like-this)
+         ("<f5>" . mc/mark-next-like-this)
+         ("C-c <f4>" . mc/mark-all-like-this)
+         ("<ESC> <ESC>" . mc/keyboard-quit))
+  :ensure t)
 
 (require 'bash-completion)
 (bash-completion-setup)
@@ -107,7 +109,10 @@
 (add-hook 'sh-set-shell-hook 'flymake-shell-load)
 
 ;; magit
-(setq magit-refresh-status-buffer nil)
+;; (setq magit-refresh-status-buffer nil)
+(use-package magit
+  :bind ("C-x g" . magit-status)
+  :ensure t)
 
 ;; autoupdate
 (require 'auto-package-update)
