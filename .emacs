@@ -10,7 +10,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(enclose flymake-shell flycheck-pyflakes flycheck-pkg-config flycheck-indicator flycheck-yamllint pyvenv treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
+   '(git-gutter enclose flymake-shell flycheck-pyflakes flycheck-pkg-config flycheck-indicator flycheck-yamllint pyvenv treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
  '(warning-suppress-types '((comp) (comp))))
 
 (set-face-attribute 'default nil :font "Hack" :height 100)
@@ -62,6 +62,8 @@
 
 (require 'bash-completion)
 (bash-completion-setup)
+
+(global-git-gutter-mode +1)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
