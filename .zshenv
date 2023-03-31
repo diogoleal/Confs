@@ -19,6 +19,9 @@ export PATH="$GOBIN:$PATH"
 
 # Export ~/bin
 export PATH="$PATH:$HOME/bin"
+export PATH=$PATH:$HOME/
+export PATH=$PATH:$HOME/.cargo/bin
+
 # export PATH="$PATH:$HOME/.local/bin:$PATH"
 # Pyenv
 
@@ -80,4 +83,7 @@ export sdkman_dir="$home/.sdkman"
 # k8s
 source <(kubectl completion zsh)
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+autoload -Uz compinit
+compinit
 

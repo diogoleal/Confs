@@ -25,15 +25,15 @@ __f_tmux(){
 }
 
 __f_vim(){
-  mkdir -p ~/.vim && true
-  mkdir -p ~/.config/nvim && true
-  cp -v .vimrc ~/
-  ln -s ~/.vimrc ~/.config/nvim/init.vim
-  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    mkdir -p ~/.vim && true
+    mkdir -p ~/.config/nvim && true
+    cp -v .vimrc ~/
+    ln -s ~/.vimrc ~/.config/nvim/init.vim
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  vim +PlugInstall +qall
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim +PlugInstall +qall
 }
 
 __f_python(){
@@ -151,17 +151,19 @@ __f_emacs() {
 }
 
 __f_zsh(){
-  #mkdir -p "${ZSH_DIR}"
-  sudo dnf install zsh -y
+    sudo dnf install zsh -y
+    mkdir -p  ~/.zsh/plugins ~/.zsh/themes
+    git clone git@github.com:spaceship-prompt/spaceship-prompt.git ~/.zsh/themes/spaceship-prompt
+    git clone git@github.com:zdharma-zmirror/fast-syntax-highlighting.git ~/.zsh/plugins/fast-syntax-highlighting
+    git clone git@github.com:zsh-users/zsh-autosuggestions.git ~/.zsh/plugins/zsh-autosuggestions
+    git clone git@github.com:zsh-users/zsh-completions.git ~/.zsh/plugins/zsh-completions
+    if [ ! -f ${HOME}/.zshrc ]; then
+        #        cp -v .zshrc .zshenv ~/
+        ln -s $DIR_CONF/.zshrc ~/.zshrc
+    fi
 
-  if [ ! -f ${HOME}/.zshrc ] && [ ! -f ${HOME}/.zshenv ]; then
-    cp -v .zshrc .zshenv ~/
-  fi
-
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-  # chsh -s /bin/zsh "${USER}"
-  # . "${HOME}"/.zshrc
+    # chsh -s /bin/zsh "${USER}"
+    # . "${HOME}"/.zshrc
 }
 
 option="${1}"
