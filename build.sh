@@ -143,6 +143,10 @@ __f_kubectl(){
 }
 
 __f_emacs() {
+    wget https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip
+    unzip Hack-v3.003-ttf.zip && mv ttf/* ~/.local/share/fonts/
+    rmdir ttf
+    rm Hack-v3.003-ttf.zip 
     ln -s ~/Workspace/Confs/.emacs ~/.emacs
     mkdir -p ~/.config/systemd/user/
     cp .config/systemd/user/emacs.service ~/.config/systemd/user/emacs.service
