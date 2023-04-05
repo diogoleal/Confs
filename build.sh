@@ -60,6 +60,16 @@ __f_fish(){
   exec fish
 }
 
+__f_pipewrire(){
+  mkdir ~/lib
+  wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
+  unzip linux-rnnoise.zip
+  mv linux-rnnoise ~/lib
+  ln -s $DIR_CONF/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
+  systemctl restart --user pipewire.service
+  rm linux-rnnoise.zip
+}
+
 __f_kind(){
   if [ ! -f ${HOME}/bin/kind ]; then
     echo "install kind"
