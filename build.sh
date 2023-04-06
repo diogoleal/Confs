@@ -107,6 +107,10 @@ __f_asdf_plugins(){
     asdf plugin add awscli
     asdf install awscli latest:2
     asdf global awscli latest
+    echo "add aws-vault"
+    asdf plugin-add aws-vault https://github.com/karancode/asdf-aws-vault.git
+    asdf install aws-vault latest
+    asdf global aws-vault latest
 }
 
 __f_install_tools(){
