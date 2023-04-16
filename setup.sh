@@ -9,22 +9,21 @@ TERRAGRUNT_VERSION=0.35.4
 TERRAFORM_DOCS_VERSION=0.16.0
 DIR_CONF="$HOME/Workspace/Confs"
 
-__f_createbin(){
-    mkdir ~/bin
-}
+mkdir ~/bin -p || true
 
 __f_config(){
-    ln -s $DIR_CONF/.gitconfig ~/.gitconfig
-    ln -s $DIR_CONF/.curlrc ~/.curlrc
+    ln -sf $DIR_CONF/.gitconfig ~/.gitconfig
+    ln -sf $DIR_CONF/.curlrc ~/.curlrc
 }
 
 __f_tmux(){
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux/themepack
-    ln -s $DIR_CONF/.tmux.conf ~/.tmux.conf
+    ln -sf $DIR_CONF/.tmux.conf ~/.tmux.conf
 }
 
 __f_vim(){
+    sudo dnf install -y neovim
     mkdir -p ~/.vim && true
     mkdir -p ~/.config/nvim && true
     ln -s $DIR_CONF/.vimrc ~/.vimrc
@@ -65,7 +64,7 @@ __f_pipewrire(){
     wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
     unzip linux-rnnoise.zip
     mv linux-rnnoise ~/lib
-    ln -s $DIR_CONF/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
+    ln -sf $DIR_CONF/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
     systemctl restart --user pipewire.service
     rm linux-rnnoise.zip
 }
@@ -115,8 +114,12 @@ __f_asdf_plugins(){
 }
 
 __f_install_tools(){
-    echo "install fzf, direnv, neovim, Docker, Discord, Telegram ... ;)"
-    sudo dnf install fzf direnv neovim gnome-tweaks util-linux-user delta-git -y
+    echo "install fzf, direnv, neovim, Docker, Discord, Telegram, Font Hack... ;)"
+    unzip Hack-v3.003-ttf.zip && mv ttf/* ~/.local/share/fonts/
+    rmdir ttf
+    rm Hack-v3.003-ttf.zip
+
+    sudo dnf install fzf direnv gnome-tweaks util-linux-user delta-git -y
     __f_install_flatpak
 
     for i in org.signal.Signal com.discordapp.Discord org.telegram.desktop org.mozilla.firefox com.spotify.Client com.github.micahflee.torbrowser-launcher io.podman_desktop.PodmanDesktop
@@ -159,10 +162,7 @@ __f_kubectl(){
 
 __f_emacs() {
     wget https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip
-    unzip Hack-v3.003-ttf.zip && mv ttf/* ~/.local/share/fonts/
-    rmdir ttf
-    rm Hack-v3.003-ttf.zip
-    ln -s $DIR_CONF/.emacs ~/.emacs
+    ln -sf $DIR_CONF/.emacs ~/.emacs
     mkdir -p ~/.config/systemd/user/
     cp .config/systemd/user/emacs.service ~/.config/systemd/user/emacs.service
     systemctl enable --user emacs
@@ -178,7 +178,7 @@ __f_zsh(){
     git clone git@github.com:zsh-users/zsh-completions.git ~/.zsh/plugins/zsh-completions
     if [ ! -f ${HOME}/.zshrc ]; then
         #        cp -v .zshrc .zshenv ~/
-        ln -s $DIR_CONF/.zshrc ~/.zshrc
+        ln -sf $DIR_CONF/.zshrc ~/.zshrc
     fi
 
     # chsh -s /bin/zsh "${USER}"
@@ -196,23 +196,56 @@ case "${option}" in
   "zsh")
     __f_zsh
     ;;
+  "config")
+    __f_config
+    ;;
   "tmux")
       __f_tmux
       ;;
   "python")
       __f_python
       ;;
+  "k8s")
+      __f_kind
+      __f_kubectl
+      ;;
+  "asdf")
+      __f_asdf
+      __f_asdf_plugins
+      ;;
+  "pipewrire")
+      __f_pipewrire
+      ;;
   "all")
+      __f_install_tools
+      __f_install_flatpak
+      __f_pipewrire
       __f_zsh
       __f_tmux
       __f_emacs
-      # __f_kind
-      # __f_kubectl
-      __f_install_tools
+       __f_kind
+       __f_kubectl
       __f_install_podman
       ;;
-   *)
-       echo " build.sh vim | fish | zsh | all | emacs | tmux |python"
-       exit 1
+  *)
+      echo " setup.sh
+        zsh => I love it
+        emacs => my main editor
+        tmux => install tmux, tpm, themes and configuration
+        python => my main programming language
+        config => curl and gitconfig
+        k8s => install kind and kubectl
+        asdf => install asdf and plugins
+        pipewrire => configure noise suppression for voice
+        podman => install podman
+
+        ### I don't use more ###
+        sublime => install sublime
+        vim => install vim and plugins (I don't use more)
+        fish => install fish (I don't use more)
+
+        ### install all ###
+        all my active settings"
+        exit 1
        ;;
 esac
