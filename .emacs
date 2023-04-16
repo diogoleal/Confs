@@ -1,5 +1,6 @@
 (setq initial-scratch-message nil)
 (setq inhibit-startup-message t)
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -10,7 +11,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(git-gutter enclose flymake-shell flycheck-pyflakes flycheck-pkg-config flycheck-indicator flycheck-yamllint pyvenv treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
+   '(terraform-mode multiple-cursors auto-complete git-gutter enclose flymake-shell flycheck-pyflakes flycheck-pkg-config flycheck-indicator flycheck-yamllint pyvenv treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs rainbow-delimiters flycheck auto-package-update bash-completion k8s-mode highlight-parentheses magit dracula-theme dockerfile-mode yaml-mode markdown-mode))
  '(warning-suppress-types '((comp) (comp))))
 
 (set-face-attribute 'default nil :font "Hack" :height 100)
@@ -20,6 +21,8 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (savehist-mode 1)
+
+(require 'use-package)
 
 (setq-default show-trailing-whitespace t)
 
@@ -63,8 +66,6 @@
 (require 'bash-completion)
 (bash-completion-setup)
 
-(global-git-gutter-mode +1)
-
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
@@ -86,6 +87,24 @@
 (setq interprogram-paste-function 'wl-paste)
 
 
+; Terraform
+
+(use-package terraform-mode
+  ;; if using straight
+  ;; :straight t
+
+  ;; if using package.el
+  ;; :ensure t
+  :custom (terraform-indent-level 4)
+  :config
+  (defun my-terraform-mode-init ()
+    ;; if you want to use outline-minor-mode
+    ;; (outline-minor-mode 1)
+    )
+
+  (add-hook 'terraform-mode-hook 'my-terraform-mode-init))
+
+
 ; Python
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -93,7 +112,7 @@
   :ensure t
   :config
   (pyvenv-mode t)
-;; https://fredrikmeyer.net/2020/08/26/emacs-python-venv.html
+;; ;; https://fredrikmeyer.net/2020/08/26/emacs-python-venv.html
 ;; Set correct Python interpreter
   (setq pyvenv-post-activate-hooks
         (list (lambda ()
@@ -115,9 +134,10 @@
 (use-package magit
   :bind ("C-x g" . magit-status)
   :ensure t)
+(global-git-gutter-mode +1)
 
 ;; autoupdate
-(require 'auto-package-update)
+;; (require 'auto-package-update)
 
 ;; backup
 (setq backup-by-copying t      ; don't clobber symlinks
@@ -286,4 +306,9 @@ before we send our 'ok' to the SessionManager."
   :after (treemacs)
   :ensure t
   :config (treemacs-set-scope-type 'Tabs))
-
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
