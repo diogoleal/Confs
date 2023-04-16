@@ -28,6 +28,9 @@ key[PageUp]="${terminfo[kpp]}"
 key[PageDown]="${terminfo[knp]}"
 key[Shift-Tab]="${terminfo[kcbt]}"
 
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 # setup key accordingly
 [[ -n "${key[Home]}"      ]] && bindkey -- "${key[Home]}"       beginning-of-line
 [[ -n "${key[End]}"       ]] && bindkey -- "${key[End]}"        end-of-line
@@ -57,6 +60,9 @@ export SAVEHIST=10000
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt INC_APPEND_HISTORY
+
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
