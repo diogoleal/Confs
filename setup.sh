@@ -9,7 +9,7 @@ TERRAGRUNT_VERSION=0.35.4
 TERRAFORM_DOCS_VERSION=0.16.0
 DIR_CONF="$HOME/Workspace/Confs"
 
-mkdir ~/bin -p || true
+mkdir ~/bin -p && mkdir -p ~/lib || true
 
 __f_config(){
     ln -sf $DIR_CONF/.gitconfig ~/.gitconfig
@@ -35,6 +35,16 @@ __f_vim(){
     vim +PlugInstall +qall
 }
 
+__f_espanso(){
+    wget -O ~/bin/Espanso.AppImage 'https://github.com/federico-terzi/espanso/releases/download/v2.1.8/Espanso-X11.AppImage'
+    chmod u+x ~/bin/Espanso.AppImage
+    sudo ~/bin/Espanso.AppImage env-path register
+    echo "Register espanso as a systemd service"
+    espanso service register
+    echo "Start espanso"
+    espanso start
+}
+
 __f_python(){
     # install to flycheck
     pip install --upgrade pip
@@ -48,19 +58,15 @@ __f_python(){
 }
 
 __f_fish(){
-    # curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-    fisher install laughedelic/pisces
-    python3 -m pip install --user pipx
-    register-python-argcomplete --shell fish pipx >~/.config/fish/completions/pipx.fish
-    pipx install virtualfish
-    fish_add_path ~/.local/bin
-    # exec fish
-    vf install compat_aliases projects environment
+    sudo dnf install -y fish
+    ln -sf $DIR_CONF/.config/fish/functions/alias.fish ~/.config/fish/functions/alias.fish
+    ln -sf $DIR_CONF/.config/fish/config.fish ~/.config/fish/config.fish
+    curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
     exec fish
+    fisher install laughedelic/pisces
 }
 
 __f_pipewrire(){
-    mkdir ~/lib
     wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
     unzip linux-rnnoise.zip
     mv linux-rnnoise ~/lib
@@ -114,7 +120,7 @@ __f_asdf_plugins(){
 }
 
 __f_install_tools(){
-    echo "install fzf, direnv, neovim, Docker, Discord, Telegram, Font Hack... ;)"
+    echo "install fzf, direnv, Docker, Discord, Telegram, Font Hack... ;)"
     unzip Hack-v3.003-ttf.zip && mv ttf/* ~/.local/share/fonts/
     rmdir ttf
     rm Hack-v3.003-ttf.zip
@@ -216,16 +222,19 @@ case "${option}" in
   "pipewrire")
       __f_pipewrire
       ;;
+  "espanso")
+      __f_espanso
+      ;;
   "all")
       __f_install_tools
-      __f_install_flatpak
       __f_pipewrire
       __f_zsh
       __f_tmux
       __f_emacs
-       __f_kind
-       __f_kubectl
+      __f_kind
+      __f_kubectl
       __f_install_podman
+      __f_espanso
       ;;
   *)
       echo " setup.sh
