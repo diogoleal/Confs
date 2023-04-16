@@ -15,7 +15,7 @@ __f_createbin(){
 
 __f_config(){
     ln -s $DIR_CONF/.gitconfig ~/.gitconfig
-    # cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ .Xresources.d ~/
+    ln -s $DIR_CONF/.curlrc ~/.curlrc
 }
 
 __f_tmux(){
@@ -61,13 +61,13 @@ __f_fish(){
 }
 
 __f_pipewrire(){
-  mkdir ~/lib
-  wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
-  unzip linux-rnnoise.zip
-  mv linux-rnnoise ~/lib
-  ln -s $DIR_CONF/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
-  systemctl restart --user pipewire.service
-  rm linux-rnnoise.zip
+    mkdir ~/lib
+    wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
+    unzip linux-rnnoise.zip
+    mv linux-rnnoise ~/lib
+    ln -s $DIR_CONF/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
+    systemctl restart --user pipewire.service
+    rm linux-rnnoise.zip
 }
 
 __f_kind(){
@@ -162,7 +162,7 @@ __f_emacs() {
     unzip Hack-v3.003-ttf.zip && mv ttf/* ~/.local/share/fonts/
     rmdir ttf
     rm Hack-v3.003-ttf.zip
-    ln -s ~/Workspace/Confs/.emacs ~/.emacs
+    ln -s $DIR_CONF/.emacs ~/.emacs
     mkdir -p ~/.config/systemd/user/
     cp .config/systemd/user/emacs.service ~/.config/systemd/user/emacs.service
     systemctl enable --user emacs
