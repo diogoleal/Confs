@@ -2,7 +2,7 @@
 
 export BIN="$HOME/bin/"
 ZSH_DIR="$HOME/.zsh"
-TERRAFORM_VERSION=1.1
+TERRAFORM_VERSION="latest"
 HELM_VERSION="latest"
 ASDF_VERSION=v0.9.0
 TERRAGRUNT_VERSION=0.35.4
@@ -10,25 +10,25 @@ TERRAFORM_DOCS_VERSION=0.16.0
 DIR_CONF="$HOME/Workspace/Confs"
 
 __f_createbin(){
-  mkdir ~/bin
+    mkdir ~/bin
 }
 
 __f_config(){
-  cp -rf .config/htop .gitconfig ~/
-  # cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ .Xresources.d ~/
+    ln -s $DIR_CONF/.gitconfig ~/.gitconfig
+    # cp -rf .Xmodmap .Xresources .xinitrc .rtorrent.rc .config/htop/ .Xresources.d ~/
 }
 
 __f_tmux(){
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux/themepack
-  ln -s $DIR_CONF/.tmux.conf ~/.tmux.conf
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux/themepack
+    ln -s $DIR_CONF/.tmux.conf ~/.tmux.conf
 }
 
 __f_vim(){
     mkdir -p ~/.vim && true
     mkdir -p ~/.config/nvim && true
-    cp -v .vimrc ~/
-    ln -s ~/.vimrc ~/.config/nvim/init.vim
+    ln -s $DIR_CONF/.vimrc ~/.vimrc
+    ln -s $DIR_CONF/.vimrc ~/.config/nvim/init.vim
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -49,15 +49,15 @@ __f_python(){
 }
 
 __f_fish(){
-  # curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-  fisher install laughedelic/pisces
-  python3 -m pip install --user pipx
-  register-python-argcomplete --shell fish pipx >~/.config/fish/completions/pipx.fish
-  pipx install virtualfish
-  fish_add_path ~/.local/bin
-  # exec fish
-  vf install compat_aliases projects environment
-  exec fish
+    # curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+    fisher install laughedelic/pisces
+    python3 -m pip install --user pipx
+    register-python-argcomplete --shell fish pipx >~/.config/fish/completions/pipx.fish
+    pipx install virtualfish
+    fish_add_path ~/.local/bin
+    # exec fish
+    vf install compat_aliases projects environment
+    exec fish
 }
 
 __f_pipewrire(){
@@ -71,19 +71,20 @@ __f_pipewrire(){
 }
 
 __f_kind(){
-  if [ ! -f ${HOME}/bin/kind ]; then
-    echo "install kind"
-    curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
-    chmod +x ./kind
-    mv ./kind ${HOME}/bin/kind
-  fi
+    if [ ! -f ${HOME}/bin/kind ]; then
+        echo "install kind"
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+        chmod +x ./kind
+        mv ./kind ${HOME}/bin/kind
+        rm kind
+    fi
 }
 
 __f_asdf(){
-  if [ ! -d ${HOME}/.asdf ]; then
-    echo "install asdf"
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION}
-  fi
+    if [ ! -d ${HOME}/.asdf ]; then
+        echo "install asdf"
+        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION}
+    fi
 }
 
 __f_asdf_plugins(){
@@ -114,53 +115,53 @@ __f_asdf_plugins(){
 }
 
 __f_install_tools(){
-  echo "install fzf, direnv, neovim, Docker, Discord, Telegram ... ;)"
-  sudo dnf install fzf direnv neovim gnome-tweaks util-linux-user -y
-  __f_install_flatpak
+    echo "install fzf, direnv, neovim, Docker, Discord, Telegram ... ;)"
+    sudo dnf install fzf direnv neovim gnome-tweaks util-linux-user delta-git -y
+    __f_install_flatpak
 
-  for i in org.signal.Signal com.discordapp.Discord org.telegram.desktop org.mozilla.firefox com.spotify.Client com.github.micahflee.torbrowser-launcher io.podman_desktop.PodmanDesktop
-   do
-    flatpak -y --user install $i
-  done
-  __f_install_sublime
-  __f_kubectl
+    for i in org.signal.Signal com.discordapp.Discord org.telegram.desktop org.mozilla.firefox com.spotify.Client com.github.micahflee.torbrowser-launcher io.podman_desktop.PodmanDesktop
+    do
+        flatpak -y --user install $i
+    done
+    __f_install_sublime
+    __f_kubectl
 
-  curl -s "https://get.sdkman.io" | bash
+    curl -s "https://get.sdkman.io" | bash
 }
 
 __f_install_podman(){
-  sudo dnf install podman -y
-  sudo systemctl enable --now podman.socket
+    sudo dnf install podman -y
+    sudo systemctl enable --now podman.socket
 }
 
 __f_install_flatpak(){
-  flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 }
 
 __f_install_sublime(){
-  sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
-  sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-  sudo dnf install sublime-text -y
+    sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+    sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+    sudo dnf install sublime-text -y
 }
 
 __f_kubectl(){
-  PATH_KUBECTL=/usr/local/bin/kubectl
+    PATH_KUBECTL=/usr/local/bin/kubectl
 
-  if [ ! -e "$PATH_KUBECTL" ]; then
-    curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-  fi
-  if [ ! -x "$PATH_KUBECTL" ]; then
-    chmod +x ./kubectl
-    sudo mv ./kubectl ${PATH_KUBECTL}
-    kubectl version --client
-  fi
+    if [ ! -e "$PATH_KUBECTL" ]; then
+        curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+    fi
+    if [ ! -x "$PATH_KUBECTL" ]; then
+        chmod +x ./kubectl
+        sudo mv ./kubectl ${PATH_KUBECTL}
+        kubectl version --client
+    fi
 }
 
 __f_emacs() {
     wget https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip
     unzip Hack-v3.003-ttf.zip && mv ttf/* ~/.local/share/fonts/
     rmdir ttf
-    rm Hack-v3.003-ttf.zip 
+    rm Hack-v3.003-ttf.zip
     ln -s ~/Workspace/Confs/.emacs ~/.emacs
     mkdir -p ~/.config/systemd/user/
     cp .config/systemd/user/emacs.service ~/.config/systemd/user/emacs.service
@@ -185,32 +186,33 @@ __f_zsh(){
 }
 
 option="${1}"
-
 case "${option}" in
   "vim")
-    __f_vim
-    ;;
+      __f_vim
+      ;;
   "fish")
-    __f_fish
-    ;;
+      __f_fish
+      ;;
   "zsh")
     __f_zsh
     ;;
   "tmux")
-    __f_tmux
-    ;;
+      __f_tmux
+      ;;
   "python")
-    __f_python
-    ;;
+      __f_python
+      ;;
   "all")
-    __f_zsh
-    # __f_kind
-    # __f_kubectl
-    __f_install_tools
-    __f_install_podman
-     ;;
+      __f_zsh
+      __f_tmux
+      __f_emacs
+      # __f_kind
+      # __f_kubectl
+      __f_install_tools
+      __f_install_podman
+      ;;
    *)
-     echo " build.sh vim | fish | zsh | all | emacs | tmux |python"
-     exit 1
-    ;;
+       echo " build.sh vim | fish | zsh | all | emacs | tmux |python"
+       exit 1
+       ;;
 esac
