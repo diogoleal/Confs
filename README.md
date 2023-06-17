@@ -3,18 +3,17 @@
 ## In use:
 - fish => my favorite shell
 - emacs => my main editor
-- tmux => install tmux, tpm, themes and configuration
+- tmux => I use tmux, tpm, themes and configuration
 - python => my main programming language
-- config => curl and gitconfig
-- k8s => install kind and kubectl
-- asdf => install asdf and plugins
+- k8s => kind and kubectl
+- asdf => asdf and plugins to terraform, terragrunt and others
 - pipewrire => configure noise suppression for voice
-- podman => install podman
+- podman
 
 ### I don't use more ###
-- sublime => install sublime
-- vim => install vim and plugins (I don't use more)
-- zsh => install zsh (I don't use more)
+- sublime
+- vim
+- zsh
 
 ### install all ###
 - all => my active settings
