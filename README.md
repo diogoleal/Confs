@@ -1,5 +1,24 @@
 # My dotfiles
 
+## In use:
+- fish => my favorite shell
+- emacs => my main editor
+- tmux => install tmux, tpm, themes and configuration
+- python => my main programming language
+- config => curl and gitconfig
+- k8s => install kind and kubectl
+- asdf => install asdf and plugins
+- pipewrire => configure noise suppression for voice
+- podman => install podman
+
+### I don't use more ###
+- sublime => install sublime
+- vim => install vim and plugins (I don't use more)
+- zsh => install zsh (I don't use more)
+
+### install all ###
+- all => my active settings
+
 ## Emacs
 <kbd>F9</kbd> rainbow-delimiters<br />
 <kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>t</kbd> + <kbd>t</kbd> - treemacs<br />
@@ -23,5 +42,8 @@
 * F11 - tagbar
 * C-e + h', 'j', 'k', 'l'  - winresize
 * C-n - autocomplete
+
+
+
 
 
