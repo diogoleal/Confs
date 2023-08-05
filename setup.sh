@@ -1,7 +1,6 @@
 #!/bin/sh
 
 export BIN="$HOME/bin/"
-# ZSH_DIR="$HOME/.zsh"
 TERRAFORM_VERSION="latest"
 HELM_VERSION="latest"
 ASDF_VERSION=v0.9.0
@@ -41,7 +40,7 @@ __f_vim(){
 __f_espanso(){
     wget -O "$HOME"/bin/Espanso.AppImage 'https://github.com/federico-terzi/espanso/releases/download/v2.1.8/Espanso-X11.AppImage'
     chmod u+x "$HOME"/bin/Espanso.AppImage
-    sudo ~/bin/Espanso.AppImage env-path register
+    sudo "$HOME"/bin/Espanso.AppImage env-path register
     echo "Register espanso as a systemd service"
     espanso service register
     echo "Start espanso"
@@ -49,7 +48,6 @@ __f_espanso(){
 }
 
 __f_python(){
-
     pip install --upgrade pip
     sudo dnf install openssl-libs zlib-devel clang clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel -y
     # python3 -m pip install --user pipx
@@ -57,7 +55,7 @@ __f_python(){
     pip install git+https://github.com/psf/black
 }
 
-__f_pyenv() {
+__f_pyenv(){
     __f_fish
     git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
     echo "set --export PYENV_ROOT $HOME/.pyenv" > ~/.config/fish/conf.d/pyenv.fish
@@ -127,7 +125,7 @@ __f_asdf_plugins(){
 }
 
 
-__f_install_hack_fonts() {
+__f_install_hack_fonts(){
     wget https://github.com/source-foundry/Hack/releases/download/$HACK_VERSION/Hack-$HACK_VERSION-ttf.zip
     unzip Hack-$HACK_VERSION-ttf.zip && mv ttf/* ~/.local/share/fonts/
     rmdir ttf
@@ -137,10 +135,10 @@ __f_install_hack_fonts() {
 __f_install_tools(){
     echo "install fzf, direnv, Docker, Discord, Telegram, Font Hack... ;)"
     __f_install_hack_fonts
-    sudo dnf install fzf direnv gnome-tweaks util-linux-user delta-git -y
+    sudo dnf install fzf direnv gnome-tweaks util-linux-user delta-git moreutils -y
     __f_install_flatpak
 
-    for i in org.signal.Signal com.discordapp.Discord org.telegram.desktop org.mozilla.firefox com.spotify.Client com.github.micahflee.torbrowser-launcher io.podman_desktop.PodmanDesktop
+    for i in org.signal.Signal com.discordapp.Discord org.telegram.desktop org.mozilla.firefox com io.podman_desktop.PodmanDesktop
     do
         flatpak -y --user install $i
     done
@@ -178,7 +176,7 @@ __f_kubectl(){
     fi
 }
 
-__f_emacs() {
+__f_emacs(){
     __f_install_hack_fonts
     ln -sf "$DIR_CONF"/.emacs "$HOME"/.emacs
     mkdir -p "$HOME"/.config/systemd/user/
