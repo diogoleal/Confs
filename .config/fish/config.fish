@@ -8,9 +8,9 @@ function pycharm
     /home/diogo/.local/share/JetBrains/Toolbox/scripts/pycharm
 end
 
-function _
-  sudo $argv
-end
+#function _
+#  sudo $argv
+#end
 
 function tempo
   curl -4 http://wttr.in/RiodeJaneiro
