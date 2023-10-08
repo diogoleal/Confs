@@ -77,7 +77,6 @@ unzip Hack-$HACK_VERSION-ttf.zip && mv ttf/* ~/.local/share/fonts/
 rmdir ttf
 rm Hack-$HACK_VERSION-ttf.zip
 
-
 # Pipewrire
 wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
 unzip linux-rnnoise.zip
@@ -86,7 +85,7 @@ ln -sf "$DIR_CONF"/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.c
 systemctl restart --user pipewire.service
 rm linux-rnnoise.zip
 
-# Install sdkman
+# sdkman
 curl -s "https://get.sdkman.io" | bash
 
 # asdf
@@ -98,22 +97,30 @@ if [ ! -d "${HOME}"/.asdf ]; then
 fi
 
 # asdf plugins
-echo "add plugin Terraform"
+# Terraform
 asdf plugin-add terraform https://github.com/asdf-community/asdf-hashicorp.git
 asdf install terraform $TERRAFORM_VERSION
 asdf global terraform $TERRAFORM_VERSION
-echo "add plugin helm"
+# helm
 asdf plugin-add helm https://github.com/Antiarchitect/asdf-helm.git
 asdf install helm $HELM_VERSION
 asdf global helm $HELM_VERSION
-echo "add awscli 2"
+# awscli 2
 asdf plugin add awscli
 asdf install awscli latest:2
 asdf global awscli latest
-echo "add aws-vault"
+# aws-vault
 asdf plugin-add aws-vault https://github.com/karancode/asdf-aws-vault.git
 asdf install aws-vault latest
 asdf global aws-vault latest
+# eksctl
+asdf plugin-add eksctl https://github.com/elementalvoid/asdf-eksctl.git
+asdf install eksctl latest
+asdf global aws-vault latest
+# heptio-authenticator-aws
+asdf plugin-add heptio-authenticator-aws https://github.com/neerfri/asdf-heptio-authenticator-aws.git
+asdf install heptio-authenticator-aws latest
+asdf global heptio-authenticator-aws latest
 
 # Jetbrains
 wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
