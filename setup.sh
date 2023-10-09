@@ -72,6 +72,7 @@ do
 done
 
 # Font Hack
+mkdir -p /home/diogo/.local/share/fonts/
 wget https://github.com/source-foundry/Hack/releases/download/$HACK_VERSION/Hack-$HACK_VERSION-ttf.zip
 unzip Hack-$HACK_VERSION-ttf.zip && mv ttf/* ~/.local/share/fonts/
 rmdir ttf
