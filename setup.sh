@@ -97,6 +97,15 @@ if [ ! -d "${HOME}"/.asdf ]; then
     mkdir -p ~/.config/fish/completions; and ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
 fi
 
+
+# neovim
+sudo dnf install -y neovim
+mkdir -p "$HOME"/.config/nvim && true
+ln -s "$DIR_CONF"/.vimrc "$HOME"/.config/nvim/init.vim
+curl -fLo "$HOME"/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim +PlugInstall +qall
+
 # asdf plugins
 # Terraform
 asdf plugin-add terraform https://github.com/asdf-community/asdf-hashicorp.git
