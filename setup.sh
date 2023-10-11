@@ -5,7 +5,6 @@ TERRAFORM_VERSION="latest"
 HELM_VERSION="latest"
 ASDF_VERSION=v0.13.1
 DIR_CONF="$HOME/Workspace/Confs"
-PYENV_ROOT="$HOME/.pyenv"
 HACK_VERSION="v3.003"
 KIND_VERSION="v0.20.0"
 JETBRAINS_TOOLBOX_VERSION="2.0.4.17212"
@@ -13,7 +12,7 @@ JETBRAINS_TOOLBOX_VERSION="2.0.4.17212"
 mkdir ~/bin -p && mkdir -p ~/lib || true
 
 echo "install fzf, direnv, Docker, Discord, Telegram, Font Hack... ;)"
-sudo dnf install git fzf direnv gnome-tweaks util-linux-user delta-git moreutils podman fish \
+sudo dnf install curl git fzf direnv gnome-tweaks util-linux-user delta-git moreutils podman fish \
     openssl-libs zlib-devel clang clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel -y
 
 sudo systemctl enable --now podman.socket
@@ -27,7 +26,7 @@ ln -sf "$DIR_CONF"/.tmux.conf "$HOME"/.tmux.conf
 # Fish shell
 ln -sf "$DIR_CONF"/.config/fish/functions/alias.fish ~/.config/fish/functions/alias.fish
 ln -sf "$DIR_CONF"/.config/fish/config.fish ~/.config/fish/config.fish
-curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+curl -sLo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
 fish -c "fisher install laughedelic/pisces"
 
 # Python
@@ -36,31 +35,17 @@ pip install --upgrade pip
 pip install pylint
 pip install git+https://github.com/psf/black
 
-## Pyenv + fish
-#git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
-#echo "set --export PYENV_ROOT $HOME/.pyenv" > ~/.config/fish/conf.d/pyenv.fish
-#git clone https://github.com/pyenv/pyenv-virtualenv.git "$PYENV_ROOT"/plugins/pyenv-virtualenv
-#ln -sf "$DIR_CONF"/.config/fish/conf.d/pyenv.fish ~/.config/fish/conf.d/pyenv.fish
-
 # kubectl
-PATH_KUBECTL=${HOME}"/bin"
-
-if [ ! -e "$PATH_KUBECTL" ]; then
-    curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-fi
-if [ ! -x "$PATH_KUBECTL" ]; then
-    chmod +x ./kubectl
-    sudo mv ./kubectl ${PATH_KUBECTL}
-    kubectl version --client
-fi
+curl -sLO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl
+mv ./kubectl ${BIN}
 
 # Kind
-if [ ! -f "${HOME}"/bin/kind ]; then
+if [ ! -f "${BIN}"/kind ]; then
     echo "install kind"
-    curl -Lo ./kind https://kind.sigs.k8s.io/dl/"$KIND_VERSION"/kind-linux-amd64
+    curl -sLo ./kind https://kind.sigs.k8s.io/dl/"$KIND_VERSION"/kind-linux-amd64
     chmod +x ./kind
-    mv ./kind "${HOME}"/bin/kind
-    rm kind
+    mv ./kind "${BIN}"/kind
 fi
 
 # Flatpak
@@ -102,7 +87,7 @@ fi
 sudo dnf install -y neovim
 mkdir -p "$HOME"/.config/nvim && true
 ln -s "$DIR_CONF"/.vimrc "$HOME"/.config/nvim/init.vim
-curl -fLo "$HOME"/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+curl -sfLo "$HOME"/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qall
 
