@@ -13,7 +13,7 @@ mkdir ~/bin -p && mkdir -p ~/lib || true
 
 echo "install packages via dnf ;)"
 sudo dnf update -y
-sudo dnf install curl git fzf direnv gnome-tweaks util-linux-user delta-git \
+sudo dnf install curl neovim git fzf direnv gnome-tweaks util-linux-user delta-git \
                       moreutils podman fish openssl-libs zlib-devel clang \
                       clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel -y
 
@@ -79,7 +79,6 @@ if [ ! -d "${HOME}"/.asdf ]; then
 fi
 
 # neovim
-sudo dnf install -y neovim
 mkdir -p "$HOME"/.config/nvim && true
 ln -s "$DIR_CONF"/.vimrc "$HOME"/.config/nvim/init.vim
 curl -sfLo "$HOME"/.local/share/nvim/site/autoload/plug.vim --create-dirs \
