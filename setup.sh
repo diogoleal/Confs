@@ -12,7 +12,7 @@ JETBRAINS_TOOLBOX_VERSION=2.0.4.17212
 mkdir ~/bin -p && mkdir -p ~/lib || true
 
 echo "install packages via dnf ;)"
-sudo dnf update -y
+sudo dnf upgrade -y --refresh
 sudo dnf install curl neovim git fzf direnv gnome-tweaks util-linux-user delta-git \
                       moreutils podman fish openssl-libs zlib-devel clang \
                       clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel -y
@@ -46,11 +46,14 @@ fi
 
 # Flatpak
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-for i in org.signal.Signal org.telegram.desktop io.podman_desktop.PodmanDesktop com.brave.Browser com.google.Chrome dev.geopjr.Tuba
-do
-    flatpak -y --user install $i
-done
+flatpak install flathub --user -y org.signal.Signal \
+                                  org.telegram.desktop \
+                                  io.podman_desktop.PodmanDesktop  \
+                                  com.brave.Browser \
+                                  com.google.Chrome \
+                                  dev.geopjr.Tuba \
+                                  io.dbeaver.DBeaverCommunity \
+                                  org.gnome.World.PikaBackup
 
 # Font Hack
 mkdir -p /home/diogo/.local/share/fonts/
@@ -118,6 +121,11 @@ jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}/jetbrains-toolbox
 rm -rf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
 
 # GNOME
+
+gsettings set org.gnome.software download-updates false
+gsettings set org.gnome.software download-updates-notify false
+gsettings set org.gnome.software first-run false
+
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.shell favorite-apps "[
                                               'com.brave.Browser.desktop',
