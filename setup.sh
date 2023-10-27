@@ -1,9 +1,7 @@
 #!/bin/sh
 
-export BIN="$HOME/bin/"
+BIN="$HOME/bin/"
 DIR_CONF="$HOME/Workspace/Confs"
-TERRAFORM_VERSION=latest
-HELM_VERSION="latest"
 ASDF_VERSION=v0.13.1
 HACK_VERSION=v3.003
 KIND_VERSION=v0.20.0
@@ -19,6 +17,7 @@ sudo dnf install curl neovim git fzf direnv gnome-tweaks util-linux-user delta-g
 
 sudo systemctl enable --now podman.socket
 
+
 ln -sf "$DIR_CONF"/.gitconfig "$HOME"/.gitconfig
 ln -sf "$DIR_CONF"/.curlrc "$HOME"/.curlrc
 git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm
@@ -30,11 +29,7 @@ ln -sf "$DIR_CONF"/.config/fish/functions/alias.fish ~/.config/fish/functions/al
 ln -sf "$DIR_CONF"/.config/fish/config.fish ~/.config/fish/config.fish
 curl -sLo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
 fish -c "fisher install laughedelic/pisces"
-
-# kubectl
-curl -sLO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x ./kubectl
-mv ./kubectl ${BIN}
+sudo chsh -s /usr/bin/fish "${USER}"
 
 # Kind
 if [ ! -f "${BIN}"/kind ]; then
@@ -47,6 +42,7 @@ fi
 # Flatpak
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub --user -y org.signal.Signal \
+                                  net.ankiweb.Anki \
                                   org.telegram.desktop \
                                   io.podman_desktop.PodmanDesktop  \
                                   com.brave.Browser \
@@ -89,30 +85,32 @@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qall
 
 # asdf plugins
-## terraform
-asdf plugin-add terraform https://github.com/asdf-community/asdf-hashicorp.git
-asdf install terraform $TERRAFORM_VERSION
-asdf global terraform $TERRAFORM_VERSION
-## helm
-asdf plugin-add helm https://github.com/Antiarchitect/asdf-helm.git
-asdf install helm $HELM_VERSION
-asdf global helm $HELM_VERSION
-## awscli 2
-asdf plugin-add awscli
-asdf install awscli latest:2
-asdf global awscli latest
-## aws-vault
-asdf plugin-add aws-vault https://github.com/karancode/asdf-aws-vault.git
-asdf install aws-vault latest
-asdf global aws-vault latest
-## eksctl
-asdf plugin-add eksctl https://github.com/elementalvoid/asdf-eksctl.git
-asdf install eksctl latest
-asdf global aws-vault latest
-## heptio-authenticator-aws
-asdf plugin-add heptio-authenticator-aws https://github.com/neerfri/asdf-heptio-authenticator-aws.git
-asdf install heptio-authenticator-aws latest
-asdf global heptio-authenticator-aws latest
+asdfPlugins=(
+  "terraform"
+  "helm"
+  "aws-vault"
+  "eksctl"
+  "heptio-authenticator-aws"
+  "kubectl")
+
+asdfPluginsAdd=(
+  "https://github.com/asdf-community/asdf-hashicorp.git"
+  "https://github.com/Antiarchitect/asdf-helm.git"
+  "https://github.com/karancode/asdf-aws-vault.git"
+  "https://github.com/elementalvoid/asdf-eksctl.git"
+  "https://github.com/neerfri/asdf-heptio-authenticator-aws.git"
+  "https://github.com/asdf-community/asdf-kubectl.git")
+
+VolIndex=0
+MaxIndices=${#asdfPlugins[@]}
+
+while (($VolIndex < $MaxIndices))
+do
+    asdf plugin-add "${asdfPlugins[$VolIndex]} ${asdfPluginsAdd[$VolIndex]}"
+    asdf install "${asdfPlugins[$VolIndex]}" latest
+    asdf global "${asdfPlugins[$VolIndex]}" latest
+    ((++VolIndex))
+done
 
 # Jetbrains
 wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
