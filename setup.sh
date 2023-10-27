@@ -13,16 +13,17 @@ echo "install packages via dnf ;)"
 sudo dnf upgrade -y --refresh
 sudo dnf install curl neovim git fzf direnv gnome-tweaks util-linux-user delta-git \
                       moreutils podman fish openssl-libs zlib-devel clang \
-                      clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel -y
+                      clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel terminator -y
 
 sudo systemctl enable --now podman.socket
 
-
+# Configs
 ln -sf "$DIR_CONF"/.gitconfig "$HOME"/.gitconfig
 ln -sf "$DIR_CONF"/.curlrc "$HOME"/.curlrc
 git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm
 git clone https://github.com/jimeh/tmux-themepack.git "$HOME"/.tmux/themepack
 ln -sf "$DIR_CONF"/.tmux.conf "$HOME"/.tmux.conf
+ln -sf "$DIR_CONF"/.config/terminator/ "$HOME"/.config
 
 # Fish shell
 ln -sf "$DIR_CONF"/.config/fish/functions/alias.fish ~/.config/fish/functions/alias.fish
@@ -45,8 +46,6 @@ flatpak install flathub --user -y org.signal.Signal \
                                   net.ankiweb.Anki \
                                   org.telegram.desktop \
                                   io.podman_desktop.PodmanDesktop  \
-                                  com.brave.Browser \
-                                  com.google.Chrome \
                                   dev.geopjr.Tuba \
                                   io.dbeaver.DBeaverCommunity \
                                   org.gnome.World.PikaBackup
@@ -126,9 +125,9 @@ gsettings set org.gnome.software first-run false
 
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.shell favorite-apps "[
-                                              'com.brave.Browser.desktop',
+                                              'firefox.desktop',
                                               'org.gnome.Nautilus.desktop',
                                               'org.gnome.Boxes.desktop',
                                               'jetbrains-pycharm-ce.desktop',
-                                              'com.gexperts.Tilix.desktop',
+                                              'terminator.desktop',
                                               'virt-manager.desktop']"
