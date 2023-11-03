@@ -11,9 +11,10 @@ mkdir ~/bin -p && mkdir -p ~/lib || true
 
 echo "install packages via dnf ;)"
 sudo dnf upgrade -y --refresh
-sudo dnf install curl neovim git fzf direnv gnome-tweaks util-linux-user delta-git \
+sudo dnf install -y curl neovim git fzf direnv gnome-tweaks util-linux-user delta-git \
                       moreutils podman fish openssl-libs zlib-devel clang \
-                      clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel terminator -y
+                      clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel terminator \
+                      speech-dispatcher
 
 sudo systemctl enable --now podman.socket
 
