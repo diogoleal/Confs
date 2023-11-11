@@ -11,7 +11,7 @@ mkdir ~/bin -p && mkdir -p ~/lib || true
 
 echo "install packages via dnf ;)"
 sudo dnf upgrade -y --refresh
-sudo dnf install -y curl neovim git fzf direnv gnome-tweaks util-linux-user delta-git \
+sudo dnf install -y curl neovim git fzf direnv util-linux-user delta-git \
                       moreutils podman fish openssl-libs zlib-devel clang \
                       clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel terminator \
                       speech-dispatcher
@@ -123,6 +123,9 @@ rm -rf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
 gsettings set org.gnome.software download-updates false
 gsettings set org.gnome.software download-updates-notify false
 gsettings set org.gnome.software first-run false
+
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape']"
+gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
 
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.shell favorite-apps "[
