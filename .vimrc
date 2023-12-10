@@ -52,7 +52,6 @@ let g:multi_cursor_prev_key='<ALT-p>'
 let g:multi_cursor_skip_key='<ALT-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-
 Plug 'w0rp/ale'
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
@@ -112,6 +111,9 @@ let g:move_key_modifier = 'C'
 "<C-j>   Move current line/selection down
 "<C-h>   Move current character/selection left
 "<C-l>   Move current character/selection right
+
+" commentary
+Plug 'tpope/vim-commentary'
 
 Plug 'kien/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
@@ -258,6 +260,8 @@ set showmode
 
 " Mostra os espacos em branco inuteis no final da linha
 au BufNewFile,BufRead * syn match brancomala '\s\+$' | hi brancomala ctermbg=red
+
+
 
 " show/hide comments
    fu! CommOnOff()
