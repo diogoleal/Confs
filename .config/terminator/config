@@ -2,13 +2,15 @@
 [keybindings]
 [profiles]
   [[default]]
-    scrollbar_position = hidden
     visible_bell = True
+    background_color = "#fbf1c7"
     cursor_shape = ibeam
-    foreground_color = "#ffffff"
+    font = JetBrainsMonoNL NFM 14
+    foreground_color = "#3c3836"
+    scrollbar_position = hidden
     scrollback_infinite = True
+    use_system_font = False
     copy_on_selection = True
-    use_theme_colors = True
 [layouts]
   [[default]]
     [[[child1]]]
