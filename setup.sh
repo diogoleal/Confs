@@ -9,7 +9,6 @@ JETBRAINS_TOOLBOX_VERSION=2.0.4.17212
 
 mkdir ~/bin -p && mkdir -p ~/lib || true
 
-echo "install packages via dnf ;)"
 sudo dnf upgrade -y --refresh
 sudo dnf install -y curl neovim git fzf direnv util-linux-user delta-git \
                       moreutils podman fish openssl-libs zlib-devel clang \
@@ -50,6 +49,8 @@ flatpak install flathub --user -y org.signal.Signal \
                                   dev.geopjr.Tuba \
                                   io.dbeaver.DBeaverCommunity \
                                   org.gnome.World.PikaBackup
+
+flatpak install --user --from https://nightly.gnome.org/repo/appstream/org.gnome.Prompt.Devel.flatpakref
 
 # Font Hack
 mkdir -p /home/diogo/.local/share/fonts/
