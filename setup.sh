@@ -28,6 +28,7 @@ ln -sf "$DIR_CONF"/.config/terminator/ "$HOME"/.config
 # Fish shell
 ln -sf "$DIR_CONF"/.config/fish/functions/alias.fish ~/.config/fish/functions/alias.fish
 ln -sf "$DIR_CONF"/.config/fish/config.fish ~/.config/fish/config.fish
+ln -sf "$DIR_CONF"/.config/fish/k9s.fish ~/.config/fish/completions/k9s.fish
 curl -sLo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
 fish -c "fisher install laughedelic/pisces"
 sudo chsh -s /usr/bin/fish "${USER}"
