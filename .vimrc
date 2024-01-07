@@ -31,7 +31,7 @@ let g:NERDTreeIndicatorMapCustom = {
 " lightline
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'dracula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -66,7 +66,7 @@ filetype plugin on
 
 let &runtimepath.=',~/.vim/bundle/ale'
 
-"winresizer
+" winresizer
 Plug 'simeji/winresizer'
 
 "Plug 'dag/vim-fish'
@@ -128,32 +128,35 @@ Plug 'tpope/vim-fugitive'
 Plug 'mileszs/ack.vim'
 Plug 'wincent/ferret'
 
-"Ansible
+" Ansible
 Plug 'pearofducks/ansible-vim'
 
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
-"Nuake terminal
+  " Displaying indent levels
+Plug 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_enable_on_vim_startup = 1
+hi IndentGuidesOdd  ctermbg=black
+hi IndentGuidesEven ctermbg=darkgrey
+
+" Nuake terminal
 Plug 'Lenovsky/nuake'
 nnoremap <F6> :Nuake<CR>
 inoremap <F6> <C-\><C-n>:Nuake<CR>
 tnoremap <F6> <C-\><C-n>:Nuake<CR>
 
-"Theme
-Plug 'junegunn/seoul256.vim'
+" Theme
+"Plug 'junegunn/seoul256.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
 syntax enable
 
-" Unified color scheme (default: dark)
-colo seoul256
-
 " Switch
-set background=dark
-
-"colorscheme onedark
+" set background=dark
+colorscheme dracula
 filetype indent on
 "set t_Co=256
 set encoding=utf-8
@@ -169,10 +172,10 @@ set autoread
 set autowrite
 
 " Enabled color column
-if (exists('+colorcolumn'))
-    set colorcolumn=120
-    highlight ColorColumn ctermbg=1
-endif
+"if (exists('+colorcolumn'))
+"    set colorcolumn=120
+"    highlight ColorColumn ctermbg=3
+"endif
 
 set list
 set listchars=tab:>-
@@ -195,7 +198,7 @@ set hlsearch
 set hlsearch!
 nnoremap <F8> :set hlsearch!<CR>
 
-"copy to clipboard
+" copy to clipboard
 noremap YY "+y<CR>
 
 " Makes search act like search in modern browsers
@@ -260,8 +263,6 @@ set showmode
 
 " Mostra os espacos em branco inuteis no final da linha
 au BufNewFile,BufRead * syn match brancomala '\s\+$' | hi brancomala ctermbg=red
-
-
 
 " show/hide comments
    fu! CommOnOff()
