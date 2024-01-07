@@ -134,7 +134,7 @@ Plug 'pearofducks/ansible-vim'
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
-  " Displaying indent levels
+" Displaying indent levels
 Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup = 1
 hi IndentGuidesOdd  ctermbg=black
