@@ -25,3 +25,4 @@ function sprunge
   curl -F 'sprunge=<-' http://sprunge.us
 end
 
+kubectl completion fish | source
