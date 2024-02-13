@@ -10,11 +10,11 @@ JETBRAINS_TOOLBOX_VERSION=2.0.4.17212
 mkdir ~/bin -p && mkdir -p ~/lib || true
 
 sudo dnf upgrade -y --refresh
-sudo dnf install -y curl neovim git fzf direnv util-linux-user delta-git \
+sudo dnf install -y curl neovim git fzf direnv util-linux-user git-delta \
                       moreutils podman fish openssl-libs zlib-devel clang \
-                      clang-devel bzip2-devel libffi-devel readline-devel sqlite-devel terminator \
-                      speech-dispatcher
-
+                      clang-devel bzip2-devel libffi-devel readline-devel \
+                      sqlite-devel terminator speech-dispatcher virt-manager
+sudo dnf remove firefox -y
 sudo systemctl enable --now podman.socket
 
 # Configs
@@ -26,6 +26,7 @@ ln -sf "$DIR_CONF"/.tmux.conf "$HOME"/.tmux.conf
 ln -sf "$DIR_CONF"/.config/terminator/ "$HOME"/.config
 
 # Fish shell
+mkdir -p ~/.config/fish/{functions,completions}
 ln -sf "$DIR_CONF"/.config/fish/functions/alias.fish ~/.config/fish/functions/alias.fish
 ln -sf "$DIR_CONF"/.config/fish/config.fish ~/.config/fish/config.fish
 ln -sf "$DIR_CONF"/.config/fish/k9s.fish ~/.config/fish/completions/k9s.fish
@@ -43,15 +44,16 @@ fi
 
 # Flatpak
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub --user -y org.signal.Signal \
-                                  net.ankiweb.Anki \
+flatpak install flathub --user -y net.ankiweb.Anki \
                                   org.telegram.desktop \
-                                  io.podman_desktop.PodmanDesktop  \
+                                  io.podman_desktop.PodmanDesktop \
                                   dev.geopjr.Tuba \
                                   io.dbeaver.DBeaverCommunity \
-                                  org.gnome.World.PikaBackup
+                                  org.gnome.World.PikaBackup \
+                                  org.mozilla.firefox \
+                                  org.freedesktop.Platform.ffmpeg-full/x86_64/23.08
 
-flatpak install --user --from https://nightly.gnome.org/repo/appstream/org.gnome.Prompt.Devel.flatpakref
+flatpak install --user -y --from https://nightly.gnome.org/repo/appstream/org.gnome.Prompt.Devel.flatpakref
 
 # Font Hack
 mkdir -p /home/diogo/.local/share/fonts/
@@ -60,25 +62,6 @@ unzip Hack-$HACK_VERSION-ttf.zip && mv ttf/* ~/.local/share/fonts/
 rmdir ttf
 rm Hack-$HACK_VERSION-ttf.zip
 
-# Pipewrire
-wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
-unzip linux-rnnoise.zip
-mv linux-rnnoise ~/lib
-ln -sf "$DIR_CONF"/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
-systemctl restart --user pipewire.service
-rm linux-rnnoise.zip
-
-# sdkman
-curl -s "https://get.sdkman.io" | bash
-
-# asdf
-if [ ! -d "${HOME}"/.asdf ]; then
-    echo "install asdf"
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION}
-    source ~/.asdf/asdf.fish
-    mkdir -p ~/.config/fish/completions; and ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
-fi
-
 # neovim
 mkdir -p "$HOME"/.config/nvim && true
 ln -s "$DIR_CONF"/.vimrc "$HOME"/.config/nvim/init.vim
@@ -86,39 +69,58 @@ curl -sfLo "$HOME"/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qall
 
+# Pipewrire
+wget https://github.com/werman/noise-suppression-for-voice/releases/download/v1.03/linux-rnnoise.zip
+unzip linux-rnnoise.zip
+mv linux-rnnoise ~/lib
+ln -sf "$DIR_CONF"/.config/pipewire/pipewire.conf.d/99-input-denoising.conf ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
+systemctl restart --user pipewire.service
+rm -rf linux-rnnoise*
+
+# sdkman
+curl -s "https://get.sdkman.io" | bash
+
+# asdf
+# if [ ! -d "${HOME}"/.asdf ]; then
+#    echo "install asdf"
+#    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION}
+#    source ~/.asdf/asdf.fish
+#    mkdir -p ~/.config/fish/completions; and ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
+# fi
+
 # asdf plugins
-asdfPlugins=(
-  "terraform"
-  "helm"
-  "aws-vault"
-  "eksctl"
-  "heptio-authenticator-aws"
-  "kubectl")
+# asdfPlugins=(
+#  "terraform"
+#  "helm"
+#  "aws-vault"
+#  "eksctl"
+#  "heptio-authenticator-aws"
+#  "kubectl")
 
-asdfPluginsAdd=(
-  "https://github.com/asdf-community/asdf-hashicorp.git"
-  "https://github.com/Antiarchitect/asdf-helm.git"
-  "https://github.com/karancode/asdf-aws-vault.git"
-  "https://github.com/elementalvoid/asdf-eksctl.git"
-  "https://github.com/neerfri/asdf-heptio-authenticator-aws.git"
-  "https://github.com/asdf-community/asdf-kubectl.git")
+# asdfPluginsAdd=(
+#  "https://github.com/asdf-community/asdf-hashicorp.git"
+#  "https://github.com/Antiarchitect/asdf-helm.git"
+#  "https://github.com/karancode/asdf-aws-vault.git"
+#  "https://github.com/elementalvoid/asdf-eksctl.git"
+#  "https://github.com/neerfri/asdf-heptio-authenticator-aws.git"
+#  "https://github.com/asdf-community/asdf-kubectl.git")
 
-VolIndex=0
-MaxIndices=${#asdfPlugins[@]}
+# VolIndex=0
+# MaxIndices=${#asdfPlugins[@]}
 
-while (($VolIndex < $MaxIndices))
-do
-    asdf plugin-add "${asdfPlugins[$VolIndex]} ${asdfPluginsAdd[$VolIndex]}"
-    asdf install "${asdfPlugins[$VolIndex]}" latest
-    asdf global "${asdfPlugins[$VolIndex]}" latest
-    ((++VolIndex))
-done
+#while (($VolIndex < $MaxIndices))
+#do
+#    asdf plugin-add "${asdfPlugins[$VolIndex]} ${asdfPluginsAdd[$VolIndex]}"
+#    asdf install "${asdfPlugins[$VolIndex]}" latest
+#    asdf global "${asdfPlugins[$VolIndex]}" latest
+#    ((++VolIndex))
+#done
 
 # Jetbrains
 wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
 tar -xvf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
 jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}/jetbrains-toolbox
-rm -rf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
+rm -rf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}*
 
 # GNOME
 
@@ -131,7 +133,7 @@ gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
 
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.shell favorite-apps "[
-                                              'firefox.desktop',
+                                              'org.mozilla.firefox.desktop',
                                               'org.gnome.Nautilus.desktop',
                                               'org.gnome.Boxes.desktop',
                                               'jetbrains-pycharm-ce.desktop',
