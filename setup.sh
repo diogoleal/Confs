@@ -2,6 +2,7 @@
 
 BIN="$HOME/bin/"
 DIR_CONF="$HOME/Workspace/Confs"
+DIR_EXTENSIONS="/home/diogo/.local/share/gnome-shell/extensions"
 ASDF_VERSION=v0.13.1
 HACK_VERSION=v3.003
 KIND_VERSION=v0.20.0
@@ -122,15 +123,18 @@ tar -xvf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
 jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}/jetbrains-toolbox
 rm -rf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}*
 
+# GNOME extensions 
+git clone https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator.git ${DIR_EXTENSIONS}/clipboard-indicator@tudmotu.com
+gnome-extensions enable clipboard-indicator@tudmotu.com
+
 # GNOME
-
-gsettings set org.gnome.software download-updates false
-gsettings set org.gnome.software download-updates-notify false
+gsettings set org.gnome.software download-updates true
+gsettings set org.gnome.software download-updates-notify true
 gsettings set org.gnome.software first-run false
-
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape']"
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
-
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.shell favorite-apps "[
                                               'org.mozilla.firefox.desktop',
@@ -139,3 +143,4 @@ gsettings set org.gnome.shell favorite-apps "[
                                               'jetbrains-pycharm-ce.desktop',
                                               'terminator.desktop',
                                               'virt-manager.desktop']"
+gnome-session-quit --logout
