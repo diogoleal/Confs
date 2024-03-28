@@ -52,7 +52,8 @@ flatpak install flathub --user -y net.ankiweb.Anki \
                                   io.dbeaver.DBeaverCommunity \
                                   org.gnome.World.PikaBackup \
                                   org.mozilla.firefox \
-                                  org.freedesktop.Platform.ffmpeg-full/x86_64/23.08
+                                  org.freedesktop.Platform.ffmpeg-full/x86_64/23.08 \
+                                  com.helix_editor.Helix
 
 flatpak install --user -y --from https://nightly.gnome.org/repo/appstream/org.gnome.Prompt.Devel.flatpakref
 
