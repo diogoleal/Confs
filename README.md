@@ -2,13 +2,7 @@
 
 ## In use:
 - fish => my favorite shell
-- tmux
-- python
-- k8s => kind and kubectl
-- asdf => asdf and plugins to terraform, terragrunt and others
 - pipewrire => configure noise suppression for voice
-- podman
-- fleet and pycharm
 - neovim
 
 ## Vim keybindings

@@ -2,10 +2,7 @@
 
 BIN="$HOME/bin/"
 DIR_CONF="$HOME/Workspace/Confs"
-DIR_EXTENSIONS="/home/diogo/.local/share/gnome-shell/extensions"
-ASDF_VERSION=v0.13.1
 HACK_VERSION=v3.003
-KIND_VERSION=v0.20.0
 JETBRAINS_TOOLBOX_VERSION=2.0.4.17212
 
 mkdir ~/bin -p && mkdir -p ~/lib || true
@@ -14,7 +11,7 @@ sudo dnf upgrade -y --refresh
 sudo dnf install -y curl neovim git fzf direnv util-linux-user git-delta \
                       moreutils podman fish openssl-libs zlib-devel clang \
                       clang-devel bzip2-devel libffi-devel readline-devel \
-                      sqlite-devel terminator speech-dispatcher virt-manager
+                      sqlite-devel virt-manager
 sudo dnf remove firefox -y
 sudo systemctl enable --now podman.socket
 
@@ -34,14 +31,6 @@ ln -sf "$DIR_CONF"/.config/fish/k9s.fish ~/.config/fish/completions/k9s.fish
 curl -sLo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
 fish -c "fisher install laughedelic/pisces"
 sudo chsh -s /usr/bin/fish "${USER}"
-
-# Kind
-if [ ! -f "${BIN}"/kind ]; then
-    echo "install kind"
-    curl -sLo ./kind https://kind.sigs.k8s.io/dl/"$KIND_VERSION"/kind-linux-amd64
-    chmod +x ./kind
-    mv ./kind "${BIN}"/kind
-fi
 
 # Flatpak
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -82,66 +71,8 @@ rm -rf linux-rnnoise*
 # sdkman
 curl -s "https://get.sdkman.io" | bash
 
-# asdf
-# if [ ! -d "${HOME}"/.asdf ]; then
-#    echo "install asdf"
-#    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION}
-#    source ~/.asdf/asdf.fish
-#    mkdir -p ~/.config/fish/completions; and ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
-# fi
-
-# asdf plugins
-# asdfPlugins=(
-#  "terraform"
-#  "helm"
-#  "aws-vault"
-#  "eksctl"
-#  "heptio-authenticator-aws"
-#  "kubectl")
-
-# asdfPluginsAdd=(
-#  "https://github.com/asdf-community/asdf-hashicorp.git"
-#  "https://github.com/Antiarchitect/asdf-helm.git"
-#  "https://github.com/karancode/asdf-aws-vault.git"
-#  "https://github.com/elementalvoid/asdf-eksctl.git"
-#  "https://github.com/neerfri/asdf-heptio-authenticator-aws.git"
-#  "https://github.com/asdf-community/asdf-kubectl.git")
-
-# VolIndex=0
-# MaxIndices=${#asdfPlugins[@]}
-
-#while (($VolIndex < $MaxIndices))
-#do
-#    asdf plugin-add "${asdfPlugins[$VolIndex]} ${asdfPluginsAdd[$VolIndex]}"
-#    asdf install "${asdfPlugins[$VolIndex]}" latest
-#    asdf global "${asdfPlugins[$VolIndex]}" latest
-#    ((++VolIndex))
-#done
-
 # Jetbrains
 wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
 tar -xvf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz
 jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}/jetbrains-toolbox
 rm -rf jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}*
-
-# GNOME extensions 
-git clone https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator.git ${DIR_EXTENSIONS}/clipboard-indicator@tudmotu.com
-gnome-extensions enable clipboard-indicator@tudmotu.com
-
-# GNOME
-gsettings set org.gnome.software download-updates true
-gsettings set org.gnome.software download-updates-notify true
-gsettings set org.gnome.software first-run false
-gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape']"
-gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
-gsettings set org.gnome.desktop.interface clock-show-weekday true
-gsettings set org.gnome.shell favorite-apps "[
-                                              'org.mozilla.firefox.desktop',
-                                              'org.gnome.Nautilus.desktop',
-                                              'org.gnome.Boxes.desktop',
-                                              'jetbrains-pycharm-ce.desktop',
-                                              'terminator.desktop',
-                                              'virt-manager.desktop']"
-gnome-session-quit --logout
