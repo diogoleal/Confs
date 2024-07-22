@@ -1,18 +1,11 @@
-direnv hook fish | source
+/usr/bin/direnv hook fish | source
 fish_add_path /home/diogo/bin/
 fish_add_path /var/lib/snapd/snap/bin
 fish_add_path /home/diogo/.cargo/bin
 fish_add_path /home/diogo/.local/bin
+fish_add_path /home/diogo/bin/go/bin
 
-set --universal GOPATH /home/diogo/go
-function fleet
-    /home/diogo/.local/share/JetBrains/Toolbox/scripts/fleet
-end
-
-function pycharm
-    /home/diogo/.local/share/JetBrains/Toolbox/scripts/pycharm
-end
-
+set --universal GOPATH /home/diogo/Workspace/go
 function S
   sudo $argv
 end
