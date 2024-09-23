@@ -31,7 +31,7 @@ flatpak install flathub -y net.ankiweb.Anki \
                             com.vivaldi.Vivaldi
 
 toolbox create bin
-toolbox run -c bin sudo dnf install -y direnv fzf fish gh neovim ansible opentofu
+toolbox run -c bin sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find
 
 # eksctl
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
