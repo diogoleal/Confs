@@ -25,6 +25,7 @@ flatpak install flathub -y  org.telegram.desktop \
                             org.kde.neochat \
                             com.vivaldi.Vivaldi \
                             ch.protonmail.protonmail-bridge \
+                            io.ente.auth \
                             org.kde.kleopatra \
                             org.mozilla.Thunderbird \
                             dev.zed.Zed \
