@@ -1,6 +1,5 @@
 #!/bin/sh
 
-BIN="$HOME/bin/"
 DIR_CONF="$HOME/Workspace/Confs"
 GO_VERSION=1.22.5
 mkdir ~/bin -p && mkdir -p ~/lib || true
@@ -19,17 +18,16 @@ sudo chsh -s /usr/bin/fish "${USER}"
 
 # Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub -y net.ankiweb.Anki \
-                            org.telegram.desktop \
+flatpak install flathub -y  org.telegram.desktop \
                             io.dbeaver.DBeaverCommunity \
                             org.freedesktop.Platform.ffmpeg-full/x86_64/23.08 \
-                            eu.betterbird.Betterbird \
-                            md.obsidian.Obsidian \
-                            org.kde.kate \
                             org.kde.tokodon \
                             org.kde.neochat \
-                            com.vivaldi.Vivaldi
-
+                            com.vivaldi.Vivaldi \
+                            ch.protonmail.protonmail-bridge \
+                            org.kde.kleopatra \
+                            org.mozilla.Thunderbird \
+                            dev.zed.Zed \
 toolbox create bin
 toolbox run -c bin sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find
 

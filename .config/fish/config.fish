@@ -4,6 +4,7 @@ fish_add_path /var/lib/snapd/snap/bin
 fish_add_path /home/diogo/.cargo/bin
 fish_add_path /home/diogo/.local/bin
 fish_add_path /home/diogo/bin/go/bin
+fish_add_path $HOME/.config/emacs/bin
 
 set --universal GOPATH /home/diogo/Workspace/go
 function S
