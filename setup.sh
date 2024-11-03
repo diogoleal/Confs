@@ -29,8 +29,8 @@ flatpak install flathub -y  org.telegram.desktop \
                             org.kde.kleopatra \
                             org.mozilla.Thunderbird \
                             dev.zed.Zed \
-toolbox create bin
-toolbox run -c bin sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find
+
+sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find lazygit
 
 # eksctl
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
@@ -44,13 +44,7 @@ curl -LO https://dl.k8s.io/release/v1.30.0/bin/linux/amd64/kubectl
 install -m=+x+r kubectl ~/bin/kubectl
 rm -rf kubectl
 
-# LSP
-podman run -it quay.io/redhat-developer/yaml-language-server:latest
-
 # Go
-toolbox create go
-toolbox run -c bin
-
 wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
 tar -zxf go${GO_VERSION}.linux-amd64.tar.gz -C ~/bin
 rm -rf go${GO_VERSION}.linux-amd64.tar.gz
