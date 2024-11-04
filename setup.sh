@@ -29,8 +29,9 @@ flatpak install flathub -y  org.telegram.desktop \
                             org.kde.kleopatra \
                             org.mozilla.Thunderbird \
                             dev.zed.Zed \
+                            network.loki.Session
 
-sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find lazygit
+sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find lazygit btop
 
 # eksctl
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
