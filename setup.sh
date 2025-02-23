@@ -2,7 +2,14 @@
 
 DIR_CONF="$HOME/Workspace/Confs"
 GO_VERSION=1.22.5
-mkdir ~/bin -p && mkdir -p ~/lib || true
+mkdir ~/{bin,lib} -p || true
+mkdir ~/Workspace || true
+
+sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+sudo dnf config-manager addrepo --from-repofile=https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+
+sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep \ 
+         fd-find lazygit btop yt-dlp+default sublime-text
 
 # Configs
 ln -sf "$DIR_CONF"/.gitconfig "$HOME"/.gitconfig
@@ -19,19 +26,9 @@ sudo chsh -s /usr/bin/fish "${USER}"
 # Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub -y  org.telegram.desktop \
-                            io.dbeaver.DBeaverCommunity \
-                            org.freedesktop.Platform.ffmpeg-full/x86_64/23.08 \
-                            org.kde.tokodon \
-                            org.kde.neochat \
                             com.vivaldi.Vivaldi \
-                            ch.protonmail.protonmail-bridge \
                             io.ente.auth \
-                            org.kde.kleopatra \
-                            org.mozilla.Thunderbird \
-                            dev.zed.Zed \
-                            network.loki.Session
-
-sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find lazygit btop
+                            org.mozilla.Thunderbird
 
 # eksctl
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
