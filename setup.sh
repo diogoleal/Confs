@@ -5,9 +5,10 @@ GO_VERSION=1.22.5
 mkdir ~/{bin,lib} -p || true
 mkdir ~/Workspace || true
 
+sudo dnf upgrade -y --refresh
+sudo dnf remove firefox -y
 sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 sudo dnf config-manager addrepo --from-repofile=https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-
 sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep \ 
          fd-find lazygit btop yt-dlp+default sublime-text
 
