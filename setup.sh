@@ -28,7 +28,9 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 flatpak install flathub -y  org.telegram.desktop \
                             com.vivaldi.Vivaldi \
                             io.ente.auth \
-                            org.mozilla.Thunderbird
+                            org.mozilla.Thunderbird \
+                            net.cozic.joplin_desktop \
+                            org.onlyoffice.desktopeditors
 
 # eksctl
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
