@@ -2,7 +2,7 @@
 
 * Desktop Environment - [GNOME](https://gnome.org)
 * Browser -  [vivaldi](https://vivaldi.com)
-* Shell - [fish](https:/fishshell.com)
+* Shell - [fish](https://fishshell.com)
 * Terminal - [terminator](https://gnome-terminator.org)
 * Editor - [emacs](https://emacs.org) / Sublime
 * Notes - [joplin](https://joplinapp.org)
