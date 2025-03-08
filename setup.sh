@@ -1,9 +1,15 @@
 #!/bin/sh
 
-BIN="$HOME/bin/"
 DIR_CONF="$HOME/Workspace/Confs"
-GO_VERSION=1.22.5
-mkdir ~/bin -p && mkdir -p ~/lib || true
+mkdir ~/{bin,lib} -p || true
+mkdir ~/Workspace || true
+
+sudo dnf remove firefox -y
+sudo dnf upgrade -y --refresh
+sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+sudo dnf config-manager addrepo --from-repofile=https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep \
+         fd-find lazygit btop yt-dlp+default sublime-text emacs
 
 # Configs
 ln -sf "$DIR_CONF"/.gitconfig "$HOME"/.gitconfig
@@ -19,20 +25,12 @@ sudo chsh -s /usr/bin/fish "${USER}"
 
 # Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub -y net.ankiweb.Anki \
-                            org.telegram.desktop \
-                            io.dbeaver.DBeaverCommunity \
-                            org.freedesktop.Platform.ffmpeg-full/x86_64/23.08 \
-                            eu.betterbird.Betterbird \
-                            md.obsidian.Obsidian \
-                            org.kde.kate \
-                            org.kde.tokodon \
-                            org.kde.neochat \
-                            com.vivaldi.Vivaldi
-
-toolbox create bin
-toolbox run -c bin sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep fd-find
-
+flatpak install flathub -y  org.telegram.desktop \
+                            com.vivaldi.Vivaldi \
+                            io.ente.auth \
+                            org.mozilla.Thunderbird \
+                            net.cozic.joplin_desktop \
+                            org.onlyoffice.desktopeditors
 # eksctl
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
 tar -xzf eksctl_Linux_amd64.tar.gz -C /tmp && rm eksctl_Linux_amd64.tar.gz
@@ -45,13 +43,12 @@ curl -LO https://dl.k8s.io/release/v1.30.0/bin/linux/amd64/kubectl
 install -m=+x+r kubectl ~/bin/kubectl
 rm -rf kubectl
 
-# LSP
-podman run -it quay.io/redhat-developer/yaml-language-server:latest
-
 # Go
-toolbox create go
-toolbox run -c bin
+VERSION=$(curl -s https://go.dev/VERSION?m=text)
+curl -LO https://go.dev/dl/${VERSION}.linux-amd64.tar.gz
+tar -C ~/bin/ -xzf ${VERSION}.linux-amd64.tar.gz
+rm -rf ${VERSION}.linux-amd64.tar.gz
 
-wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
-tar -zxf go${GO_VERSION}.linux-amd64.tar.gz -C ~/bin
-rm -rf go${GO_VERSION}.linux-amd64.tar.gz
+
+# emacs purcell
+git clone https://github.com/purcell/emacs.d.git ~/.emacs.d
