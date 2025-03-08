@@ -1,11 +1,11 @@
 # My dotfiles
 
-* Desktop Environment: GNOME
+* Desktop Environment: [GNOME](gnome.org)
 * Browser -  [vivaldi](https://vivaldi.com)
-* Shell - (https://fishshell.com)[fish]
-* Terminal: terminator
-* Editor - emacs / Sublime
-* Notepad - Joplin
+* Shell - [fish](https:/fishshell.com)
+* Terminal: [terminator](https://gnome-terminator.org)
+* Editor - [emacs](emacs.org) / Sublime
+* Notes - [joplin](https://joplinapp.org)
 
 ## emacs key bindings
 <kbd>F9</kbd> rainbow-delimiters<br />
