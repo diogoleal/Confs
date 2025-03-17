@@ -1,4 +1,5 @@
-(setq initial-scratch-message nil)
+
+;;(setq initial-scratch-message nil)
 (setq inhibit-startup-message t)
 
 (setq visible-bell t)
@@ -18,7 +19,8 @@
 (setq use-package-always-ensure t)
 
 ;; Global configs
-(set-face-attribute 'default nil :font "Hack" :height 100)
+;;(set-face-attribute 'default nil :font "Hack" :height 100)
+(set-frame-font "Inconsolata-13" nil t)
 (load-theme 'tsdh-dark t)
 (show-paren-mode t)
 (scroll-bar-mode -1)
@@ -30,6 +32,38 @@
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
 (global-display-line-numbers-mode)
+;(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; (use-package popper
+;;   :ensure t
+;;   :bind (("C-x C-b" . popper-toggle))
+;;   :custom
+;;   (popper-reference-buffers
+;;    '("\\*Ibuffer\\*"
+;;      "\\*Messages\\*"
+;;      "Output\\*$"
+;;      "\\*Async Shell Command\\*"))
+;;   :config
+;;   (popper-mode +1)
+;;   (popper-echo-mode +1))
+
+(setq-default mode-line-format
+  '("%e" mode-line-front-space
+    "Line: %l - Column: %c - File: "
+    mode-line-buffer-identification
+    " "
+    mode-line-modes
+    mode-line-end-spaces))
+
+(electric-pair-mode 1)
+(setq electric-pair-pairs '(
+    (?\" . ?\")
+    (?\{ . ?\})
+    (?\[ . ?\])
+    (?\( . ?\))
+    (?\‘ . ?\’)
+    (?\« . ?\»)
+))
 
 ;; auto-complete
 (use-package auto-complete
@@ -39,7 +73,7 @@
     (global-auto-complete-mode t)))
 
 ;; k8s-mode
-(use-package k8s-mode)
+;;(use-package k8s-mode)
 
 ;; dockerfile-mode
 (use-package dockerfile-mode)
@@ -111,13 +145,25 @@
   :config
   (global-git-gutter-mode +1))
 
+(use-package blamer
+  :ensure t
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  (blamer-author-formatter " ✎ %s ")
+  (blamer-datetime-formatter "[%s]")
+  (blamer-prettify-time-p t)
+  :config
+  (global-blamer-mode 1))
+
 ;; backup
-(setq backup-by-copying t
-      backup-directory-alist '(("." . "~/.saves/"))
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+;; (setq backup-by-copying t
+;;       backup-directory-alist '(("." . "~/.saves/"))
+;;       delete-old-versions t
+;;       kept-new-versions 6
+;;       kept-old-versions 2
+;;       version-control t)
 
 ;; ;; Integration with GNOME
 ;; (use-package dbus
@@ -347,9 +393,9 @@
 ;(setq warning-suppress-types '((comp) (initialization)))
 
 ;; reload when change init.el
-(add-hook 'after-init-hook
-          (lambda () (add-to-list 'load-path "~/.emacs.d/")
-            (load-file "~/.emacs.d/init.el")))
+;; (add-hook 'after-init-hook
+;;           (lambda () (add-to-list 'load-path "~/.emacs.d/")
+;;             (load-file "~/.emacs.d/init.el")))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
