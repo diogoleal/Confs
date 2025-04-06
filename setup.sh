@@ -8,7 +8,7 @@ sudo dnf remove firefox -y
 sudo dnf upgrade -y --refresh
 sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 sudo dnf config-manager addrepo --from-repofile=https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-sudo dnf install -y direnv fzf fish gh neovim ansible opentofu bat duf procs ripgrep \
+sudo dnf install -y direnv fzf fish gh ansible opentofu bat duf procs ripgrep \
          fd-find lazygit btop yt-dlp+default sublime-text emacs
 
 # Configs
@@ -20,7 +20,6 @@ ln -sf "$DIR_CONF"/.config/fish/functions/alias.fish ~/.config/fish/functions/al
 ln -sf "$DIR_CONF"/.config/fish/config.fish ~/.config/fish/config.fish
 ln -sf "$DIR_CONF"/.config/fish/k9s.fish ~/.config/fish/completions/k9s.fish
 curl -sLo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
-fish -c "fisher install laughedelic/pisces"
 sudo chsh -s /usr/bin/fish "${USER}"
 
 # Flatpak
@@ -28,8 +27,8 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 flatpak install flathub -y  org.telegram.desktop \
                             com.vivaldi.Vivaldi \
                             io.ente.auth \
-                            org.mozilla.Thunderbird \
                             net.cozic.joplin_desktop \
+                            org.gnome.Meld \
                             org.onlyoffice.desktopeditors
 # eksctl
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
@@ -49,6 +48,5 @@ curl -LO https://go.dev/dl/${VERSION}.linux-amd64.tar.gz
 tar -C ~/bin/ -xzf ${VERSION}.linux-amd64.tar.gz
 rm -rf ${VERSION}.linux-amd64.tar.gz
 
-
-# emacs purcell
-git clone https://github.com/purcell/emacs.d.git ~/.emacs.d
+# emacs
+ln -sf "$DIR_CONF"/.emacs.d/init.el  ~/.emacs.d/init.el

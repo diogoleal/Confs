@@ -1,9 +1,22 @@
+;;; init.el --- Personal Emacs configuration
+;;; Commentary:
+;; This is the Emacs configuration file.
+
+;;; Code:
 
 ;;(setq initial-scratch-message nil)
+
+;; Temporarily increase garbage collection threshold to improve startup performance
+(setq gc-cons-threshold 100000000)
+
 (setq inhibit-startup-message t)
 
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
+
+;; https://themkat.net/2025/03/25/simple_smoother_emacs_scrolling.html
+(setq scroll-conservatively 10
+      scroll-margin 15)
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -20,8 +33,9 @@
 
 ;; Global configs
 ;;(set-face-attribute 'default nil :font "Hack" :height 100)
-(set-frame-font "Inconsolata-13" nil t)
-(load-theme 'tsdh-dark t)
+(set-frame-font "Inconsolata-14" nil t)
+(load-theme 'leuven t)
+
 (show-paren-mode t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -32,6 +46,14 @@
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
 (global-display-line-numbers-mode)
+(setq make-backup-files nil)
+(setq version-control t)
+(setq backup-by-copying t)
+(setq delete-old-versions t)
+(setq kept-new-versions 10)
+(setq kept-old-versions 2)
+(setq auto-save-default nil)
+
 ;(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; (use-package popper
@@ -42,28 +64,39 @@
 ;;    '("\\*Ibuffer\\*"
 ;;      "\\*Messages\\*"
 ;;      "Output\\*$"
-;;      "\\*Async Shell Command\\*"))
-;;   :config
-;;   (popper-mode +1)
-;;   (popper-echo-mode +1))
 
-(setq-default mode-line-format
-  '("%e" mode-line-front-space
-    "Line: %l - Column: %c - File: "
-    mode-line-buffer-identification
-    " "
-    mode-line-modes
-    mode-line-end-spaces))
 
-(electric-pair-mode 1)
-(setq electric-pair-pairs '(
-    (?\" . ?\")
-    (?\{ . ?\})
-    (?\[ . ?\])
-    (?\( . ?\))
-    (?\‘ . ?\’)
-    (?\« . ?\»)
-))
+;; enable tab-bar-mode
+(setq tab-bar-show 1)
+(tab-bar-mode 1)
+
+(setq tab-bar-format '(tab-bar-format-history
+                       tab-bar-format-tabs
+                       tab-bar-separator
+                       tab-bar-format-add-tab))
+
+;; Keybindings organization
+(global-set-key (kbd "C-x t n") 'tab-new)
+(global-set-key (kbd "C-x t c") 'tab-close)
+(global-set-key (kbd "C-x t o") 'tab-next)
+(global-set-key (kbd "C-x t p") 'tab-previous)
+(global-set-key (kbd "C-x t r") 'tab-rename)
+(global-set-key (kbd "C-x t s") 'tab-switch)
+(global-set-key [f9] 'rainbow-delimiters-mode)
+(global-set-key (kbd "C-<tab>") 'other-window)
+(global-set-key (kbd "M-<up>") 'enlarge-window)
+(global-set-key (kbd "M-<down>") 'shrink-window)
+(global-set-key (kbd "M-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-<left>") 'shrink-window-horizontally)
+
+;; (setq electric-pair-pairs '(
+;;     (?\" . ?\")
+;;     (?\{ . ?\})
+;;     (?\[ . ?\])
+;;     (?\( . ?\))
+;;     (?\‘ . ?\’)
+;;     (?\« . ?\»)
+;; ))
 
 ;; auto-complete
 (use-package auto-complete
@@ -72,9 +105,6 @@
     (ac-config-default)
     (global-auto-complete-mode t)))
 
-;; k8s-mode
-;;(use-package k8s-mode)
-
 ;; dockerfile-mode
 (use-package dockerfile-mode)
 
@@ -82,15 +112,6 @@
 (use-package highlight-parentheses
   :hook
   ((minibuffer-setup . highlight-parentheses-minibuffer-setup)))
-
-;; global shortcuts
-(global-set-key [f9] 'rainbow-delimiters-mode)
-(global-set-key [f2] 'neotree-toggle)
-(global-set-key (kbd "C-<tab>") 'other-window)
-(global-set-key (kbd "M-<up>") 'enlarge-window)
-(global-set-key (kbd "M-<down>") 'shrink-window)
-(global-set-key (kbd "M-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-<left>") 'shrink-window-horizontally)
 
 ;; multiple-cursors
 (use-package multiple-cursors
@@ -140,21 +161,97 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
-;; git-gutter
-(use-package git-gutter
-  :config
-  (global-git-gutter-mode +1))
+(use-package all-the-icons
+  :ensure t)
 
-(use-package blamer
+(use-package doom-modeline
   :ensure t
+  :init
+  (doom-modeline-mode 1)
   :custom
-  (blamer-idle-time 0.3)
-  (blamer-min-offset 70)
-  (blamer-author-formatter " ✎ %s ")
-  (blamer-datetime-formatter "[%s]")
-  (blamer-prettify-time-p t)
+  (doom-modeline-icon t)) ;; Habilita ícones
+
+;; git-gutter
+;; (use-package git-gutter
+;;   :config
+;;   (global-git-gutter-mode +1))
+
+;; (use-package blamer
+;;   :ensure t
+;;   :custom
+;;   (blamer-idle-time 0.3)
+;;   (blamer-min-offset 70)
+;;   (blamer-author-formatter " ✎ %s ")
+;;   (blamer-datetime-formatter "[%s]")
+;;   (blamer-prettify-time-p t)
+;;   :config
+;;   (global-blamer-mode 1))
+
+;; ;; Consolidated Org Mode configuration
+;; (use-package org
+;;   :ensure t
+;;   :hook (org-mode . visual-line-mode)
+;;   :config
+;;   (setq org-hide-leading-stars t
+;;         org-startup-indented t
+;;         org-ellipsis " ⤵"
+;;         org-log-done 'time
+;;         org-directory "~/org/"
+;;         org-agenda-files '("~/org/tarefas.org"))
+;;   :bind (("C-c a" . org-agenda)
+;;          ("C-c c" . org-capture)))
+
+;; ;; Consolidated Org Superstar configuration
+;; (use-package org-superstar
+;;   :ensure t
+;;   :hook (org-mode . org-superstar-mode)
+;;   :config
+;;   (setq org-superstar-headline-bullets-list '(?★ ?◉ ?○ ?◆ ?▶)))
+
+;; ;; Org Modern Mode configuration
+
+(use-package org-modern
+  :ensure t
+  :hook (org-mode . org-modern-mode))
+
+;; (use-package org-modern
+;;   :ensure t
+;;   :hook (org-mode . org-modern-mode)
+;;   :config
+;;   (setq org-modern-star '("◉" "○" "▶" "◆")
+;;         org-modern-table nil
+;;         org-modern-block-fringe nil))
+
+
+;; org-mode
+;; (require 'org)
+;; (define-key global-map "\C-cl" 'org-store-link)
+;; (define-key global-map "\C-ca" 'org-agenda)
+;; (setq org-log-done t)
+
+
+(use-package org
+  :ensure t
+  :hook (org-mode . visual-line-mode)
   :config
-  (global-blamer-mode 1))
+  (setq org-hide-leading-stars t
+        org-startup-indented t
+        org-ellipsis " ⤵"
+        org-log-done 'time
+        org-directory "~/org/"
+        org-agenda-files '("~/org/tarefas.org"))
+  :bind (("C-c a" . org-agenda)
+         ("C-c c" . org-capture)))
+
+;; Consolidated Org Superstar configuration
+;; (use-package org-superstar
+;;   :ensure t
+;;   :hook (org-mode . org-superstar-mode)
+;;   :config
+;;   (setq org-superstar-headline-bullets-list '(?★ ?◉ ?○ ?◆ ?▶)))
+
+(use-package htmlize
+  :ensure t)
 
 ;; backup
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -201,22 +298,57 @@
 ;;              (string-match "GNOME" (shell-command-to-string "echo $XDG_CURRENT_DESKTOP")))
 ;;     (my-gnome-register))
 
-;; enable tab-bar-mode
-(setq tab-bar-show 1)
-(tab-bar-mode 1)
 
-(setq tab-bar-format '(tab-bar-format-history
-                       tab-bar-format-tabs
-                       tab-bar-separator
-                       tab-bar-format-add-tab))
+;; Groovy
+(add-to-list 'auto-mode-alist '("Jenkinsfile\\'" . groovy-mode))
+(use-package groovy-mode
+  :ensure t
+  :mode ("Jenkinsfile\\'" . groovy-mode)
+  :config
+  (setq groovy-indent-offset 4))
 
-;; Shortcus
-(global-set-key (kbd "C-x t n") 'tab-new)
-(global-set-key (kbd "C-x t c") 'tab-close)
-(global-set-key (kbd "C-x t o") 'tab-next)
-(global-set-key (kbd "C-x t p") 'tab-previous)
-(global-set-key (kbd "C-x t r") 'tab-rename)
-(global-set-key (kbd "C-x t s") 'tab-switch)
+;; sudo dnf install clang-tools-extra nodejs npm
+;; go install golang.org/x/tools/gopls@latest
+;; npm install bash-language-server yaml-language-server pyright
+;; M-x lsp
+
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook ((c-mode          . lsp)
+         (c++-mode        . lsp)
+         (python-mode     . lsp)
+         (go-mode         . lsp)
+         (sh-mode         . lsp)
+         (yaml-mode       . lsp))
+  :commands lsp)
+
+(use-package consult
+  :ensure t
+  :bind (
+         ("C-s" . consult-line)
+         ("C-c s" . consult-ripgrep)
+         ("C-x b" . consult-buffer)
+         ("M-y" . consult-yank-pop)
+         ))
+
+(use-package consult-project-extra
+  :ensure t
+  :after consult
+  :bind (("C-c p f" . consult-project-extra-find)
+         ("C-c p g" . consult-project-extra-ripgrep)))
+
+
+(use-package vertico
+  :ensure t
+  :init (vertico-mode))
+
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless)))
+
 
 (use-package treemacs
   :ensure t
@@ -283,6 +415,8 @@
     ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 44)
 
+    (use-package treemacs-projectile
+      :ensure t)
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode 'always)
@@ -323,12 +457,12 @@
   :after (treemacs magit)
   :ensure t)
 
-(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+(use-package treemacs-persp
+  :after (treemacs persp-mode)
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 
-(use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
+(use-package treemacs-tab-bar
   :after (treemacs)
   :ensure t
   :config (treemacs-set-scope-type 'Tabs))
@@ -355,26 +489,61 @@
                   (when (eq major-mode 'vterm-mode)
                     (kill-buffer-and-window))))
 
+;; Project organization
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1)
+  (setq projectile-project-search-path '("~/Workspace/" "~/")
+        projectile-switch-project-action #'treemacs-add-and-display-current-project-exclusively
+	      projectile-indexing-method 'alien
+	      projectile-use-git-grep 1))
+
+;; (projectile-register-project-type 'python-toml '("pyproject.toml")
+;;                                   :project-file "pyproject.toml"
+;;                                   :compile "poetry build"
+;;                                   :test "task test"
+;;                                   :test-prefix "test_"
+;;                                   :test-suffix "_test")
+
+(use-package dashboard
+  :ensure t
+  :init
+  (setq dashboard-items '((recents . 10)
+			                    (projects . 10))
+	      dashboard-startup-banner 'logo
+	      dashboard-set-file-icons t
+	      dashboard-icon-type 'all-the-icons
+	      dashboard-heading-icons t
+	      dashboard-projects-backend 'projectile
+	      dashboard-set-init-info t)
+  :config
+  (dashboard-setup-startup-hook))
+(setq dashboard-org-agenda-categories '("Tasks"))
+
+(provide 'dashboard-config)
+
 ;; shortcut vterm
 (global-set-key (kbd "C-c t") 'vterm)
 
-;; Salva buffers e posição do cursor
-(setq desktop-save 'if-exists)
-(desktop-save-mode 1)
+;; (setq desktop-save 'if-exists)
+;; (desktop-save-mode 1)
 
-;; Multiples workspaces
-(use-package persp-mode
-  :ensure t
-  :init
-  (setq persp-auto-save-fname "~/.emacs.d/workspace")
-  :config
-  (persp-mode 1))
+;; ;; Multiples workspaces
+;; (use-package persp-mode
+;;   :ensure t
+;;   :init
+;;   (setq persp-auto-save-fname "~/.emacs.d/workspace")
+;;   :config
+;;   (persp-mode 1))
 
-;; Window layout
-(use-package eyebrowse
-  :ensure t
-  :config
-  (eyebrowse-mode t))
+;; ;; Window layout
+;; (use-package eyebrowse
+;;   :ensure t
+;;   :config
+;;   (eyebrowse-mode t))
 
 (use-package highlight-symbol
   :ensure t
@@ -384,13 +553,26 @@
         highlight-symbol-idle-delay 0.5)
   )
 
-(use-package swiper
-  :ensure t
-  :bind (("C-s" . swiper))
-  )
+;; (use-package swiper
+;;   :ensure t
+;;   :bind (("C-s" . swiper))
+;;   )
+
+(defun close-buffers-by-extension (extension)
+  "Closes all buffers that have files with the given EXTENSION."
+  (interactive "sEnter the extension (e.g. yaml, py, el, bash)")
+  (let ((pattern (concat "\\." (regexp-quote extension) "\\'")))
+    (mapc (lambda (buf)
+            (when (and (buffer-file-name buf)
+                       (string-match pattern (buffer-file-name buf)))
+              (kill-buffer buf)))
+          (buffer-list)))
+  (message "Buffers with .%s extension closed" extension))
+
+(global-set-key (kbd "C-c b k") 'close-buffers-by-extension)
 
 ;;; silent warming and packages build
-;(setq warning-suppress-types '((comp) (initialization)))
+;; (setq warning-suppress-types '((comp) (initialization)))
 
 ;; reload when change init.el
 ;; (add-hook 'after-init-hook
@@ -408,5 +590,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(treemacs-tab-bar treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs terraform-mode pyvenv multiple-cursors magit k8s-mode highlight-parentheses git-gutter flymake-shell flycheck dockerfile-mode bash-completion auto-complete)))
+ '(package-selected-packages nil))
+
