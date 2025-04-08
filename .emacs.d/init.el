@@ -187,48 +187,6 @@
 ;;   :config
 ;;   (global-blamer-mode 1))
 
-;; ;; Consolidated Org Mode configuration
-;; (use-package org
-;;   :ensure t
-;;   :hook (org-mode . visual-line-mode)
-;;   :config
-;;   (setq org-hide-leading-stars t
-;;         org-startup-indented t
-;;         org-ellipsis " ⤵"
-;;         org-log-done 'time
-;;         org-directory "~/org/"
-;;         org-agenda-files '("~/org/tarefas.org"))
-;;   :bind (("C-c a" . org-agenda)
-;;          ("C-c c" . org-capture)))
-
-;; ;; Consolidated Org Superstar configuration
-;; (use-package org-superstar
-;;   :ensure t
-;;   :hook (org-mode . org-superstar-mode)
-;;   :config
-;;   (setq org-superstar-headline-bullets-list '(?★ ?◉ ?○ ?◆ ?▶)))
-
-;; ;; Org Modern Mode configuration
-
-(use-package org-modern
-  :ensure t
-  :hook (org-mode . org-modern-mode))
-
-;; (use-package org-modern
-;;   :ensure t
-;;   :hook (org-mode . org-modern-mode)
-;;   :config
-;;   (setq org-modern-star '("◉" "○" "▶" "◆")
-;;         org-modern-table nil
-;;         org-modern-block-fringe nil))
-
-
-;; org-mode
-;; (require 'org)
-;; (define-key global-map "\C-cl" 'org-store-link)
-;; (define-key global-map "\C-ca" 'org-agenda)
-;; (setq org-log-done t)
-
 
 (use-package org
   :ensure t
@@ -243,12 +201,9 @@
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)))
 
-;; Consolidated Org Superstar configuration
-;; (use-package org-superstar
-;;   :ensure t
-;;   :hook (org-mode . org-superstar-mode)
-;;   :config
-;;   (setq org-superstar-headline-bullets-list '(?★ ?◉ ?○ ?◆ ?▶)))
+(use-package org-modern
+  :ensure t
+  :hook (org-mode . org-modern-mode))
 
 (use-package htmlize
   :ensure t)
@@ -557,6 +512,11 @@
 ;;   :ensure t
 ;;   :bind (("C-s" . swiper))
 ;;   )
+
+;; Load auth-source for secure credential management
+(require 'auth-source)
+(setq auth-sources '(default-secret))
+(setq auth-source-debug t)
 
 (defun close-buffers-by-extension (extension)
   "Closes all buffers that have files with the given EXTENSION."
