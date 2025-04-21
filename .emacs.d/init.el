@@ -108,7 +108,6 @@
 ;; dockerfile-mode
 (use-package dockerfile-mode)
 
-;; highlight-parentheses
 (use-package highlight-parentheses
   :hook
   ((minibuffer-setup . highlight-parentheses-minibuffer-setup)))
@@ -133,8 +132,7 @@
   :hook
   (terraform-mode . my-terraform-mode-init)
   :config
-  (defun my-terraform-mode-init ()
-    ))
+  (defun my-terraform-mode-init ()))
 
 ;; flycheck
 (use-package flycheck
@@ -169,7 +167,7 @@
   :init
   (doom-modeline-mode 1)
   :custom
-  (doom-modeline-icon t)) ;; Habilita ícones
+  (doom-modeline-icon t))
 
 ;; git-gutter
 ;; (use-package git-gutter
@@ -187,19 +185,47 @@
 ;;   :config
 ;;   (global-blamer-mode 1))
 
-
 (use-package org
   :ensure t
   :hook (org-mode . visual-line-mode)
   :config
-  (setq org-hide-leading-stars t
-        org-startup-indented t
-        org-ellipsis " ⤵"
-        org-log-done 'time
-        org-directory "~/org/"
-        org-agenda-files '("~/org/tarefas.org"))
-  :bind (("C-c a" . org-agenda)
-         ("C-c c" . org-capture)))
+  (setq
+   org-startup-folded 'showeverything
+   org-hide-emphasis-markers t
+   org-log-done 'time))
+
+  (setq org-directory "~/org/")
+
+  ;; (setq org-hide-leading-stars t
+  ;;       org-startup-indented t
+  ;;       org-ellipsis " ⤵"
+
+
+  ;; :bind (("C-c a" . org-agenda)
+  ;;        ("C-c c" . org-capture))
+
+
+(setq org-agenda-files
+      (list (expand-file-name "tasks.org" org-directory)
+            (expand-file-name "notes.org" org-directory)
+            (expand-file-name "meetings.org" org-directory)
+            (expand-file-name "journal.org" org-directory)))
+
+(setq org-capture-templates
+      '(("n" "Quick Note" entry (file "~/org/notes.org")
+         "* %?\n%U\n")
+        ("t" "Task" entry (file "~/org/tasks.org")
+         "* TODO %?\nSCHEDULED: %t\n%U\n")
+        ("m" "Meeting" entry (file "~/org/meetings.org")
+         "* MEETING with %? :meeting:\nSCHEDULED: %t\n%U\n")
+        ("j" "Journal Entry" entry (file+olp+datetree "~/org/journal.org")
+         "* %?\n%U\n")))
+
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(add-hook 'org-mode-hook #'org-indent-mode)
+(add-hook 'org-mode-hook #'visual-line-mode)
 
 (use-package org-modern
   :ensure t
@@ -216,43 +242,6 @@
 ;;       kept-new-versions 6
 ;;       kept-old-versions 2
 ;;       version-control t)
-
-;; ;; Integration with GNOME
-;; (use-package dbus
-;;   :config
-;;   (defun my-register-signals (client-path)
-;;     "Registrar para os sinais 'QueryEndSession' e 'EndSession' do Gnome SessionManager."
-;;     (setq my-gnome-client-path client-path)
-;;     (let ((end-session-response
-;;            (lambda (&optional arg)
-;;              (dbus-call-method-asynchronously
-;;               :session "org.gnome.SessionManager" my-gnome-client-path
-;;               "org.gnome.SessionManager.ClientPrivate" "EndSessionResponse"
-;;               nil t "")))))
-;;       (dbus-register-signal
-;;        :session "org.gnome.SessionManager" client-path
-;;        "org.gnome.SessionManager.Client" "QueryEndSession"
-;;        `(lambda ()
-;;           (,end-session-response)
-;;           t))
-;;       (dbus-register-signal
-;;        :session "org.gnome.SessionManager" client-path
-;;        "org.gnome.SessionManager.Client" "EndSession"
-;;        `(lambda ()
-;;           (add-hook 'kill-emacs-hook ,end-session-response t)
-;;           (kill-emacs)))))
-
-;;   (defun my-gnome-register ()
-;;     "Registrar este Emacs como cliente do GNOME SessionManager."
-;;     (dbus-call-method-asynchronously
-;;      :session "org.gnome.SessionManager" "/org/gnome/SessionManager"
-;;      "org.gnome.SessionManager" "RegisterClient"
-;;      #'my-register-signals (user-login-name) (system-name)))
-
-;;   (when (and (eq window-system 'x)
-;;              (string-match "GNOME" (shell-command-to-string "echo $XDG_CURRENT_DESKTOP")))
-;;     (my-gnome-register))
-
 
 ;; Groovy
 (add-to-list 'auto-mode-alist '("Jenkinsfile\\'" . groovy-mode))
@@ -293,7 +282,6 @@
   :after consult
   :bind (("C-c p f" . consult-project-extra-find)
          ("C-c p g" . consult-project-extra-ripgrep)))
-
 
 (use-package vertico
   :ensure t
@@ -368,7 +356,7 @@
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+    ;; (treemacs-resize-icons 30)
 
     (use-package treemacs-projectile
       :ensure t)
@@ -428,8 +416,7 @@
   :config
   (setq vterm-shell "/usr/bin/fish")
   (setq vterm-max-scrollback 50000)
-  (setq vterm-kill-buffer-on-exit t)
-  )
+  (setq vterm-kill-buffer-on-exit t))
 
 (global-set-key (kbd "C-x <f12>")
                 (lambda ()
@@ -455,13 +442,6 @@
         projectile-switch-project-action #'treemacs-add-and-display-current-project-exclusively
 	      projectile-indexing-method 'alien
 	      projectile-use-git-grep 1))
-
-;; (projectile-register-project-type 'python-toml '("pyproject.toml")
-;;                                   :project-file "pyproject.toml"
-;;                                   :compile "poetry build"
-;;                                   :test "task test"
-;;                                   :test-prefix "test_"
-;;                                   :test-suffix "_test")
 
 (use-package dashboard
   :ensure t
@@ -505,8 +485,7 @@
   :hook (prog-mode . highlight-symbol-mode)
   :config
   (setq highlight-symbol-on-navigation-p t
-        highlight-symbol-idle-delay 0.5)
-  )
+        highlight-symbol-idle-delay 0.5))
 
 ;; (use-package swiper
 ;;   :ensure t

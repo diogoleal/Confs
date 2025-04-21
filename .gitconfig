@@ -1,14 +1,20 @@
-[user]
-    name = Diogo Leal
-    email = diogo@diogoleal.com
-    signingkey = 4D7CF362
+[includeIf "gitdir:/home/diogo/Workspace/Embraer/**"]
+  path = /home/diogo/Workspace/Embraer/gitconfig
+
+ [includeIf "gitdir:/home/diogo/Workspace/personal/**"]
+  path = /home/diogo/Workspace/personal/gitconfig
+
+#  [user]
+#    name = Diogo Leal Andrade
+#    email = diogo.andrade@redspark.io
+#    signingkey = 4D7CF362
 # [color]
 #    branch = auto
 #    diff = auto
 #    interactive = auto
 #    status = auto
 [core]
-    editor = nvim
+    editor = emacs -nw
     #pager = less -FXRS
     # pager = delta
     autocrlf = input
@@ -214,3 +220,5 @@
   unmerged = magenta bold reverse
   untracked = red
   updated = green bold
+[credential]
+	helper = store
