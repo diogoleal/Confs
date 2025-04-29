@@ -14,6 +14,8 @@
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
 
+(setq global-auto-revert-mode t)
+
 ;; https://themkat.net/2025/03/25/simple_smoother_emacs_scrolling.html
 (setq scroll-conservatively 10
       scroll-margin 15)
@@ -32,7 +34,6 @@
 (setq use-package-always-ensure t)
 
 ;; Global configs
-;;(set-face-attribute 'default nil :font "Hack" :height 100)
 (set-frame-font "Inconsolata-14" nil t)
 (load-theme 'leuven t)
 
@@ -53,18 +54,6 @@
 (setq kept-new-versions 10)
 (setq kept-old-versions 2)
 (setq auto-save-default nil)
-
-;(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; (use-package popper
-;;   :ensure t
-;;   :bind (("C-x C-b" . popper-toggle))
-;;   :custom
-;;   (popper-reference-buffers
-;;    '("\\*Ibuffer\\*"
-;;      "\\*Messages\\*"
-;;      "Output\\*$"
-
 
 ;; enable tab-bar-mode
 (setq tab-bar-show 1)
@@ -201,10 +190,6 @@
   ;;       org-ellipsis " ⤵"
 
 
-  ;; :bind (("C-c a" . org-agenda)
-  ;;        ("C-c c" . org-capture))
-
-
 (setq org-agenda-files
       (list (expand-file-name "tasks.org" org-directory)
             (expand-file-name "notes.org" org-directory)
@@ -274,8 +259,7 @@
          ("C-s" . consult-line)
          ("C-c s" . consult-ripgrep)
          ("C-x b" . consult-buffer)
-         ("M-y" . consult-yank-pop)
-         ))
+         ("M-y" . consult-yank-pop)))
 
 (use-package consult-project-extra
   :ensure t
@@ -291,7 +275,6 @@
   :ensure t
   :config
   (setq completion-styles '(orderless)))
-
 
 (use-package treemacs
   :ensure t
@@ -410,6 +393,31 @@
   :ensure t
   :config (treemacs-set-scope-type 'Tabs))
 
+(defun open-in-window (buffer)
+  "Question in which window to open the new buffer."
+  (interactive "bBuffer: ")
+  (if (> (count-windows) 1)
+      (let ((window (read-window "In which window to open?")))
+        (select-window window)
+        (switch-to-buffer buffer))
+    (switch-to-buffer buffer)))
+
+(defun my-find-file (filename)
+  "File opening with window choice"
+  (interactive "FFind file: ")
+  (find-file filename)
+  (open-in-window (current-buffer)))
+
+(defun my-treemacs-find-file ()
+  "Open file via treemacs and choose window."
+  (interactive)
+  (treemacs-visit-node)
+  (open-in-window (current-buffer)))
+
+;; Substitua os comandos padrao por esses para ter a funcionalidade.
+(global-set-key (kbd "C-x C-f") 'my-find-file)
+(global-set-key (kbd "C-x t") 'my-treemacs-find-file)
+
 ;; vterm
 (use-package vterm
   :ensure t
@@ -486,11 +494,6 @@
   :config
   (setq highlight-symbol-on-navigation-p t
         highlight-symbol-idle-delay 0.5))
-
-;; (use-package swiper
-;;   :ensure t
-;;   :bind (("C-s" . swiper))
-;;   )
 
 ;; Load auth-source for secure credential management
 (require 'auth-source)
