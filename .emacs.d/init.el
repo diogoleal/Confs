@@ -55,59 +55,27 @@
 (setq kept-old-versions 2)
 (setq auto-save-default nil)
 
-;; enable tab-bar-mode
-(setq tab-bar-show 1)
+;; Enable tab-bar-mode
 (tab-bar-mode 1)
+(defun my/open-file-in-new-tab (orig-fun &rest args)
+  "Opens files in a new tab when using interactive commands such as find-file."
+  (let ((file (car args)))
+    (tab-new)
+    (apply orig-fun args)))
 
-(setq tab-bar-format '(tab-bar-format-history
-                       tab-bar-format-tabs
-                       tab-bar-separator
-                       tab-bar-format-add-tab))
+(advice-add 'find-file :around #'my/open-file-in-new-tab)
+(advice-add 'find-file-other-window :around #'my/open-file-in-new-tab)
+(advice-add 'find-file-other-frame :around #'my/open-file-in-new-tab)
 
-;; Keybindings organization
-(global-set-key (kbd "C-x t n") 'tab-new)
-(global-set-key (kbd "C-x t c") 'tab-close)
-(global-set-key (kbd "C-x t o") 'tab-next)
-(global-set-key (kbd "C-x t p") 'tab-previous)
-(global-set-key (kbd "C-x t r") 'tab-rename)
-(global-set-key (kbd "C-x t s") 'tab-switch)
-(global-set-key [f9] 'rainbow-delimiters-mode)
-(global-set-key (kbd "C-<tab>") 'other-window)
-(global-set-key (kbd "M-<up>") 'enlarge-window)
-(global-set-key (kbd "M-<down>") 'shrink-window)
-(global-set-key (kbd "M-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-<left>") 'shrink-window-horizontally)
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
-;; (setq electric-pair-pairs '(
-;;     (?\" . ?\")
-;;     (?\{ . ?\})
-;;     (?\[ . ?\])
-;;     (?\( . ?\))
-;;     (?\‘ . ?\’)
-;;     (?\« . ?\»)
-;; ))
 
-;; auto-complete
-(use-package auto-complete
-  :init
-  (progn
-    (ac-config-default)
-    (global-auto-complete-mode t)))
 
-;; dockerfile-mode
-(use-package dockerfile-mode)
-
-(use-package highlight-parentheses
-  :hook
-  ((minibuffer-setup . highlight-parentheses-minibuffer-setup)))
-
-;; multiple-cursors
-(use-package multiple-cursors
-  :bind
-  (("C-<up>" . mc/mark-previous-like-this)
-   ("C-<down>" . mc/mark-next-like-this)
-   ("C-c C-<down>" . mc/mark-all-like-this)
-   ("C-<escape>" . mc/keyboard-quit)))
+(use-package dockerfile-mode
+  :ensure t
+  :mode ("Dockerfile\\'" . dockerfile-mode))
 
 ;; bash-completion
 (use-package bash-completion
@@ -123,33 +91,54 @@
   :config
   (defun my-terraform-mode-init ()))
 
-;; flycheck
+;; Flycheck
 (use-package flycheck
-  :hook
-  (after-init . global-flycheck-mode))
+  :ensure t
+  :after lsp-mode
+  :init (global-flycheck-mode))
 
-;; pyvenv
-(use-package pyvenv
-  :config
-  (pyvenv-mode t)
-  (setq pyvenv-post-activate-hooks
-        (list (lambda ()
-                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
-  (setq pyvenv-post-deactivate-hooks
-        (list (lambda ()
-                (setq python-shell-interpreter "python3")))))
-
-;; flymake-shell
-(use-package flymake-shell
-  :hook
-  (sh-set-shell . flymake-shell-load))
+;; Integration with lsp-mode
+(with-eval-after-load 'lsp-mode
+  (setq lsp-diagnostics-provider :flycheck))
+(setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
 
 ;; magit
 (use-package magit
-  :bind ("C-x g" . magit-status))
+  :ensure t
+  :config
+  (setq magit-diff-refine-hunk nil)
+  (with-eval-after-load 'magit-diff
+    (require 'magit-ediff)
+    (setq magit-ediff-dwim-show-on-hunks t)))
 
-(use-package all-the-icons
-  :ensure t)
+;; Ediff
+(use-package ediff
+  :ensure nil
+  :config
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-highlight-all-diffs t)
+  (setq ediff-auto-refine 'off)
+  (setq ediff-forward-word-function 'forward-word)
+  (setq ediff-diff-options "-w"))
+
+;; Diff-hl
+(use-package diff-hl
+  :ensure t
+  :hook ((prog-mode . diff-hl-mode)
+         (magit-post-refresh . diff-hl-magit-post-refresh))
+  :config
+  (setq diff-hl-draw-borders nil)
+  (setq diff-hl-side 'left)
+  (diff-hl-flydiff-mode 1))
+
+(defun my-ediff-files ()
+  (interactive)
+  (call-interactively 'ediff-files))
+
+(defun my-ediff-buffers ()
+  (interactive)
+  (call-interactively 'ediff-buffers))
 
 (use-package doom-modeline
   :ensure t
@@ -157,22 +146,6 @@
   (doom-modeline-mode 1)
   :custom
   (doom-modeline-icon t))
-
-;; git-gutter
-;; (use-package git-gutter
-;;   :config
-;;   (global-git-gutter-mode +1))
-
-;; (use-package blamer
-;;   :ensure t
-;;   :custom
-;;   (blamer-idle-time 0.3)
-;;   (blamer-min-offset 70)
-;;   (blamer-author-formatter " ✎ %s ")
-;;   (blamer-datetime-formatter "[%s]")
-;;   (blamer-prettify-time-p t)
-;;   :config
-;;   (global-blamer-mode 1))
 
 (use-package org
   :ensure t
@@ -183,19 +156,12 @@
    org-hide-emphasis-markers t
    org-log-done 'time))
 
-  (setq org-directory "~/org/")
-
-  ;; (setq org-hide-leading-stars t
-  ;;       org-startup-indented t
-  ;;       org-ellipsis " ⤵"
-
-
+(setq org-directory "~/org/")
 (setq org-agenda-files
       (list (expand-file-name "tasks.org" org-directory)
             (expand-file-name "notes.org" org-directory)
             (expand-file-name "meetings.org" org-directory)
             (expand-file-name "journal.org" org-directory)))
-
 (setq org-capture-templates
       '(("n" "Quick Note" entry (file "~/org/notes.org")
          "* %?\n%U\n")
@@ -206,27 +172,59 @@
         ("j" "Journal Entry" entry (file+olp+datetree "~/org/journal.org")
          "* %?\n%U\n")))
 
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
-
 (add-hook 'org-mode-hook #'org-indent-mode)
 (add-hook 'org-mode-hook #'visual-line-mode)
+
+;; Display images automatically when opening org files
+(setq org-startup-with-inline-images t)
+
+;; Show images when entering org-mode
+(add-hook 'org-mode-hook #'org-display-inline-images)
+
+;; Shortcut to refresh inline images (C-c i) only after org-mode is loaded
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c i") #'org-display-inline-images))
+
+(setq org-image-actual-width nil)
 
 (use-package org-modern
   :ensure t
   :hook (org-mode . org-modern-mode))
 
-(use-package htmlize
-  :ensure t)
+(auto-insert-mode 1)
+(setq auto-insert-query nil)
+
+(define-auto-insert
+  "\\.org\\'"
+  (lambda ()
+    (let ((type (completing-read "Template type: " '("note" "project" "diary"))))
+      (insert
+       (pcase type
+         ("note"
+          (concat "#+TITLE: " (read-string "Title: ") "\n"
+                  "#+AUTHOR: Diogo\n"
+                  "#+DATE: " (format-time-string "<%Y-%m-%d>") "\n"
+                  "#+LANGUAGE: en\n"
+                  "#+OPTIONS: toc:nil num:nil ^:nil\n"
+                  "#+STARTUP: content inlineimages indent hidestars entitiespretty logdone\n"
+                  "#+EXPORT_FILE_NAME: " (file-name-base (buffer-file-name)) "\n\n"
+                  "* Tasks\n** TODO \n\n* Notes\n\n* Ideas\n"))
+         ("project"
+          (concat "#+TITLE: Project: " (read-string "Project Name: ") "\n"
+                  "#+AUTHOR: Diogo\n"
+                  "#+DATE: " (format-time-string "<%Y-%m-%d>") "\n"
+                  "#+LANGUAGE: en\n"
+                  "#+OPTIONS: toc:nil num:nil ^:nil\n"
+                  "#+STARTUP: overview indent\n"
+                  "* Goals\n\n* Tasks\n\n* Milestones\n\n"))
+         ("diary"
+          (concat "#+TITLE: Journal Entry\n"
+                  "#+DATE: " (format-time-string "<%Y-%m-%d>") "\n"
+                  "#+STARTUP: showall inlineimages\n\n"
+                  "* Morning\n\n* Afternoon\n\n* Notes\n")))))))
 
 ;; backup
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-;; (setq backup-by-copying t
-;;       backup-directory-alist '(("." . "~/.saves/"))
-;;       delete-old-versions t
-;;       kept-new-versions 6
-;;       kept-old-versions 2
-;;       version-control t)
 
 ;; Groovy
 (add-to-list 'auto-mode-alist '("Jenkinsfile\\'" . groovy-mode))
@@ -235,6 +233,17 @@
   :mode ("Jenkinsfile\\'" . groovy-mode)
   :config
   (setq groovy-indent-offset 4))
+
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode)
+  :config
+  (setq company-idle-delay 0.2
+        company-minimum-prefix-length 1
+        company-tooltip-align-annotations t
+        company-show-quick-access t))
+(add-hook 'prog-mode-hook #'company-mode)
 
 ;; sudo dnf install clang-tools-extra nodejs npm
 ;; go install golang.org/x/tools/gopls@latest
@@ -246,31 +255,19 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :hook ((c-mode          . lsp)
-         (c++-mode        . lsp)
          (python-mode     . lsp)
          (go-mode         . lsp)
          (sh-mode         . lsp)
          (yaml-mode       . lsp))
   :commands lsp)
 
-(use-package consult
-  :ensure t
-  :bind (
-         ("C-s" . consult-line)
-         ("C-c s" . consult-ripgrep)
-         ("C-x b" . consult-buffer)
-         ("M-y" . consult-yank-pop)))
-
-(use-package consult-project-extra
-  :ensure t
-  :after consult
-  :bind (("C-c p f" . consult-project-extra-find)
-         ("C-c p g" . consult-project-extra-ripgrep)))
-
-(use-package vertico
-  :ensure t
-  :init (vertico-mode))
-
+(use-package all-the-icons :ensure t)
+(use-package multiple-cursors :ensure t)
+(use-package htmlize :ensure t)
+(use-package multiple-cursors :ensure t)
+(use-package consult :ensure t)
+(use-package consult-project-extra :ensure t :after consult)
+(use-package vertico :ensure t :init (vertico-mode))
 (use-package orderless
   :ensure t
   :config
@@ -335,45 +332,31 @@
           treemacs-width                           35
           treemacs-width-increment                 1
           treemacs-width-is-initially-locked       t
-          treemacs-workspace-switch-cleanup        nil)
+          treemacs-workspace-switch-cleanup        nil))
 
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;; (treemacs-resize-icons 30)
+  ;; The default width and height of the icons is 22 pixels. If you are
+  ;; using a Hi-DPI display, uncomment this to double the icon size.
+  ;; (treemacs-resize-icons 30)
 
-    (use-package treemacs-projectile
-      :ensure t)
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode 'always)
-    (when treemacs-python-executable
-      (treemacs-git-commit-diff-mode t))
+  (use-package treemacs-projectile
+    :ensure t)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode 'always)
+  (when treemacs-python-executable
+    (treemacs-git-commit-diff-mode t))
 
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null treemacs-python-executable)))
+    (`(t . t)
+     (treemacs-git-mode 'deferred))
+    (`(t . _)
+     (treemacs-git-mode 'simple)))
 
-    (treemacs-hide-gitignored-files-mode nil))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t d"   . treemacs-select-directory)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+  (treemacs-hide-gitignored-files-mode nil))
 
-(use-package treemacs-evil
-  :after (treemacs evil)
-  :ensure t)
-
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
+(use-package treemacs-evil :after (treemacs evil) :ensure t)
+(use-package treemacs-projectile :after (treemacs projectile) :ensure t)
 
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)
@@ -394,13 +377,24 @@
   :config (treemacs-set-scope-type 'Tabs))
 
 (defun open-in-window (buffer)
-  "Question in which window to open the new buffer."
+  "Open BUFFER in a selected window, prompting for window choice if multiple windows exist."
   (interactive "bBuffer: ")
-  (if (> (count-windows) 1)
-      (let ((window (read-window "In which window to open?")))
-        (select-window window)
-        (switch-to-buffer buffer))
-    (switch-to-buffer buffer)))
+  (let ((buffer-obj (get-buffer buffer)))
+    (if (not buffer-obj)
+        (error "Buffer '%s' does not exist" buffer)
+      (if (> (count-windows) 1)
+          (let* ((windows (window-list))
+                 (window-names (mapcar (lambda (w)
+                                         (format "%s: %s"
+                                                 (window-number w)
+                                                 (buffer-name (window-buffer w))))
+                                       windows))
+                 (chosen (completing-read "Select window: " window-names nil t))
+                 (window (nth (string-to-number (car (split-string chosen ":")))
+                              windows)))
+            (select-window window)
+            (switch-to-buffer buffer-obj))
+        (switch-to-buffer buffer-obj)))))
 
 (defun my-find-file (filename)
   "File opening with window choice"
@@ -413,31 +407,6 @@
   (interactive)
   (treemacs-visit-node)
   (open-in-window (current-buffer)))
-
-;; Substitua os comandos padrao por esses para ter a funcionalidade.
-(global-set-key (kbd "C-x C-f") 'my-find-file)
-(global-set-key (kbd "C-x t") 'my-treemacs-find-file)
-
-;; vterm
-(use-package vterm
-  :ensure t
-  :config
-  (setq vterm-shell "/usr/bin/fish")
-  (setq vterm-max-scrollback 50000)
-  (setq vterm-kill-buffer-on-exit t))
-
-(global-set-key (kbd "C-x <f12>")
-                (lambda ()
-                  (interactive)
-                  (split-window-below)
-                  (other-window 1)
-                  (vterm)))
-
-(global-set-key (kbd "C-x <f11>")
-                (lambda ()
-                  (interactive)
-                  (when (eq major-mode 'vterm-mode)
-                    (kill-buffer-and-window))))
 
 ;; Project organization
 (use-package projectile
@@ -464,29 +433,9 @@
 	      dashboard-set-init-info t)
   :config
   (dashboard-setup-startup-hook))
-(setq dashboard-org-agenda-categories '("Tasks"))
+;;(setq dashboard-org-agenda-categories '("Tasks"))
 
 (provide 'dashboard-config)
-
-;; shortcut vterm
-(global-set-key (kbd "C-c t") 'vterm)
-
-;; (setq desktop-save 'if-exists)
-;; (desktop-save-mode 1)
-
-;; ;; Multiples workspaces
-;; (use-package persp-mode
-;;   :ensure t
-;;   :init
-;;   (setq persp-auto-save-fname "~/.emacs.d/workspace")
-;;   :config
-;;   (persp-mode 1))
-
-;; ;; Window layout
-;; (use-package eyebrowse
-;;   :ensure t
-;;   :config
-;;   (eyebrowse-mode t))
 
 (use-package highlight-symbol
   :ensure t
@@ -511,26 +460,86 @@
           (buffer-list)))
   (message "Buffers with .%s extension closed" extension))
 
-(global-set-key (kbd "C-c b k") 'close-buffers-by-extension)
+;; vterm
+(use-package vterm
+  :ensure t
+  :config
+  (setq vterm-shell "/usr/bin/fish")
+  (setq vterm-max-scrollback 50000)
+  (setq vterm-kill-buffer-on-exit t))
 
-;;; silent warming and packages build
-;; (setq warning-suppress-types '((comp) (initialization)))
-
-;; reload when change init.el
-;; (add-hook 'after-init-hook
-;;           (lambda () (add-to-list 'load-path "~/.emacs.d/")
-;;             (load-file "~/.emacs.d/init.el")))
+(dolist (binding
+         '(("C-<tab>"        . other-window)
+           ("M-<up>"         . enlarge-window)
+           ("M-<down>"       . shrink-window)
+           ("M-<right>"      . enlarge-window-horizontally)
+           ("M-<left>"       . shrink-window-horizontally)
+           ("C-<up>"         . mc/mark-previous-like-this)
+           ("C-<down>"       . mc/mark-next-like-this)
+           ("C-c C-<down>"   . mc/mark-all-like-this)
+           ("C-<escape>"     . mc/keyboard-quit)
+           ("C-c b k"        . close-buffers-by-extension)
+           ("C-x g"          . magit-status)
+           ("C-c d f"        . 'my-ediff-files)
+           ("C-c d b"        . 'my-ediff-buffers)
+           ("C-s"            . consult-line)
+           ("C-c s"          . consult-ripgrep)
+           ("C-x b"          . consult-buffer)
+           ("M-y"            . consult-yank-pop)
+           ("C-c p f"        . consult-project-extra-find)
+           ("C-c p g"        . consult-project-extra-ripgrep)
+           ("C-c a"          . org-agenda)
+           ("C-c c"          . org-capture)
+           ("M-0"            . treemacs-select-window)
+           ("C-x t t"        . treemacs)
+           ("C-x t d"        . treemacs-select-directory)
+           ("C-x t B"        . treemacs-bookmark)
+           ("C-x t C-t"      . treemacs-find-file)
+           ("C-x t M-t"      . treemacs-find-tag)
+           ("C-c v"          . vterm)
+           )
+         )
+  (global-set-key (kbd (car binding)) (cdr binding)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(diff-hl-change ((t (:background "#ddddff" :foreground "black"))))
+ '(diff-hl-delete ((t (:background "#ffdddd" :foreground "black"))))
+ '(diff-hl-insert ((t (:background "#ddffdd" :foreground "black"))))
+ '(ediff-current-diff-A ((t (:background "#ff5555" :foreground "white"))))
+ '(ediff-current-diff-B ((t (:background "#55ff55" :foreground "white"))))
+ '(ediff-even-diff-A ((t (:background "#f0f0f0"))))
+ '(ediff-even-diff-B ((t (:background "#f0f0f0"))))
+ '(ediff-fine-diff-A ((t (:background "#ffaaaa" :foreground "black"))))
+ '(ediff-fine-diff-B ((t (:background "#aaffaa" :foreground "black"))))
+ '(ediff-odd-diff-A ((t (:background "#e0e0e0"))))
+ '(ediff-odd-diff-B ((t (:background "#e0e0e0"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#7f8c8d"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#3498db"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#2ecc71"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#f1c40f"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#e67e22"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#e74c3c")))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
 
+
+ '(package-selected-packages
+   '(all-the-icons bash-completion blamer company
+                   consult-project-extra dashboard diff-hl docker
+                   dockerfile-mode doom-modeline eyebrowse flycheck
+                   go-mode highlight-parentheses highlight-symbol
+                   htmlize multiple-cursors orderless org-modern
+                   python-mode swiper terraform-mode treemacs-evil
+                   treemacs-icons-dired treemacs-magit treemacs-persp
+                   treemacs-projectile treemacs-tab-bar vertico vterm
+                   yaml)))
+
+(put 'downcase-region 'disabled nil)
+;;(put 'scroll-left 'disabled nil)
