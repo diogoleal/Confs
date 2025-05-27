@@ -55,23 +55,21 @@
 (setq kept-old-versions 2)
 (setq auto-save-default nil)
 
-;; Enable tab-bar-mode
-(tab-bar-mode 1)
-(defun my/open-file-in-new-tab (orig-fun &rest args)
-  "Opens files in a new tab when using interactive commands such as find-file."
-  (let ((file (car args)))
-    (tab-new)
-    (apply orig-fun args)))
+;; ;; Enable tab-bar-mode
+;; (tab-bar-mode 1)
+;; (defun my/open-file-in-new-tab (orig-fun &rest args)
+;;   "Opens files in a new tab when using interactive commands such as find-file."
+;;   (let ((file (car args)))
+;;     (tab-new)
+;;     (apply orig-fun args)))
 
-(advice-add 'find-file :around #'my/open-file-in-new-tab)
-(advice-add 'find-file-other-window :around #'my/open-file-in-new-tab)
-(advice-add 'find-file-other-frame :around #'my/open-file-in-new-tab)
+;; (advice-add 'find-file :around #'my/open-file-in-new-tab)
+;; (advice-add 'find-file-other-window :around #'my/open-file-in-new-tab)
+;; (advice-add 'find-file-other-frame :around #'my/open-file-in-new-tab)
 
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
-
-
 
 (use-package dockerfile-mode
   :ensure t
@@ -408,34 +406,26 @@
   (treemacs-visit-node)
   (open-in-window (current-buffer)))
 
-;; Project organization
-(use-package projectile
+(use-package page-break-lines
   :ensure t
-  :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1)
-  (setq projectile-project-search-path '("~/Workspace/" "~/")
-        projectile-switch-project-action #'treemacs-add-and-display-current-project-exclusively
-	      projectile-indexing-method 'alien
-	      projectile-use-git-grep 1))
+  :hook (dashboard-mode . page-break-lines-mode))
 
 (use-package dashboard
   :ensure t
   :init
-  (setq dashboard-items '((recents . 10)
-			                    (projects . 10))
-	      dashboard-startup-banner 'logo
-	      dashboard-set-file-icons t
-	      dashboard-icon-type 'all-the-icons
-	      dashboard-heading-icons t
-	      dashboard-projects-backend 'projectile
-	      dashboard-set-init-info t)
+  (setq dashboard-startup-banner 'official) ;; ou um caminho para imagem
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts nil)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)))
+  :custom
+  (dashboard-set-heading-icons t)
+  (dashboard-set-file-icons t)
+  (dashboard-set-init-info t)
+  (dashboard-set-footer t)
   :config
   (dashboard-setup-startup-hook))
-;;(setq dashboard-org-agenda-categories '("Tasks"))
-
-(provide 'dashboard-config)
 
 (use-package highlight-symbol
   :ensure t
@@ -528,18 +518,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
-
- '(package-selected-packages
-   '(all-the-icons bash-completion blamer company
-                   consult-project-extra dashboard diff-hl docker
-                   dockerfile-mode doom-modeline eyebrowse flycheck
-                   go-mode highlight-parentheses highlight-symbol
-                   htmlize multiple-cursors orderless org-modern
-                   python-mode swiper terraform-mode treemacs-evil
-                   treemacs-icons-dired treemacs-magit treemacs-persp
-                   treemacs-projectile treemacs-tab-bar vertico vterm
-                   yaml)))
+ '(package-selected-packages nil))
 
 (put 'downcase-region 'disabled nil)
 ;;(put 'scroll-left 'disabled nil)

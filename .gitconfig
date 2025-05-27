@@ -221,4 +221,7 @@
   untracked = red
   updated = green bold
 [credential]
-	helper = store
+	helper = cache
+[user]
+	email = diogo.andrade@redspark.io
+	name = Diogo Leal Andrade
