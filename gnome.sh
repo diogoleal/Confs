@@ -16,11 +16,9 @@ gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enable
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 gsettings set org.gnome.shell favorite-apps "[
                                               'vivaldi-stable.desktop',
+                                              'kitty.desktop',
+                                              'emacs.desktop',
                                               'org.gnome.Nautilus.desktop',
-                                              'org.gnome.Ptyxis.desktop',
-                                              'sublime_text.desktop',
                                               'net.cozic.joplin_desktop.desktop',
-                                              'io.ente.auth.desktop',
-                                              'org.telegram.desktop',
                                               'org.onlyoffice.desktopeditors.desktop']"
 gnome-session-quit --logout

@@ -29,7 +29,12 @@ flatpak install flathub -y  org.telegram.desktop \
                             io.ente.auth \
                             net.cozic.joplin_desktop \
                             dev.geopjr.Tuba \
-                            org.onlyoffice.desktopeditors
+                            org.onlyoffice.desktopeditors \
+                            com.pikatorrent.PikaTorrent \
+                            dev.geopjr.Tuba \
+                            org.gnome.World.PikaBackup \
+                            net.jami.Jami
+
 # eksctl
 #curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
 #tar -xzf eksctl_Linux_amd64.tar.gz -C /tmp && rm eksctl_Linux_amd64.tar.gz
