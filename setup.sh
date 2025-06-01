@@ -7,8 +7,8 @@ mkdir ~/Workspace || true
 sudo dnf remove firefox rhythmbox -y
 sudo dnf upgrade -y --refresh
 sudo dnf install -y direnv fzf fish ansible opentofu bat duf procs ripgrep \
-         fd-find btop yt-dlp+default
-# emacs deps
+         fd-find btop yt-dlp+default kitty
+# emacs dependencies
 sudo dnf install -y emacs libtool cmake clang-tools-extra nodejs npm
 
 # Configs
@@ -28,6 +28,7 @@ flatpak install flathub -y  org.telegram.desktop \
                             com.vivaldi.Vivaldi \
                             io.ente.auth \
                             net.cozic.joplin_desktop \
+                            dev.geopjr.Tuba \
                             org.onlyoffice.desktopeditors
 # eksctl
 #curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
@@ -54,3 +55,14 @@ npm install bash-language-server yaml-language-server pyright
 
 # tmux
 ln -sf "$DIR_CONF"/.tmux.conf  ~/.tmux.conf
+
+# Kitty
+ln -sf "$DIR_CONF"/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
+
+# filen.io
+sudo dnf install -y https://cdn.filen.io/@filen/desktop/release/latest/Filen_linux_x86_64.rpm
+
+# mega
+wget https://mega.nz/linux/repo/Fedora_42/x86_64/megasync-Fedora_42.x86_64.rpm
+sudo dnf install "$PWD/megasync-Fedora_42.x86_64.rpm"
+rm -rf "$PWD/megasync-Fedora_42.x86_64.rpm"
