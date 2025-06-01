@@ -1,21 +1,11 @@
 ;;; init.el --- Personal Emacs configuration
-;;; Commentary:
-;; This is the Emacs configuration file.
-
-;;; Code:
-
-;;(setq initial-scratch-message nil)
 
 ;; Temporarily increase garbage collection threshold to improve startup performance
 (setq gc-cons-threshold 100000000)
-
 (setq inhibit-startup-message t)
-
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
-
 (setq global-auto-revert-mode t)
-
 ;; https://themkat.net/2025/03/25/simple_smoother_emacs_scrolling.html
 (setq scroll-conservatively 10
       scroll-margin 15)
@@ -35,8 +25,7 @@
 
 ;; Global configs
 (set-frame-font "Inconsolata-14" nil t)
-(load-theme 'leuven t)
-
+(load-theme 'leuven-dark t)
 (show-paren-mode t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -260,6 +249,10 @@
   :commands lsp)
 
 (use-package all-the-icons :ensure t)
+(use-package async :defer t :ensure t)
+(use-package request :defer t :ensure t)
+(use-package nerd-icons :defer t :ensure t :custom
+  (nerd-icons-scale-factor 1.0))
 (use-package multiple-cursors :ensure t)
 (use-package htmlize :ensure t)
 (use-package multiple-cursors :ensure t)
@@ -355,20 +348,16 @@
 
 (use-package treemacs-evil :after (treemacs evil) :ensure t)
 (use-package treemacs-projectile :after (treemacs projectile) :ensure t)
-
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :ensure t)
-
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
-
 (use-package treemacs-persp
   :after (treemacs persp-mode)
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
-
 (use-package treemacs-tab-bar
   :after (treemacs)
   :ensure t
@@ -412,20 +401,14 @@
 
 (use-package dashboard
   :ensure t
-  :init
-  (setq dashboard-startup-banner 'official) ;; ou um caminho para imagem
-  (setq dashboard-center-content t)
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner 'official)
   (setq dashboard-show-shortcuts nil)
   (setq dashboard-items '((recents  . 5)
-                          (bookmarks . 5)
-                          (projects . 5)))
-  :custom
-  (dashboard-set-heading-icons t)
-  (dashboard-set-file-icons t)
-  (dashboard-set-init-info t)
-  (dashboard-set-footer t)
-  :config
-  (dashboard-setup-startup-hook))
+                          (projects . 10)
+                          (bookmarks . 5)))
+  (setq dashboard-projects-backend 'projectile))
 
 (use-package highlight-symbol
   :ensure t
@@ -435,9 +418,9 @@
         highlight-symbol-idle-delay 0.5))
 
 ;; Load auth-source for secure credential management
-(require 'auth-source)
-(setq auth-sources '(default-secret))
-(setq auth-source-debug t)
+;(require 'auth-source)
+;(setq auth-sources '(default-secret))
+;(setq auth-source-debug t)
 
 (defun close-buffers-by-extension (extension)
   "Closes all buffers that have files with the given EXTENSION."
