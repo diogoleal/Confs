@@ -9,7 +9,7 @@ sudo dnf upgrade -y --refresh
 sudo dnf install -y direnv fzf fish ansible opentofu bat duf procs ripgrep \
          fd-find btop yt-dlp+default kitty
 # emacs dependencies
-sudo dnf install -y emacs libtool cmake clang-tools-extra nodejs npm
+sudo dnf install -y emacs libtool cmake clang-tools-extra nodejs npm fira-code-fonts
 
 # Configs
 ln -sf "$DIR_CONF"/.gitconfig "$HOME"/.gitconfig
@@ -31,7 +31,6 @@ flatpak install flathub -y  org.telegram.desktop \
                             dev.geopjr.Tuba \
                             org.onlyoffice.desktopeditors \
                             com.pikatorrent.PikaTorrent \
-                            dev.geopjr.Tuba \
                             org.gnome.World.PikaBackup \
                             net.jami.Jami
 
