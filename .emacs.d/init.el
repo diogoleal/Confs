@@ -24,7 +24,8 @@
 (setq use-package-always-ensure t)
 
 ;; Global configs
-(set-frame-font "Inconsolata-14" nil t)
+(set-frame-font "Fira Code-12" nil t)
+;;(set-frame-font "Inconsolata-14" nil t)
 (load-theme 'leuven-dark t)
 (show-paren-mode t)
 (scroll-bar-mode -1)
@@ -55,6 +56,15 @@
 ;; (advice-add 'find-file :around #'my/open-file-in-new-tab)
 ;; (advice-add 'find-file-other-window :around #'my/open-file-in-new-tab)
 ;; (advice-add 'find-file-other-frame :around #'my/open-file-in-new-tab)
+
+(use-package ligature
+  :config
+  (ligature-set-ligatures 't '("www" "**" "***" "==" "!=" "===" "!=="
+                               "->" "->>" "<-" "<<" ">>" "::" "===" "=>"
+                               "=>>" "<=>" "<=" ">=" "<>" "!!" "??" "%%"
+                               "&&" "||" "++" "--" "..." "##" "###" "#{" "#["
+                               "]#" "}#" ":::" "|>" "<|" "<|>" ">>=" "=<<"))
+  (global-ligature-mode t))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -221,6 +231,13 @@
   :config
   (setq groovy-indent-offset 4))
 
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown")
+  :bind (:map markdown-mode-map
+         ("C-c C-e" . markdown-do)))
+
 (use-package company
   :ensure t
   :init
@@ -247,6 +264,20 @@
          (sh-mode         . lsp)
          (yaml-mode       . lsp))
   :commands lsp)
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
+(use-package k8s-mode
+  :ensure t
+  :after yasnippet
+  :mode ("\\.k8s\\.yaml\\'" . k8s-mode)
+  :hook (k8s-mode . yas-minor-mode))
+
+(add-hook 'k8s-mode-hook #'company-mode)
+(add-hook 'k8s-mode-hook #'yas-minor-mode)
 
 (use-package all-the-icons :ensure t)
 (use-package async :defer t :ensure t)
