@@ -30,10 +30,7 @@
          (yaml-mode       . lsp))
   :commands lsp)
 
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode)
-
+(use-package lsp-ui :ensure t :commands lsp-ui-mode)
 (use-package which-key
   :ensure t
   :config
@@ -46,30 +43,21 @@
 
 (add-hook 'prog-mode-hook #'company-mode)
 
-
 (use-package company
   :ensure t
-  :init
-  (global-company-mode)
+  :hook ((after-init . global-company-mode)
+         (prog-mode . company-mode))
   :config
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 1
         company-tooltip-align-annotations t
         company-show-quick-access t))
-(add-hook 'prog-mode-hook #'company-mode)
 
-(use-package yasnippet
-  :ensure t
-  :config
-  (yas-global-mode 1))
-
+(use-package yasnippet :ensure t :config (yas-global-mode 1))
 (use-package consult :ensure t)
 (use-package consult-project-extra :ensure t :after consult)
-(use-package vertico :ensure t :init (vertico-mode))
-(use-package orderless
-  :ensure t
-  :config
-  (setq completion-styles '(orderless)))
+(use-package vertico :ensure t :config (vertico-mode))
+(use-package orderless :ensure t :config (setq completion-styles '(orderless)))
 
 (provide 'code)
 ;;; code.el ends here
