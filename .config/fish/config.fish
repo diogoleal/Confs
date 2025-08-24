@@ -24,3 +24,6 @@ function sprunge
 end
 
 kubectl completion fish | source
+
+set -gx PATH $PATH $HOME/.krew/bin
+
