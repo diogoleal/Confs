@@ -17,10 +17,13 @@ krew-install:
 	tar zxvf "$${KREW}.tar.gz" && \
 	./"$${KREW}" install krew
 
-
-
 rpm: setup fedora fish flatpak kubectl go emacs kitty
 apt: setup fedora fish flatpak kubectl go emacs kitty
+pacman: setup arch fish kubectl emacs kitty evisum enlightenment vivaldi terminology
+
+arch:
+	sudo pacman -Syu ttf-cascadia-code-nerd fish emacs kitty direnv \
+		fzf btop bat duf ripgrep yt-dlp
 
 setup:
 	mkdir -p $(BIN) $(LIB) $(HOME)/Workspace
@@ -72,9 +75,12 @@ go:
 	rm -f $$(cat .goversion).linux-amd64.tar.gz .goversion
 
 emacs:
+	mkdir -p ~/.emacs.d/
 	ln -sf $(DIR_CONF)/.emacs.d/init.el $(HOME)/.emacs.d/init.el
-	go install golang.org/x/tools/gopls@latest
-	npm install bash-language-server yaml-language-server pyright
+	ln -sf $(DIR_CONF)/.emacs.d/early-init.el $(HOME)/.emacs.d/early-init.el
+	ln -sf $(DIR_CONF)/.emacs.d/elpaca.el $(HOME)/.emacs.d/elpaca.el
+	#go install golang.org/x/tools/gopls@latest
+	#npm install bash-language-server yaml-language-server pyright
 
 kitty:
 	ln -sf $(DIR_CONF)/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
