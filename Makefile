@@ -75,12 +75,15 @@ go:
 	rm -f $$(cat .goversion).linux-amd64.tar.gz .goversion
 
 emacs:
-	mkdir -p ~/.emacs.d/
+	mkdir -p ~/.emacs.d/ ~/.config/systemd/user/
 	ln -sf $(DIR_CONF)/.emacs.d/init.el $(HOME)/.emacs.d/init.el
 	ln -sf $(DIR_CONF)/.emacs.d/early-init.el $(HOME)/.emacs.d/early-init.el
 	ln -sf $(DIR_CONF)/.emacs.d/elpaca.el $(HOME)/.emacs.d/elpaca.el
-	#go install golang.org/x/tools/gopls@latest
-	#npm install bash-language-server yaml-language-server pyright
+	ln -sf $(DIR_CONF)/.config/systemd/user/emacs.service $(HOME)/.config/systemd/user/emacs.service
+	systemctl --user enable emacs.service
+	systemctl --user start emacs.service
+        # go install golang.org/x/tools/gopls@latest
+        # npm install bash-language-server yaml-language-server pyright
 
 kitty:
 	ln -sf $(DIR_CONF)/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
