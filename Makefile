@@ -19,11 +19,13 @@ krew-install:
 
 rpm: setup fedora fish flatpak kubectl go emacs kitty
 apt: setup fedora fish flatpak kubectl go emacs kitty
-pacman: setup arch fish kubectl emacs kitty evisum enlightenment vivaldi terminology
+pacman: setup arch fish kubectl emacs kitty
 
 arch:
-	sudo pacman -Syu ttf-cascadia-code-nerd fish emacs kitty direnv \
-		fzf btop bat duf ripgrep yt-dlp
+	sudo pacman -Syu ttf-cascadia-code-nerd fish \
+		emacs kitty direnv fzf btop bat duf ripgrep \
+		yt-dlp evisum enlightenment vivaldi terminology vorta mupdf \
+		virt-manager nerdctl rootlesskit 
 
 setup:
 	mkdir -p $(BIN) $(LIB) $(HOME)/Workspace

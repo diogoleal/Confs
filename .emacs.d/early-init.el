@@ -35,7 +35,7 @@
 (add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font-16"))
 
 ;; Theme
-(load-theme 'leuven t)
+(load-theme 'leuven-dark t)
 
 ;; Fido mode
 (fido-mode 1)
