@@ -25,7 +25,9 @@ arch:
 	sudo pacman -Syu ttf-cascadia-code-nerd fish \
 		emacs kitty direnv fzf btop bat duf ripgrep \
 		yt-dlp evisum enlightenment vivaldi terminology vorta mupdf \
-		virt-manager nerdctl rootlesskit 
+		virt-manager nerdctl rootlesskit copyq
+
+
 
 setup:
 	mkdir -p $(BIN) $(LIB) $(HOME)/Workspace
