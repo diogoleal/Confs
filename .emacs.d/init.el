@@ -5,119 +5,49 @@
 ;;; Code:
 (load-file "~/.emacs.d/elpaca.el")
 
-(use-package dockerfile-mode
-  :ensure t
-  :mode ("Dockerfile\\'" . dockerfile-mode))
+(load-theme 'manoj-dark t)
 
-(use-package bash-completion
-  :config
-  (bash-completion-setup))
-
-(use-package terraform-mode
-  :ensure t
-  :custom
-  (terraform-indent-level 4)
-  :hook
-  (terraform-mode . my-terraform-mode-init)
-  :config
-  (defun my-terraform-mode-init ()))
-
-(add-to-list 'auto-mode-alist '("Jenkinsfile\\'" . groovy-mode))
-(use-package groovy-mode
-  :ensure t
-  :mode ("Jenkinsfile\\'" . groovy-mode)
-  :config
-  (setq groovy-indent-offset 4))
-
-(use-package transient :ensure t)
-(use-package magit :ensure t)
-
-;; (use-package org
-;;   :ensure t
-;;   :hook (org-mode . visual-line-mode)
+;; (use-package tron-legacy-theme
 ;;   :config
-;;   (setq
-;;    org-startup-folded 'showeverything
-;;    org-hide-emphasis-markers t
-;;    org-log-done 'time))
+;;   (setq tron-legacy-theme-vivid-cursor t)
+;;   (load-theme 'tron-legacy t))
 
-;; (setq org-directory "~/org/")
-;; (setq org-agenda-files
-;;       (list (expand-file-name "tasks.org" org-directory)
-;;             (expand-file-name "notes.org" org-directory)
-;;             (expand-file-name "meetings.org" org-directory)
-;;             (expand-file-name "journal.org" org-directory)))
-;; (setq org-capture-templates
-;;       '(("n" "Quick Note" entry (file "~/org/notes.org")
-;;          "* %?\n%U\n")
-;;         ("t" "Task" entry (file "~/org/tasks.org")
-;;          "* TODO %?\nSCHEDULED: %t\n%U\n")
-;;         ("m" "Meeting" entry (file "~/org/meetings.org")
-;;          "* MEETING with %? :meeting:\nSCHEDULED: %t\n%U\n")
-;;         ("j" "Journal Entry" entry (file+olp+datetree "~/org/journal.org")
-;;          "* %?\n%U\n")))
+(setq whitespace-style
+      '(face
+        trailing
+        tabs
+        spaces
+        newline
+        empty
+        space-mark
+        tab-mark))
 
-;; (add-hook 'org-mode-hook #'org-indent-mode)
-;; (add-hook 'org-mode-hook #'visual-line-mode)
-
-;; ;; Display images automatically when opening org files
-;; (setq org-startup-with-inline-images t)
-
-;; ;; Show images when entering org-mode
-;; (add-hook 'org-mode-hook #'org-display-inline-images)
-
-;; ;; Shortcut to refresh inline images (C-c i) only after org-mode is loaded
-;; (with-eval-after-load 'org
-;;   (define-key org-mode-map (kbd "C-c i") #'org-display-inline-images))
-
-;; (setq org-image-actual-width nil)
-
-;; (use-package org-modern
-;;   :ensure t
-;;   :hook (org-mode . org-modern-mode))
-
-;; (auto-insert-mode 1)
-;; (setq auto-insert-query nil)
-
-;; (define-auto-insert
-;;   "\\.org\\'"
-;;   (lambda ()
-;;     (let ((type (completing-read "Template type: " '("note" "project" "diary"))))
-;;       (insert
-;;        (pcase type
-;;          ("note"
-;;           (concat "#+TITLE: " (read-string "Title: ") "\n"
-;;                   "#+AUTHOR: Diogo\n"
-;;                   "#+DATE: " (format-time-string "<%Y-%m-%d>") "\n"
-;;                   "#+LANGUAGE: en\n"
-;;                   "#+OPTIONS: toc:nil num:nil ^:nil\n"
-;;                   "#+STARTUP: content inlineimages indent hidestars entitiespretty logdone\n"
-;;                   "#+EXPORT_FILE_NAME: " (file-name-base (buffer-file-name)) "\n\n"
-;;                   "* Tasks\n** TODO \n\n* Notes\n\n* Ideas\n"))
-;;          ("project"
-;;           (concat "#+TITLE: Project: " (read-string "Project Name: ") "\n"
-;;                   "#+AUTHOR: Diogo\n"
-;;                   "#+DATE: " (format-time-string "<%Y-%m-%d>") "\n"
-;;                   "#+LANGUAGE: en\n"
-;;                   "#+OPTIONS: toc:nil num:nil ^:nil\n"
-;;                   "#+STARTUP: overview indent\n"
-;;                   "* Goals\n\n* Tasks\n\n* Milestones\n\n"))
-;;          ("diary"
-;;           (concat "#+TITLE: Journal Entry\n"
-;;                   "#+DATE: " (format-time-string "<%Y-%m-%d>") "\n"
-;;                   "#+STARTUP: showall inlineimages\n\n"
-;;                   "* Morning\n\n* Afternoon\n\n* Notes\n")))))))
+(use-package projectile
+  :defer 1
+  :config
+  (projectile-mode +1))
 
 (use-package corfu
-  :ensure t
-  :init
-  (global-corfu-mode)
+  :hook (after-init . global-corfu-mode)
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-separator ?\s)
+  (corfu-quit-at-boundary t)
+  (corfu-quit-no-match t)
+  (corfu-echo-documentation nil))
+
+(use-package cape
+  :after corfu)
+
+(use-package orderless
+  :custom (completion-styles '(orderless basic))
   :config
-  (corfu-popupinfo-mode))
+  (setq completion-category-defaults nil))
 
 (use-package yasnippet
   :ensure t
-  :init
+  :config
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
@@ -125,19 +55,105 @@
     :after yasnippet)
 
 (use-package flymake
-  :ensure t)
+  :ensure nil
+  :hook ((prog-mode . flymake-mode)))
 
 (use-package eglot
-  :ensure t
-  :after flymake
-  :hook ((c-mode      . eglot-ensure)
-         (python-mode . eglot-ensure)
-         (go-mode     . eglot-ensure)
-         (sh-mode     . eglot-ensure)
-         (yaml-mode   . eglot-ensure))
+  :defer t
   :config
-  (add-to-list 'eglot-server-programs
-               '(python-mode . ("jedi-language-server"))))
+  (setq eglot-server-programs
+        '((python-ts-mode . ("pyright-langserver" "--stdio"))
+          (python-mode . ("pyright-langserver" "--stdio"))
+          (go-ts-mode . ("gopls"))
+          (go-mode . ("gopls"))
+          (c-ts-mode . ("clangd"))
+          (c-mode . ("clangd"))
+          (c++-ts-mode . ("clangd"))
+          (c++-mode . ("clangd"))
+          ;; (yaml-ts-mode . ("yaml-language-server" "--stdio"))
+          (yaml-mode . ("yaml-language-server" "--stdio"))
+          (json-ts-mode . ("vscode-json-languageserver" "--stdio"))
+          (json-mode . ("vscode-json-languageserver" "--stdio"))
+          (sh-mode . ("bash-language-server" "start"))
+          (terraform-mode . ("terraform-ls" "serve"))
+          (hcl-mode . ("terraform-ls" "serve")))))
+
+(defun my/enable-eglot-if-available ()
+  "Start eglot if an LSP server is available for this buffer."
+  (condition-case nil
+      (eglot-ensure)
+    (error nil)))
+
+(dolist (hook '(python-ts-mode-hook
+                json-ts-mode-hook
+                go-ts-mode-hook
+                c-ts-mode-hook
+                sh-mode-hook
+                terraform-mode-hook
+                hcl-mode-hook))
+  (add-hook hook #'my/enable-eglot-if-available))
+
+(use-package tree-sitter
+  :hook (prog-mode . turn-on-tree-sitter-mode)
+  :config
+  )
+  (use-package tree-sitter-langs
+    :ensure t
+    :config
+    (tree-sitter-require 'yaml))
+
+(when (fboundp 'treesit-available-p)
+  (when (treesit-available-p)
+    (setq my/treesit-langs
+          '(bash c cpp go python json yaml hcl))
+
+    (dolist (lang my/treesit-langs)
+      (unless (treesit-language-available-p lang)
+        (condition-case err
+            (progn
+              (message "Installing treesit grammar for %s ..." lang)
+              (ignore-errors (treesit-install-language-grammar lang)))
+          (error (message "Failed to install %s: %s" lang err)))))
+
+    (setq major-mode-remap-alist
+          '((sh-mode . bash-ts-mode)
+            (c-mode . c-ts-mode)
+            (c++-mode . c++-ts-mode)
+            (python-mode . python-ts-mode)
+            (json-mode . json-ts-mode)
+            (yaml-mode . yaml-mode)))
+
+    (setq treesit-font-lock-level 4)))
+
+(use-package terraform-mode
+  :defer t
+  :mode ("\\.tf\\'" . terraform-mode)
+  :hook (terraform-mode . (lambda ()
+                            (when (and (fboundp 'treesit-language-available-p)
+                                       (treesit-language-available-p 'hcl))
+                              (when (fboundp 'hcl-ts-mode)
+                                (hcl-ts-mode))))))
+(use-package go-mode
+  :defer t
+  :hook ((go-mode . my/enable-eglot-if-available)))
+;;(use-package cc-mode
+;;  :defer t)
+(use-package yaml-mode
+  :defer t
+  :mode ("\\.ya?ml\\'" . yaml-mode)
+  :hook (yaml-mode . my/enable-eglot-if-available))
+(use-package json-mode
+  :defer t
+  :mode ("\\.json\\'" . json-mode)
+  :hook (json-mode . my/enable-eglot-if-available))
+(use-package sh-mode
+  :ensure nil
+  :mode ("\\.sh\\'" . sh-mode)
+  :hook (sh-mode . my/enable-eglot-if-available))
+(use-package python
+  :defer t
+  :config
+  (setq python-shell-interpreter "python3"))
 
 (use-package all-the-icons :ensure t)
 (use-package multiple-cursors :ensure t)
@@ -145,11 +161,6 @@
 ;;(use-package consult-project-extra :ensure t :after consult)
 ;;(use-package vertico :ensure t :init (vertico-mode))
 (use-package neotree :ensure t)
-
-(use-package orderless
-  :ensure t
-  :config
-  (setq completion-styles '(orderless)))
 
 (defun open-in-window (buffer)
   "Open BUFFER in a selected window, prompting for window choice if multiple windows exist."
@@ -177,13 +188,26 @@
   (find-file filename)
   (open-in-window (current-buffer)))
 
-;; (use-package dashboard
-;;   :config
-;;   (setq dashboard-center-content t)
-;;   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
-;;   (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
-;;   (dashboard-setup-startup-hook))
-;; (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+(use-package dashboard
+;  :elpaca t
+  :config
+  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+  (dashboard-setup-startup-hook))
+(setq dashboard-items '((recents   . 5)
+                        (bookmarks . 5)
+                        (projects  . 5)
+                        (registers . 5)))
+
+(setq dashboard-startupify-list '(dashboard-insert-banner
+                                  dashboard-insert-banner-title
+                                  dashboard-insert-navigator
+                                  dashboard-insert-init-info
+                                  dashboard-insert-items
+                                  dashboard-insert-newline
+                                  dashboard-insert-footer))
+(setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+(setq dashboard-icon-type 'all-the-icons)
 
 (defun close-buffers-by-extension (extension)
   "Closes all buffers that have files with the given EXTENSION."
@@ -212,11 +236,14 @@
            ("C-c s"          . consult-ripgrep)
            ("C-x b"          . consult-buffer)
            ("M-y"            . consult-yank-pop)
-           ;; ("C-c p f"        . consult-project-extra-find) 
+           ;; ("C-c p f"        . consult-project-extra-find)
            ;; ("C-c p g"        . consult-project-extra-ripgrep)
            ("C-c a"          . org-agenda)
            ("C-c c"          . org-capture)
            ("<f8>"           . neotree-toggle)
+           ("C-c e r"        . eglot-rename)
+           ("C-c e f"        . eglot-format)
+           ("C-c e a"        . eglot-code-actions)
            )
          )
   (global-set-key (kbd (car binding)) (cdr binding)))
@@ -249,6 +276,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages nil)
-) 
+)
 (put 'downcase-region 'disabled nil)
 ;;(put 'scroll-left 'disabled nil)
