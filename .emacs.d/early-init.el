@@ -5,7 +5,6 @@
 ;; This file is to be executed before anything when emacs starts.
 
 ;;; Code:
-
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
@@ -32,10 +31,7 @@
 (setq package-enable-at-startup nil)
 
 ;; Fonts
-(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font-16"))
-
-;; Theme
-(load-theme 'leuven-dark t)
+(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font-12"))
 
 ;; Fido mode
 (fido-mode 1)

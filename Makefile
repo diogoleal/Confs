@@ -19,13 +19,15 @@ krew-install:
 
 rpm: setup fedora fish flatpak kubectl go emacs kitty
 apt: setup fedora fish flatpak kubectl go emacs kitty
-pacman: setup arch fish kubectl emacs kitty
+pacman: setup arch fish kubectl emacs kitty 
 
 arch:
 	sudo pacman -Syu ttf-cascadia-code-nerd fish \
 		emacs kitty direnv fzf btop bat duf ripgrep \
 		yt-dlp evisum enlightenment vivaldi terminology vorta mupdf \
-		virt-manager nerdctl rootlesskit 
+		virt-manager nerdctl rootlesskit packagekit
+	sudo systemctl enable bluetooth
+	sudo systemctl start bluetooth
 
 setup:
 	mkdir -p $(BIN) $(LIB) $(HOME)/Workspace
