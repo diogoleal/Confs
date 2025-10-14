@@ -26,4 +26,5 @@ end
 kubectl completion fish | source
 
 set -gx PATH $PATH $HOME/.krew/bin
+pyenv init - fish | source
 

@@ -25,10 +25,9 @@ arch:
 	sudo pacman -Syu ttf-cascadia-code-nerd fish \
 		emacs kitty direnv fzf btop bat duf ripgrep \
 		yt-dlp evisum enlightenment vivaldi terminology vorta mupdf \
-		virt-manager nerdctl rootlesskit packagekit
+		virt-manager nerdctl rootlesskit packagekit copyq
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
-
 setup:
 	mkdir -p $(BIN) $(LIB) $(HOME)/Workspace
 
