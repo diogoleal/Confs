@@ -5,12 +5,19 @@
 ;;; Code:
 (load-file "~/.emacs.d/elpaca.el")
 
+
+
 (load-theme 'manoj-dark t)
 
 ;; (use-package tron-legacy-theme
 ;;   :config
 ;;   (setq tron-legacy-theme-vivid-cursor t)
 ;;   (load-theme 'tron-legacy t))
+
+(use-package git-gutter
+  :ensure t
+  :config
+  (global-git-gutter-mode +1))
 
 (setq whitespace-style
       '(face
@@ -82,7 +89,7 @@
   "Start eglot if an LSP server is available for this buffer."
   (condition-case nil
       (eglot-ensure)
-    (error nil)))
+    ((error "message" format-args) nil)))
 
 (dolist (hook '(python-ts-mode-hook
                 json-ts-mode-hook
@@ -97,33 +104,33 @@
   :hook (prog-mode . turn-on-tree-sitter-mode)
   :config
   )
-  (use-package tree-sitter-langs
-    :ensure t
-    :config
-    (tree-sitter-require 'yaml))
+(use-package tree-sitter-langs
+  :ensure t
+  :config
+  (tree-sitter-require 'yaml))
 
 (when (fboundp 'treesit-available-p)
-  (when (treesit-available-p)
-    (setq my/treesit-langs
-          '(bash c cpp go python json yaml hcl))
+ (when (treesit-available-p)
+   (setq my/treesit-langs
+         '(bash c cpp go python json yaml hcl))
 
-    (dolist (lang my/treesit-langs)
-      (unless (treesit-language-available-p lang)
-        (condition-case err
-            (progn
-              (message "Installing treesit grammar for %s ..." lang)
-              (ignore-errors (treesit-install-language-grammar lang)))
-          (error (message "Failed to install %s: %s" lang err)))))
+   (dolist (lang my/treesit-langs)
+     (unless (treesit-language-available-p lang)
+       (condition-case err
+           (progn
+             (message "Installing treesit grammar for %s ..." lang)
+             (ignore-errors (treesit-install-language-grammar lang)))
+         (error (message "Failed to install %s: %s" lang err)))))
 
-    (setq major-mode-remap-alist
-          '((sh-mode . bash-ts-mode)
-            (c-mode . c-ts-mode)
-            (c++-mode . c++-ts-mode)
-            (python-mode . python-ts-mode)
-            (json-mode . json-ts-mode)
-            (yaml-mode . yaml-mode)))
+   (setq major-mode-remap-alist
+         '((sh-mode . bash-ts-mode)
+           (c-mode . c-ts-mode)
+           (c++-mode . c++-ts-mode)
+           (python-mode . python-ts-mode)
+           (json-mode . json-ts-mode)
+           (yaml-mode . yaml-mode)))
 
-    (setq treesit-font-lock-level 4)))
+   (setq treesit-font-lock-level 4)))
 
 (use-package terraform-mode
   :defer t
@@ -155,12 +162,31 @@
   :config
   (setq python-shell-interpreter "python3"))
 
+(use-package groovy-mode
+  :ensure t
+  :mode (("Jenkinsfile\\'" . groovy-mode))
+  :interpreter ("groovy" . groovy-mode)
+  :config
+  (setq groovy-indent-offset 4))
+
+(use-package jenkinsfile-mode
+  :ensure t
+  :mode ("Jenkinsfile\\'" . jenkinsfile-mode))
+
 (use-package all-the-icons :ensure t)
 (use-package multiple-cursors :ensure t)
 (use-package consult :ensure t)
 ;;(use-package consult-project-extra :ensure t :after consult)
 ;;(use-package vertico :ensure t :init (vertico-mode))
 (use-package neotree :ensure t)
+(with-eval-after-load 'neotree
+  (dolist (face '(neo-root-dir-face
+                  neo-dir-link-face
+                  neo-file-link-face
+                  neo-expand-btn-face
+                  neo-banner-face))
+    (set-face-attribute face nil :height 90)))
+(setq neo-hidden-regexp-list '("^\\.git$"))
 
 (defun open-in-window (buffer)
   "Open BUFFER in a selected window, prompting for window choice if multiple windows exist."
@@ -275,7 +301,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
-)
+ '(package-selected-packages nil))
 (put 'downcase-region 'disabled nil)
 ;;(put 'scroll-left 'disabled nil)
