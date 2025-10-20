@@ -5,14 +5,7 @@
 ;;; Code:
 (load-file "~/.emacs.d/elpaca.el")
 
-
-
 (load-theme 'manoj-dark t)
-
-;; (use-package tron-legacy-theme
-;;   :config
-;;   (setq tron-legacy-theme-vivid-cursor t)
-;;   (load-theme 'tron-legacy t))
 
 (use-package git-gutter
   :ensure t
@@ -161,17 +154,18 @@
   :defer t
   :config
   (setq python-shell-interpreter "python3"))
-
 (use-package groovy-mode
   :ensure t
   :mode (("Jenkinsfile\\'" . groovy-mode))
   :interpreter ("groovy" . groovy-mode)
   :config
   (setq groovy-indent-offset 4))
-
 (use-package jenkinsfile-mode
   :ensure t
   :mode ("Jenkinsfile\\'" . jenkinsfile-mode))
+(use-package dockerfile-mode
+  :ensure t
+  :mode (("Dockerfile\\'" . dockerfile-mode)))
 
 (use-package all-the-icons :ensure t)
 (use-package multiple-cursors :ensure t)
@@ -187,6 +181,7 @@
                   neo-banner-face))
     (set-face-attribute face nil :height 90)))
 (setq neo-hidden-regexp-list '("^\\.git$"))
+(setq neo-theme 'ascii)
 
 (defun open-in-window (buffer)
   "Open BUFFER in a selected window, prompting for window choice if multiple windows exist."
@@ -215,7 +210,6 @@
   (open-in-window (current-buffer)))
 
 (use-package dashboard
-;  :elpaca t
   :config
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
   (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
