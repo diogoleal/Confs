@@ -5,8 +5,12 @@ fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/bin/go/bin
 fish_add_path $HOME/.config/emacs/bin
-
 set --universal GOPATH $HOME/Workspace/go
+
+function e
+   emacsclient -c -nw $argv
+end
+
 function S
   sudo $argv
 end
