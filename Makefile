@@ -19,13 +19,14 @@ krew-install:
 
 rpm: setup fedora fish flatpak kubectl go emacs kitty
 apt: setup fedora fish flatpak kubectl go emacs kitty
-pacman: setup arch fish kubectl emacs kitty 
+pacman: setup arch fish kubectl emacs kitty
 
 arch:
-	sudo pacman -Syu ttf-cascadia-code-nerd fish \
+	sudo pacman -Syu --noconfirm ttf-cascadia-code-nerd fish \
 		emacs kitty direnv fzf btop bat duf ripgrep \
-		yt-dlp evisum enlightenment vivaldi terminology vorta mupdf \
-		virt-manager nerdctl rootlesskit packagekit copyq
+		yt-dlp evisum enlightenment vivaldi vorta mupdf \
+		virt-manager nerdctl rootlesskit packagekit copyq \
+		jami-qt
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
 setup:
@@ -85,9 +86,8 @@ emacs:
 	ln -sf $(DIR_CONF)/.config/systemd/user/emacs.service $(HOME)/.config/systemd/user/emacs.service
 	systemctl --user enable emacs.service
 	systemctl --user start emacs.service
-        # go install golang.org/x/tools/gopls@latest
-        # npm install bash-language-server yaml-language-server pyright
+	sudo pacman -Syu --noconfirm clang python-lsp-server bash-language-server nodejs shfmt \
+		yaml-language-server pyright vscode-json-languageserver gopls
 
 kitty:
 	ln -sf $(DIR_CONF)/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
-

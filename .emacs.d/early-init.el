@@ -5,46 +5,52 @@
 ;; This file is to be executed before anything when emacs starts.
 
 ;;; Code:
+
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
+(show-paren-mode t)
+
+(savehist-mode 1)
+(setq-default show-trailing-whitespace t)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq indent-line-function 'insert-tab)
+(setq initial-scratch-message nil)
+(setq inhibit-startup-message t)
+(setq visible-bell t)
+(setq ring-bell-function 'ignore)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font-12"))
+(global-font-lock-mode 1)
 
 ;; https://themkat.net/2025/03/25/simple_smoother_emacs_scrolling.html
 (setq scroll-conservatively 10
       scroll-margin 15)
 
-;; Enable line numbers
-;;(setq display-line-numbers-type 'relative)
-(setq display-line-numbers-width-start t)
+;(setq display-line-numbers-width-start t)
 (global-display-line-numbers-mode 1)
 
-;; Autocomplete for brackets
 (electric-pair-mode 1)
-
-;; Typing overwrites selected text
 (delete-selection-mode 1)
 
-;; Disable tab indent
-(setq-default indent-tabs-mode nil)
-
-;; Disable package.el
-(setq package-enable-at-startup nil)
-
-;; Fonts
-(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font-12"))
-
-;; Fido mode
 (fido-mode 1)
 (fido-vertical-mode 1)
-
-;; Annoying Files
-;; Disable backup~ files
-(setq make-backup-files nil)
-
-;; Disable #autosave# files
-(setq auto-save-default nil)
-
-;; Disable .#lockfile
-(setq create-lockfiles nil)
 
 ;;; early-init.el ends here

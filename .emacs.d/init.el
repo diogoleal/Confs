@@ -3,213 +3,62 @@
 ;; This is the Emacs configuration file.
 
 ;;; Code:
-(load-file "~/.emacs.d/elpaca.el")
+(load-theme 'tsdh-dark t)
 
-(load-theme 'manoj-dark t)
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
 
+(use-package consult :ensure t)
+(use-package auto-complete
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)))
+(use-package k8s-mode)
+(use-package dockerfile-mode)
+
+(use-package highlight-parentheses
+  :hook
+  ((minibuffer-setup . highlight-parentheses-minibuffer-setup)))
+
+(use-package multiple-cursors
+  :ensure t)
+
+(use-package bash-completion
+  :config
+  (bash-completion-setup))
+(use-package terraform-mode
+  :custom
+  (terraform-indent-level 4)
+  :hook
+  (terraform-mode . my-terraform-mode-init)
+  :config
+  (defun my-terraform-mode-init ()
+    ))
+
+(use-package flycheck
+  :hook
+  (after-init . global-flycheck-mode))
+
+(use-package pyvenv
+  :config
+  (pyvenv-mode t)
+  (setq pyvenv-post-activate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+  (setq pyvenv-post-deactivate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter "python3")))))
+(use-package flymake-shell
+  :hook
+  (sh-set-shell . flymake-shell-load))
+(use-package magit)
 (use-package git-gutter
-  :ensure t
   :config
   (global-git-gutter-mode +1))
 
-(setq whitespace-style
-      '(face
-        trailing
-        tabs
-        spaces
-        newline
-        empty
-        space-mark
-        tab-mark))
-
-(use-package projectile
-  :defer 1
-  :config
-  (projectile-mode +1))
-
-(use-package corfu
-  :hook (after-init . global-corfu-mode)
-  :custom
-  (corfu-cycle t)
-  (corfu-auto t)
-  (corfu-separator ?\s)
-  (corfu-quit-at-boundary t)
-  (corfu-quit-no-match t)
-  (corfu-echo-documentation nil))
-
-(use-package cape
-  :after corfu)
-
-(use-package orderless
-  :custom (completion-styles '(orderless basic))
-  :config
-  (setq completion-category-defaults nil))
-
-(use-package yasnippet
-  :ensure t
-  :config
-  (yas-global-mode 1))
-
-(use-package yasnippet-snippets
-  :ensure t
-    :after yasnippet)
-
-(use-package flymake
-  :ensure nil
-  :hook ((prog-mode . flymake-mode)))
-
-(use-package eglot
-  :defer t
-  :config
-  (setq eglot-server-programs
-        '((python-ts-mode . ("pyright-langserver" "--stdio"))
-          (python-mode . ("pyright-langserver" "--stdio"))
-          (go-ts-mode . ("gopls"))
-          (go-mode . ("gopls"))
-          (c-ts-mode . ("clangd"))
-          (c-mode . ("clangd"))
-          (c++-ts-mode . ("clangd"))
-          (c++-mode . ("clangd"))
-          ;; (yaml-ts-mode . ("yaml-language-server" "--stdio"))
-          (yaml-mode . ("yaml-language-server" "--stdio"))
-          (json-ts-mode . ("vscode-json-languageserver" "--stdio"))
-          (json-mode . ("vscode-json-languageserver" "--stdio"))
-          (sh-mode . ("bash-language-server" "start"))
-          (terraform-mode . ("terraform-ls" "serve"))
-          (hcl-mode . ("terraform-ls" "serve")))))
-
-(defun my/enable-eglot-if-available ()
-  "Start eglot if an LSP server is available for this buffer."
-  (condition-case nil
-      (eglot-ensure)
-    ((error "message" format-args) nil)))
-
-(dolist (hook '(python-ts-mode-hook
-                json-ts-mode-hook
-                go-ts-mode-hook
-                c-ts-mode-hook
-                sh-mode-hook
-                terraform-mode-hook
-                hcl-mode-hook))
-  (add-hook hook #'my/enable-eglot-if-available))
-
-(use-package tree-sitter
-  :hook (prog-mode . turn-on-tree-sitter-mode)
-  :config
-  )
-(use-package tree-sitter-langs
-  :ensure t
-  :config
-  (tree-sitter-require 'yaml))
-
-(when (fboundp 'treesit-available-p)
- (when (treesit-available-p)
-   (setq my/treesit-langs
-         '(bash c cpp go python json yaml hcl))
-
-   (dolist (lang my/treesit-langs)
-     (unless (treesit-language-available-p lang)
-       (condition-case err
-           (progn
-             (message "Installing treesit grammar for %s ..." lang)
-             (ignore-errors (treesit-install-language-grammar lang)))
-         (error (message "Failed to install %s: %s" lang err)))))
-
-   (setq major-mode-remap-alist
-         '((sh-mode . bash-ts-mode)
-           (c-mode . c-ts-mode)
-           (c++-mode . c++-ts-mode)
-           (python-mode . python-ts-mode)
-           (json-mode . json-ts-mode)
-           (yaml-mode . yaml-mode)))
-
-   (setq treesit-font-lock-level 4)))
-
-(use-package terraform-mode
-  :defer t
-  :mode ("\\.tf\\'" . terraform-mode)
-  :hook (terraform-mode . (lambda ()
-                            (when (and (fboundp 'treesit-language-available-p)
-                                       (treesit-language-available-p 'hcl))
-                              (when (fboundp 'hcl-ts-mode)
-                                (hcl-ts-mode))))))
-(use-package go-mode
-  :defer t
-  :hook ((go-mode . my/enable-eglot-if-available)))
-;;(use-package cc-mode
-;;  :defer t)
-(use-package yaml-mode
-  :defer t
-  :mode ("\\.ya?ml\\'" . yaml-mode)
-  :hook (yaml-mode . my/enable-eglot-if-available))
-(use-package json-mode
-  :defer t
-  :mode ("\\.json\\'" . json-mode)
-  :hook (json-mode . my/enable-eglot-if-available))
-(use-package sh-mode
-  :ensure nil
-  :mode ("\\.sh\\'" . sh-mode)
-  :hook (sh-mode . my/enable-eglot-if-available))
-(use-package python
-  :defer t
-  :config
-  (setq python-shell-interpreter "python3"))
-(use-package groovy-mode
-  :ensure t
-  :mode (("Jenkinsfile\\'" . groovy-mode))
-  :interpreter ("groovy" . groovy-mode)
-  :config
-  (setq groovy-indent-offset 4))
-(use-package jenkinsfile-mode
-  :ensure t
-  :mode ("Jenkinsfile\\'" . jenkinsfile-mode))
-(use-package dockerfile-mode
-  :ensure t
-  :mode (("Dockerfile\\'" . dockerfile-mode)))
-
-(use-package all-the-icons :ensure t)
-(use-package multiple-cursors :ensure t)
-(use-package consult :ensure t)
-;;(use-package consult-project-extra :ensure t :after consult)
-;;(use-package vertico :ensure t :init (vertico-mode))
-(use-package neotree :ensure t)
-(with-eval-after-load 'neotree
-  (dolist (face '(neo-root-dir-face
-                  neo-dir-link-face
-                  neo-file-link-face
-                  neo-expand-btn-face
-                  neo-banner-face))
-    (set-face-attribute face nil :height 90)))
-(setq neo-hidden-regexp-list '("^\\.git$"))
-(setq neo-theme 'ascii)
-
-(defun open-in-window (buffer)
-  "Open BUFFER in a selected window, prompting for window choice if multiple windows exist."
-  (interactive "bBuffer: ")
-  (let ((buffer-obj (get-buffer buffer)))
-    (if (not buffer-obj)
-        (error "Buffer '%s' does not exist" buffer)
-      (if (> (count-windows) 1)
-          (let* ((windows (window-list))
-                 (window-names (mapcar (lambda (w)
-                                         (format "%s: %s"
-                                                 (window-number w)
-                                                 (buffer-name (window-buffer w))))
-                                       windows))
-                 (chosen (completing-read "Select window: " window-names nil t))
-                 (window (nth (string-to-number (car (split-string chosen ":")))
-                              windows)))
-            (select-window window)
-            (switch-to-buffer buffer-obj))
-        (switch-to-buffer buffer-obj)))))
-
-(defun my-find-file (filename)
-  "File opening with window choice"
-  (interactive "FFind file: ")
-  (find-file filename)
-  (open-in-window (current-buffer)))
-
 (use-package dashboard
+  :ensure t
   :config
   (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
   (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
@@ -229,19 +78,159 @@
 (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 (setq dashboard-icon-type 'all-the-icons)
 
-(defun close-buffers-by-extension (extension)
-  "Closes all buffers that have files with the given EXTENSION."
-  (interactive "sEnter the extension (e.g. yaml, py, el, bash)")
-  (let ((pattern (concat "\\." (regexp-quote extension) "\\'")))
-    (mapc (lambda (buf)
-            (when (and (buffer-file-name buf)
-                       (string-match pattern (buffer-file-name buf)))
-              (kill-buffer buf)))
-          (buffer-list)))
-  (message "Buffers with .%s extension closed" extension))
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay        0.5
+          treemacs-directory-name-transformer      #'identity
+          treemacs-display-in-side-window          t
+          treemacs-eldoc-display                   'simple
+          treemacs-file-event-delay                2000
+          treemacs-file-extension-regex            treemacs-last-period-regex-value
+          treemacs-file-follow-delay               0.2
+          treemacs-file-name-transformer           #'identity
+          treemacs-follow-after-init               t
+          treemacs-expand-after-init               t
+          treemacs-find-workspace-method           'find-for-file-or-pick-first
+          treemacs-git-command-pipe                ""
+          treemacs-goto-tag-strategy               'refetch-index
+          treemacs-header-scroll-indicators        '(nil . "^^^^^^")
+          treemacs-hide-dot-git-directory          t
+          treemacs-indentation                     2
+          treemacs-indentation-string              " "
+          treemacs-is-never-other-window           nil
+          treemacs-max-git-entries                 5000
+          treemacs-missing-project-action          'ask
+          treemacs-move-forward-on-expand          nil
+          treemacs-no-png-images                   nil
+          treemacs-no-delete-other-windows         t
+          treemacs-project-follow-cleanup          nil
+          treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                        'left
+          treemacs-read-string-input               'from-child-frame
+          treemacs-recenter-distance               0.1
+          treemacs-recenter-after-file-follow      nil
+          treemacs-recenter-after-tag-follow       nil
+          treemacs-recenter-after-project-jump     'always
+          treemacs-recenter-after-project-expand   'on-distance
+          treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
+          treemacs-project-follow-into-home        nil
+          treemacs-show-cursor                     nil
+          treemacs-show-hidden-files               t
+          treemacs-silent-filewatch                nil
+          treemacs-silent-refresh                  nil
+          treemacs-sorting                         'alphabetic-asc
+          treemacs-select-when-already-in-treemacs 'move-back
+          treemacs-space-between-root-nodes        t
+          treemacs-tag-follow-cleanup              t
+          treemacs-tag-follow-delay                1.5
+          treemacs-text-scale                      nil
+          treemacs-user-mode-line-format           nil
+          treemacs-user-header-line-format         nil
+          treemacs-wide-toggle-width               70
+          treemacs-width                           35
+          treemacs-width-increment                 1
+          treemacs-width-is-initially-locked       t
+          treemacs-workspace-switch-cleanup        nil)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+    (when treemacs-python-executable
+      (treemacs-git-commit-diff-mode t))
+
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+
+    (treemacs-hide-gitignored-files-mode nil))
+
+  )
+
+(use-package treemacs-evil
+  :after (treemacs evil)
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once)
+  :ensure t)
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
+
+(use-package treemacs-persp
+  :after (treemacs persp-mode)
+  :ensure t
+  :config (treemacs-set-scope-type 'Perspectives))
+
+(use-package treemacs-tab-bar
+  :after (treemacs)
+  :ensure t
+  :config (treemacs-set-scope-type 'Tabs))
+
+(use-package vterm
+  :ensure t
+  :config
+  (setq vterm-shell "/usr/bin/fish")
+  (setq vterm-max-scrollback 50000)
+  (setq vterm-kill-buffer-on-exit t)
+  )
+
+(global-set-key (kbd "C-x <f12>")
+                (lambda ()
+                  (interactive)
+                  (split-window-below)
+                  (other-window 1)
+                  (vterm)))
+
+(global-set-key (kbd "C-x <f11>")
+                (lambda ()
+                  (interactive)
+                  (when (eq major-mode 'vterm-mode)
+                    (kill-buffer-and-window))))
+
+
+(use-package eyebrowse
+  :ensure t
+  :config
+  (eyebrowse-mode t))
+
+(use-package highlight-symbol
+  :ensure t
+  :hook (prog-mode . highlight-symbol-mode)
+  :config
+  (setq highlight-symbol-on-navigation-p t
+        highlight-symbol-idle-delay 0.5)
+  )
 
 (dolist (binding
-         '(("C-<tab>"        . other-window)
+         '(
+           ("M-0"            . treemacs-select-window)
+           ("C-x t 1"        . treemacs-delete-other-windows)
+           ("C-x t t"        . treemacs)
+           ("C-x t d"        . treemacs-select-directory)
+           ("C-x t B"        . treemacs-bookmark)
+           ("C-x t C-t"      . treemacs-find-file)
+           ("C-x t M-t"      . treemacs-find-tag)
+           ("C-<tab>"        . other-window)
            ("M-<up>"         . enlarge-window)
            ("M-<down>"       . shrink-window)
            ("M-<right>"      . enlarge-window-horizontally)
@@ -256,45 +245,10 @@
            ("C-c s"          . consult-ripgrep)
            ("C-x b"          . consult-buffer)
            ("M-y"            . consult-yank-pop)
-           ;; ("C-c p f"        . consult-project-extra-find)
-           ;; ("C-c p g"        . consult-project-extra-ripgrep)
-           ("C-c a"          . org-agenda)
-           ("C-c c"          . org-capture)
-           ("<f8>"           . neotree-toggle)
-           ("C-c e r"        . eglot-rename)
-           ("C-c e f"        . eglot-format)
-           ("C-c e a"        . eglot-code-actions)
+           ("C-c p f"        . consult-project-extra-find)
+           ("C-c p g"        . consult-project-extra-ripgrep)
+           ("C-c t"          . vterm)
+           ("<f9>"           . rainbow-delimiters-mode)
            )
          )
   (global-set-key (kbd (car binding)) (cdr binding)))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(diff-hl-change ((t (:background "#ddddff" :foreground "black"))))
- '(diff-hl-delete ((t (:background "#ffdddd" :foreground "black"))))
- '(diff-hl-insert ((t (:background "#ddffdd" :foreground "black"))))
- '(ediff-current-diff-A ((t (:background "#ff5555" :foreground "white"))))
- '(ediff-current-diff-B ((t (:background "#55ff55" :foreground "white"))))
- '(ediff-even-diff-A ((t (:background "#f0f0f0"))))
- '(ediff-even-diff-B ((t (:background "#f0f0f0"))))
- '(ediff-fine-diff-A ((t (:background "#ffaaaa" :foreground "black"))))
- '(ediff-fine-diff-B ((t (:background "#aaffaa" :foreground "black"))))
- '(ediff-odd-diff-A ((t (:background "#e0e0e0"))))
- '(ediff-odd-diff-B ((t (:background "#e0e0e0"))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#7f8c8d"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "#3498db"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "#2ecc71"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "#f1c40f"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "#e67e22"))))
- '(rainbow-delimiters-depth-6-face ((t (:foreground "#e74c3c")))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
-(put 'downcase-region 'disabled nil)
-;;(put 'scroll-left 'disabled nil)
