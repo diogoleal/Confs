@@ -23,13 +23,17 @@
     (global-auto-complete-mode t)))
 (use-package k8s-mode)
 (use-package dockerfile-mode)
+;; Syntax highlighting para Jenkinsfile
+(use-package groovy-mode
+  :mode ("Jenkinsfile\\'" . groovy-mode)
+  :config
+  (setq groovy-indent-offset 4))
 
 (use-package highlight-parentheses
   :hook
   ((minibuffer-setup . highlight-parentheses-minibuffer-setup)))
 
-(use-package multiple-cursors
-  :ensure t)
+(use-package multiple-cursors :ensure t)
 
 (use-package bash-completion
   :config
@@ -59,108 +63,66 @@
 (use-package flymake-shell
   :hook
   (sh-set-shell . flymake-shell-load))
-(use-package magit)
+
 (use-package git-gutter
   :config
   (global-git-gutter-mode +1))
 
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . markdown-mode)
+  :init (setq markdown-command "multimarkdown")
+  :config
+  (setq markdown-fontify-code-blocks-natively t)
+  (setq markdown-enable-math t))
+
+;; (use-package visual-fill-column
+;;   :ensure t
+;;   :hook (markdown-mode . visual-line-mode)
+;;   :hook (markdown-mode . visual-fill-column-mode)
+;;   :config
+;;   (setq visual-fill-column-width 90
+;;         visual-fill-column-center-text t))
+
+(setq markdown-fontify-code-blocks-natively t)
+
+(use-package emojify
+  :ensure t
+  :hook (markdown-mode . emojify-mode))
+
+(use-package nerd-icons :ensure t)
+
 (use-package dashboard
   :ensure t
   :config
-  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
-  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+  (setq dashboard-startup-banner 'official
+        dashboard-items '((recents  . 5)
+                          (projects . 5)
+                          (bookmarks . 5)))
   (dashboard-setup-startup-hook))
-(setq dashboard-items '((recents   . 5)
-                        (bookmarks . 5)
-                        (projects  . 5)
-                        (registers . 5)))
-(setq dashboard-projects-backend 'projectile)
-(setq dashboard-startupify-list '(dashboard-insert-banner
-                                  dashboard-insert-banner-title
-                                  dashboard-insert-navigator
-                                  dashboard-insert-init-info
-                                  dashboard-insert-items
-                                  dashboard-insert-newline
-                                  dashboard-insert-footer))
-;(setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
-(setq dashboard-icon-type 'all-the-icons)
-
-;;; Treemacs Configuration
 
 (use-package treemacs
   :ensure t
   :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
   :config
-  (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-        treemacs-deferred-git-apply-delay      0.5
-        treemacs-display-in-side-window        t
-        treemacs-follow-after-init             t
-        treemacs-expand-after-init             t
-        treemacs-find-workspace-method         'find-for-file-or-pick-first
-        treemacs-hide-dot-git-directory        t
-        treemacs-indentation                   2
-        treemacs-is-never-other-window         nil
-        treemacs-litter-directories            '("/node_modules" "/.venv" "/.cask")
-        treemacs-no-delete-other-windows       t
-        treemacs-position                      'left
-        treemacs-show-hidden-files             t
-        treemacs-sorting                       'alphabetic-asc
-        treemacs-space-between-root-nodes      t
-        treemacs-width                         35
-        treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory))
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode 'always)
+  (setq treemacs-no-png-images t
+        treemacs-width 32
+        treemacs-indentation 2)
+  (add-hook 'emacs-startup-hook #'treemacs))
 
-  (when (and (executable-find "git") treemacs-python-executable)
-    (treemacs-git-mode 'deferred))
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
 
-  (use-package treemacs-projectile
-    :after (treemacs projectile)
-    :ensure t)
-
-  (use-package treemacs-icons-dired
-    :hook (dired-mode . treemacs-icons-dired-enable-once)
-    :ensure t)
-
-  (use-package treemacs-magit
-    :after (treemacs magit)
-    :ensure t)
-
-  (use-package treemacs-persp
-    :after (treemacs persp-mode)
-    :ensure t
-    :config (treemacs-set-scope-type 'Perspectives))
-
-  (use-package treemacs-tab-bar
-    :after treemacs
-    :ensure t
-    :config (treemacs-set-scope-type 'Tabs)))
-
-(use-package vterm
+(use-package magit
   :ensure t
-  :config
-  (setq vterm-shell "/usr/bin/fish")
-  (setq vterm-max-scrollback 50000)
-  (setq vterm-kill-buffer-on-exit t)
-  )
+  :commands magit-status)
 
-(global-set-key (kbd "C-x <f12>")
+(global-set-key (kbd "C-x g")
                 (lambda ()
                   (interactive)
-                  (split-window-below)
-                  (other-window 1)
-                  (vterm)))
-
-(global-set-key (kbd "C-x <f11>")
-                (lambda ()
-                  (interactive)
-                  (when (eq major-mode 'vterm-mode)
-                    (kill-buffer-and-window))))
-
+                  (magit-status)
+                  (treemacs-select-window)))
 
 (use-package eyebrowse
   :ensure t
@@ -177,14 +139,6 @@
 
 (dolist (binding
          '(
-           ("M-0"            . treemacs-select-window)
-           ("C-x t 1"        . treemacs-delete-other-windows)
-           ("C-x t p"        . treemacs-projectile)
-           ("C-x t t"        . treemacs)
-           ("C-x t d"        . treemacs-select-directory)
-           ("C-x t B"        . treemacs-bookmark)
-           ("C-x t C-t"      . treemacs-find-file)
-           ("C-x t M-t"      . treemacs-find-tag)
            ("C-<tab>"        . other-window)
            ("M-<up>"         . enlarge-window)
            ("M-<down>"       . shrink-window)
