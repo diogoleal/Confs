@@ -23,14 +23,16 @@ pacman: setup arch fish kubectl emacs kitty
 
 arch:
 	sudo pacman -Syu --noconfirm ttf-cascadia-code-nerd fish \
-		emacs kitty direnv fzf btop bat duf ripgrep \
-		yt-dlp evisum enlightenment vivaldi vorta mupdf \
-		virt-manager nerdctl rootlesskit packagekit copyq \
+		emacs kitty direnv fzf btop bat duf ripgrep pyenv \
+		yt-dlp niri vivaldi vorta mupdf autossh\
+		virt-manager nerdctl rootlesskit packagekit \
 		jami-qt
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
+
 setup:
 	mkdir -p $(BIN) $(LIB) $(HOME)/Workspace
+	ln -sf $(DIR_CONF)/.gitconfig $(HOME)/.gitconfig
 
 ubuntu:
 	sudo apt remove -y firefox rhythmbox
@@ -51,7 +53,7 @@ fedora:
 
 fish:
 	mkdir -p ~/.config/fish/{functions,completions}
-	ln -sf $(DIR_CONF)/.gitconfig $(HOME)/.gitconfig
+	curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 	ln -sf $(DIR_CONF)/.config/fish/functions/alias.fish ~/.config/fish/functions/alias.fish
 	ln -sf $(DIR_CONF)/.config/fish/config.fish ~/.config/fish/config.fish
 	ln -sf $(DIR_CONF)/.config/fish/k9s.fish ~/.config/fish/completions/k9s.fish
@@ -91,3 +93,7 @@ emacs:
 
 kitty:
 	ln -sf $(DIR_CONF)/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
+
+virt:
+	sudo pacman -S qemu-full virt-manager virt-viewer dnsmasq vde2 openbsd-netcat libvirt
+	sudo systemctl enable --now libvirtd
