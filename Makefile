@@ -2,7 +2,10 @@ DIR_CONF := $(HOME)/Workspace/Confs
 BIN := $(HOME)/bin
 LIB := $(HOME)/lib
 
-.PHONY: all setup remove-upgrade install-deps fish flatpak kubectl go emacs kitty filen mega krew-install
+all: pacman
+pacman: setup arch fish kubectl emacs kitty virt
+
+.PHONY: all setup remove-upgrade install-deps fish flatpak kubectl go emacs kitty filen mega krew-install pacman
 
 krew-install:
 	@set -x; \
@@ -19,14 +22,16 @@ krew-install:
 
 rpm: setup fedora fish flatpak kubectl go emacs kitty
 apt: setup fedora fish flatpak kubectl go emacs kitty
-pacman: setup arch fish kubectl emacs kitty
 
 arch:
 	sudo pacman -Syu --noconfirm ttf-cascadia-code-nerd fish \
 		emacs kitty direnv fzf btop bat duf ripgrep pyenv \
-		yt-dlp niri vivaldi vorta mupdf autossh\
+		yt-dlp niri vivaldi vorta mupdf autossh \
 		virt-manager nerdctl rootlesskit packagekit \
-		jami-qt
+		jami-qt discord
+
+	yay -S --noconfirm --answerclean \
+		xfe cockatrice
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
 
