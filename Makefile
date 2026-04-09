@@ -28,10 +28,12 @@ arch:
 		emacs kitty direnv fzf btop bat duf ripgrep pyenv \
 		yt-dlp niri vivaldi vorta mupdf autossh \
 		virt-manager nerdctl rootlesskit packagekit \
-		jami-qt discord telegram-desktop
+		jami-qt discord telegram-desktop fluxcd aws-cli-v2 \
+		cups cups-pk-helper kimageformats ddcutil \
+		i2c-tools qt6ct qt5ct
 
 	yay -S --noconfirm --answerclean \
-		xfe cockatrice
+		xfe cockatrice dsearch-bin
 
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
