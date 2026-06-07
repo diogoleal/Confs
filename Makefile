@@ -2,10 +2,10 @@ DIR_CONF := $(HOME)/Workspace/Confs
 BIN := $(HOME)/bin
 LIB := $(HOME)/lib
 
-all: pacman
-pacman: setup arch fish kubectl emacs kitty virt
+all: setup arch fish kubectl emacs kitty virt
+pacman: all
 
-.PHONY: all setup remove-upgrade install-deps fish flatpak kubectl go emacs kitty filen mega krew-install pacman
+.PHONY: all setup fish flatpak kubectl go emacs kitty virt krew-install pacman ubuntu fedora arch clean
 
 krew-install:
 	@set -x; \
@@ -21,22 +21,23 @@ krew-install:
 	./"$${KREW}" install krew
 
 rpm: setup fedora fish flatpak kubectl go emacs kitty
-apt: setup fedora fish flatpak kubectl go emacs kitty
+apt: setup ubuntu fish flatpak kubectl go emacs kitty
 
 arch:
-	sudo pacman -Syu --noconfirm ttf-cascadia-code-nerd fish \
+	sudo pacman -Syu --needed --noconfirm ttf-cascadia-code-nerd fish \
 		emacs kitty direnv fzf btop bat duf ripgrep pyenv \
 		yt-dlp niri vivaldi vorta mupdf autossh \
 		virt-manager nerdctl rootlesskit packagekit \
 		jami-qt discord telegram-desktop fluxcd aws-cli-v2 \
 		cups cups-pk-helper kimageformats ddcutil \
-		i2c-tools qt6ct qt5ct kustomize
+		i2c-tools qt6ct qt5ct kustomize \
+		clang python-lsp-server bash-language-server nodejs shfmt \
+		yaml-language-server pyright vscode-json-languageserver gopls
 
 	yay -S --noconfirm --answerclean \
 		xfe cockatrice dsearch-bin
 
-	sudo systemctl enable bluetooth
-	sudo systemctl start bluetooth
+	sudo systemctl enable --now bluetooth
 
 	sudo mkdir -p /etc/pacman.d/hooks && \
 		sudo ln -sf $(DIR_CONF)/etc/pacman.d/hooks/clean-cache.hook /etc/pacman.d/hooks/clean-cache.hook
@@ -51,7 +52,7 @@ ubuntu:
 	sudo apt update && sudo apt upgrade -y
 	sudo apt install -y direnv fzf fish ansible curl gnupg \
 		bat duf procs ripgrep fd-find btop yt-dlp kitty \
-    emacs libtool cmake clang-tools nodejs npm fonts-firacode
+	emacs libtool cmake clang-tools nodejs npm fonts-firacode
 	sudo apt install -y flatpak gnome-software-plugin-flatpak
 	sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
@@ -73,9 +74,7 @@ fish:
 
 flatpak:
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install flathub -y  org.telegram.desktop \
-	                            com.vivaldi.Vivaldi \
-	                            io.ente.auth \
+	flatpak install flathub -y io.ente.auth \
 	                            dev.geopjr.Tuba \
 	                            org.onlyoffice.desktopeditors \
 	                            org.gnome.World.PikaBackup \
@@ -83,14 +82,17 @@ flatpak:
 
 kubectl:
 	curl -LO https://dl.k8s.io/release/v1.32.0/bin/linux/amd64/kubectl
-	install -m=+x+r kubectl $(BIN)/kubectl
+	install -m 755 kubectl $(BIN)/kubectl
 	rm -f kubectl
 
 go:
-	curl -s https://go.dev/VERSION?m=text | cut -d' ' -f1 | grep -v time > .goversion
-	curl -LO https://go.dev/dl/$$(cat .goversion).linux-amd64.tar.gz
-	tar -C $(BIN)/ -xzf $$(cat .goversion).linux-amd64.tar.gz
-	rm -f $$(cat .goversion).linux-amd64.tar.gz .goversion
+	@set -x; \
+	TMP_DIR=$$(mktemp -d); \
+	cd $$TMP_DIR && \
+	VERSION=$$(curl -s https://go.dev/VERSION?m=text | cut -d' ' -f1 | grep -v time) && \
+	curl -LO "https://go.dev/dl/$${VERSION}.linux-amd64.tar.gz" && \
+	tar -C $(BIN)/ -xzf "$${VERSION}.linux-amd64.tar.gz" && \
+	rm -rf $$TMP_DIR
 
 emacs:
 	mkdir -p ~/.emacs.d/ ~/.config/systemd/user/
@@ -100,12 +102,19 @@ emacs:
 	ln -sf $(DIR_CONF)/.config/systemd/user/emacs.service $(HOME)/.config/systemd/user/emacs.service
 	systemctl --user enable emacs.service
 	systemctl --user start emacs.service
-	sudo pacman -Syu --noconfirm clang python-lsp-server bash-language-server nodejs shfmt \
-		yaml-language-server pyright vscode-json-languageserver gopls
 
 kitty:
 	ln -sf $(DIR_CONF)/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
 
 virt:
-	sudo pacman -S qemu-full virt-manager virt-viewer dnsmasq vde2 openbsd-netcat libvirt
+	sudo pacman -S --needed --noconfirm qemu-full virt-manager virt-viewer dnsmasq vde2 openbsd-netcat libvirt
 	sudo systemctl enable --now libvirtd
+
+clean:
+	rm -f $(BIN)/kubectl
+	rm -rf $(BIN)/go
+	rm -rf ~/.config/fish/{functions/alias.fish,config.fish,completions/k9s.fish}
+	rm -f ~/.emacs.d/{init.el,early-init.el,elpaca.el}
+	rm -f ~/.config/kitty/kitty.conf
+	rm -f ~/.config/systemd/user/emacs.service
+	sudo rm -f /etc/pacman.d/hooks/clean-cache.hook
