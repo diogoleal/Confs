@@ -30,13 +30,17 @@ arch:
 		virt-manager nerdctl rootlesskit packagekit \
 		jami-qt discord telegram-desktop fluxcd aws-cli-v2 \
 		cups cups-pk-helper kimageformats ddcutil \
-		i2c-tools qt6ct qt5ct
+		i2c-tools qt6ct qt5ct kustomize
 
 	yay -S --noconfirm --answerclean \
 		xfe cockatrice dsearch-bin
 
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
+
+	sudo mkdir -p /etc/pacman.d/hooks && \
+		sudo ln -sf $(DIR_CONF)/etc/pacman.d/hooks/clean-cache.hook /etc/pacman.d/hooks/clean-cache.hook
+	sudo sed -i 's/^#\?CleanMethod = .*/CleanMethod = KeepCurrent/' /etc/pacman.conf
 
 setup:
 	mkdir -p $(BIN) $(LIB) $(HOME)/Workspace
