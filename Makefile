@@ -2,10 +2,10 @@ DIR_CONF := $(HOME)/Workspace/Confs
 BIN := $(HOME)/bin
 LIB := $(HOME)/lib
 
-all: setup arch fish kubectl emacs kitty virt
+all: setup arch fish kubectl emacs kitty zellij virt
 pacman: all
 
-.PHONY: all setup fish flatpak kubectl go emacs kitty virt krew-install pacman ubuntu fedora arch clean
+.PHONY: all setup fish flatpak kubectl go emacs kitty zellij virt krew-install pacman ubuntu fedora arch clean
 
 krew-install:
 	@set -x; \
@@ -28,7 +28,7 @@ arch:
 		emacs kitty direnv fzf btop bat duf ripgrep pyenv \
 		yt-dlp niri vivaldi vorta mupdf autossh \
 		virt-manager nerdctl rootlesskit packagekit \
-		jami-qt discord telegram-desktop fluxcd aws-cli-v2 \
+		jami-qt discord telegram-desktop fluxcd aws-cli-v2 zellij \
 		cups cups-pk-helper kimageformats ddcutil \
 		i2c-tools qt6ct qt5ct kustomize \
 		clang python-lsp-server bash-language-server nodejs shfmt \
@@ -106,6 +106,10 @@ emacs:
 kitty:
 	ln -sf $(DIR_CONF)/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
 
+zellij:
+	mkdir -p ~/.config/zellij
+	ln -sf $(DIR_CONF)/.config/zellij/config.kdl ~/.config/zellij/config.kdl
+
 virt:
 	sudo pacman -S --needed --noconfirm qemu-full virt-manager virt-viewer dnsmasq vde2 openbsd-netcat libvirt
 	sudo systemctl enable --now libvirtd
@@ -116,5 +120,6 @@ clean:
 	rm -rf ~/.config/fish/{functions/alias.fish,config.fish,completions/k9s.fish}
 	rm -f ~/.emacs.d/{init.el,early-init.el,elpaca.el}
 	rm -f ~/.config/kitty/kitty.conf
+	rm -f ~/.config/zellij/config.kdl
 	rm -f ~/.config/systemd/user/emacs.service
 	sudo rm -f /etc/pacman.d/hooks/clean-cache.hook

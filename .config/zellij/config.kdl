@@ -1,0 +1,63 @@
+// Overrides em cima dos keybinds padrão do zellij.
+//
+// O kitty (.config/kitty/kitty.conf) intercepta alguns atalhos no nível da
+// janela do SO, antes de chegarem ao terminal — então o zellij nunca os vê
+// quando rodando dentro do kitty. Este arquivo faz "unbind" só desses
+// atalhos e dá um substituto livre de conflito, sem tocar em mais nada do
+// resto dos defaults do zellij (sessão, tmux-mode, plugins etc.).
+//
+// Conflitos identificados (comparado com `zellij setup --dump-config`):
+//   ctrl+q  -> kitty: close_tab        (zellij default: Quit)
+//   ctrl+t  -> kitty: new_tab          (zellij default: entrar/sair do modo Tab)
+//   alt+h   -> kitty: move_window_forward   (zellij default: MoveFocusOrTab left)
+//   alt+l   -> kitty: move_window_backward  (zellij default: MoveFocusOrTab right)
+//   ctrl+c  -> kitty: copy_and_clear_or_interrupt (usado em scroll/search/rename*)
+//   ctrl+f  -> kitty: show_scrollback search      (usado em scroll/search)
+//
+// alt+h/alt+l têm alternativa redundante (Alt+Left/Alt+Right), então só
+// removemos o alias morto. ctrl+c/ctrl+f dentro de scroll/search/rename*
+// são seguros de realocar: esses modos já capturam todo o input, nada
+// vaza pro shell. ctrl+q e ctrl+t valem em modo Normal (onde teclas não
+// mapeadas vão pro shell), então os substitutos evitam atalhos comuns do
+// readline (evitados: ctrl+a/e/w/u/k/r/d/l/y/z).
+
+keybinds {
+    shared_except "locked" {
+        unbind "Ctrl q"
+        bind "Ctrl Alt q" { Quit; }
+
+        unbind "Alt h"
+        unbind "Alt l"
+    }
+
+    shared_except "tab" "locked" {
+        unbind "Ctrl t"
+        bind "Alt t" { SwitchToMode "Tab"; }
+    }
+    tab {
+        unbind "Ctrl t"
+        bind "Alt t" { SwitchToMode "Normal"; }
+    }
+
+    scroll {
+        unbind "Ctrl c"
+        unbind "Ctrl f"
+        bind "Ctrl e" { ScrollToBottom; SwitchToMode "Normal"; }
+    }
+    search {
+        unbind "Ctrl c"
+        unbind "Ctrl f"
+        bind "Ctrl e" { ScrollToBottom; SwitchToMode "Normal"; }
+    }
+    entersearch {
+        unbind "Ctrl c"
+    }
+    renametab {
+        unbind "Ctrl c"
+        bind "Ctrl e" { SwitchToMode "Normal"; }
+    }
+    renamepane {
+        unbind "Ctrl c"
+        bind "Ctrl e" { SwitchToMode "Normal"; }
+    }
+}
