@@ -1,0 +1,5 @@
+#!/bin/bash
+# Linked into theme-set.d and font-set.d by `make emacs`.
+# Retints a running Emacs. A stopped Emacs reads the theme on its next start.
+command -v emacsclient >/dev/null || exit 0
+timeout 5 emacsclient --eval '(omarchy-sync)' >/dev/null 2>&1 || true

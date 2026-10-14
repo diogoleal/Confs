@@ -1,15 +1,19 @@
 [Unit]
 Description=Emacs text editor
 Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
-After=network.target
+# Started with the desktop so the daemon gets WAYLAND_DISPLAY and the session PATH.
+PartOf=graphical-session.target
+After=graphical-session.target
 
 [Service]
-Type=forking
-ExecStart=/usr/bin/emacs --daemon
+Type=notify
+ExecStart=/usr/bin/emacs --fg-daemon
 ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 Environment=SSH_AUTH_SOCK=%t/keyring/ssh
 Environment=XDG_RUNTIME_DIR=/run/user/%U
+# The first start installs every package and compiles vterm.
+TimeoutStartSec=900
 Restart=on-failure
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target

@@ -1,4 +1,4 @@
-;;; early-init.el --- Early Init -*- lexical-binding t -*-
+;;; early-init.el --- Early Init -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -6,51 +6,36 @@
 
 ;;; Code:
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(show-paren-mode t)
+;; Less garbage collection during startup, back to a sane value afterwards.
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold (* 64 1024 1024))))
 
-(savehist-mode 1)
-(setq-default show-trailing-whitespace t)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
-(setq indent-line-function 'insert-tab)
-(setq initial-scratch-message nil)
-(setq inhibit-startup-message t)
-(setq visible-bell t)
-(setq ring-bell-function 'ignore)
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-(setq create-lockfiles nil)
+;; Bigger chunks from LSP servers and the Claude CLI.
+(setq read-process-output-max (* 4 1024 1024))
 
-(require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("gnu" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-(package-initialize)
+(setq frame-inhibit-implied-resize t
+      frame-resize-pixelwise t
+      inhibit-startup-message t
+      initial-scratch-message nil
+      native-comp-async-report-warnings-errors 'silent)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Set through the frame alists so new emacsclient frames get them too.
+(dolist (param '((tool-bar-lines . 0)
+                 (menu-bar-lines . 0)
+                 (vertical-scroll-bars)
+                 (horizontal-scroll-bars)))
+  (add-to-list 'default-frame-alist param))
 
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font-12"))
-(global-font-lock-mode 1)
-
-;; https://themkat.net/2025/03/25/simple_smoother_emacs_scrolling.html
-(setq scroll-conservatively 10
-      scroll-margin 15)
-
-;(setq display-line-numbers-width-start t)
-(global-display-line-numbers-mode 1)
-
-(electric-pair-mode 1)
-(delete-selection-mode 1)
-
-(fido-mode 1)
-(fido-vertical-mode 1)
+;; Paint the first frame with the Omarchy background to avoid a white flash.
+(let ((bin (executable-find "omarchy-theme-color")))
+  (when bin
+    (ignore-errors
+      (let ((bg (car (process-lines bin "background")))
+            (fg (car (process-lines bin "foreground"))))
+        (when (and bg (string-prefix-p "#" bg))
+          (add-to-list 'default-frame-alist `(background-color . ,bg)))
+        (when (and fg (string-prefix-p "#" fg))
+          (add-to-list 'default-frame-alist `(foreground-color . ,fg)))))))
 
 ;;; early-init.el ends here
