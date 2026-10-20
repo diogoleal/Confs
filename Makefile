@@ -25,14 +25,12 @@ apt: setup ubuntu fish flatpak kubectl go emacs kitty
 
 arch:
 	sudo pacman -Syu --needed --noconfirm ttf-cascadia-code-nerd fish \
-		emacs kitty direnv fzf btop bat duf ripgrep pyenv \
+		kitty direnv fzf btop bat duf ripgrep pyenv \
 		yt-dlp niri vivaldi vorta mupdf autossh \
 		virt-manager nerdctl rootlesskit packagekit \
 		jami-qt discord telegram-desktop fluxcd aws-cli-v2 zellij \
 		cups cups-pk-helper kimageformats ddcutil \
-		i2c-tools qt6ct qt5ct kustomize \
-		clang python-lsp-server bash-language-server nodejs shfmt \
-		yaml-language-server pyright vscode-json-languageserver gopls
+		i2c-tools qt6ct qt5ct kustomize nodejs
 
 	yay -S --noconfirm --answerclean \
 		xfe cockatrice dsearch-bin
@@ -95,13 +93,22 @@ go:
 	rm -rf $$TMP_DIR
 
 emacs:
-	mkdir -p ~/.emacs.d/ ~/.config/systemd/user/
+	# Wayland build, vterm module deps, and the language servers eglot starts.
+	sudo pacman -S --needed --noconfirm emacs-wayland libvterm cmake \
+		ripgrep fd git clang python-lsp-server pyright bash-language-server shfmt \
+		yaml-language-server vscode-json-languageserver gopls
+	mkdir -p ~/.emacs.d/lisp ~/.config/systemd/user/
+	mkdir -p ~/.config/omarchy/hooks/theme-set.d ~/.config/omarchy/hooks/font-set.d
 	ln -sf $(DIR_CONF)/.emacs.d/init.el $(HOME)/.emacs.d/init.el
 	ln -sf $(DIR_CONF)/.emacs.d/early-init.el $(HOME)/.emacs.d/early-init.el
-	ln -sf $(DIR_CONF)/.emacs.d/elpaca.el $(HOME)/.emacs.d/elpaca.el
-	ln -sf $(DIR_CONF)/.config/systemd/user/emacs.service $(HOME)/.config/systemd/user/emacs.service
-	systemctl --user enable emacs.service
-	systemctl --user start emacs.service
+	ln -sf $(DIR_CONF)/.emacs.d/lisp/omarchy.el $(HOME)/.emacs.d/lisp/omarchy.el
+	ln -sf $(DIR_CONF)/.config/omarchy/hooks/emacs-sync $(HOME)/.config/omarchy/hooks/theme-set.d/emacs-sync
+	ln -sf $(DIR_CONF)/.config/omarchy/hooks/emacs-sync $(HOME)/.config/omarchy/hooks/font-set.d/emacs-sync
+	# Copied, not linked: systemctl reenable deletes a unit that is a symlink.
+	install -m 644 $(DIR_CONF)/.config/systemd/user/emacs.service $(HOME)/.config/systemd/user/emacs.service
+	systemctl --user daemon-reload
+	systemctl --user reenable emacs.service
+	systemctl --user restart emacs.service
 
 kitty:
 	ln -sf $(DIR_CONF)/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
@@ -118,7 +125,8 @@ clean:
 	rm -f $(BIN)/kubectl
 	rm -rf $(BIN)/go
 	rm -rf ~/.config/fish/{functions/alias.fish,config.fish,completions/k9s.fish}
-	rm -f ~/.emacs.d/{init.el,early-init.el,elpaca.el}
+	rm -f ~/.emacs.d/{init.el,early-init.el,lisp/omarchy.el}
+	rm -f ~/.config/omarchy/hooks/{theme-set.d,font-set.d}/emacs-sync
 	rm -f ~/.config/kitty/kitty.conf
 	rm -f ~/.config/zellij/config.kdl
 	rm -f ~/.config/systemd/user/emacs.service

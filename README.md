@@ -22,7 +22,7 @@ This repo must live at `~/Workspace/Confs` — the `Makefile` hardcodes that pat
 | `setup` | Creates `~/bin`, `~/lib`, `~/Workspace`; symlinks `.gitconfig` |
 | `arch` | Installs packages via `pacman`/`yay`, enables bluetooth, installs the pacman cache-cleaning hook |
 | `fish` | Installs Fisher + symlinks fish config/functions/completions, sets fish as the default shell |
-| `emacs` | Symlinks Emacs config, installs and starts the `emacs.service` user unit |
+| `emacs` | Symlinks Emacs config and the Omarchy theme/font hook, installs and (re)starts the `emacs.service` user unit |
 | `kitty` | Symlinks the kitty terminal config |
 | `zellij` | Symlinks the zellij config |
 | `kubectl` | Downloads `kubectl` into `~/bin` |
@@ -45,14 +45,18 @@ There is no test suite or lint step; CI is limited to `.github/workflows/opencod
   - `k9s.fish` — fish completion script for `k9s`
 - **`kitty/`** — kitty terminal config (`kitty.conf`; FiraCode font, splits layout, custom mouse/scroll/window/tab keybindings). `kitty.conf.mod` is untracked/local-only and not managed by `make`.
 - **`zellij/`** — zellij terminal multiplexer config (`config.kdl`). Patches just the default keybinds that collide with kitty's own OS-level shortcuts (`Ctrl+q`, `Ctrl+t`, `Alt+h`/`Alt+l`, `Ctrl+c`/`Ctrl+f` inside scroll/search/rename modes), leaving the rest of zellij's defaults untouched.
-- **`systemd/user/`** — `emacs.service`, a user unit that runs `emacs --daemon` so `emacsclient` (see the `e` fish function) attaches instantly.
+- **`systemd/user/`** — `emacs.service`, a user unit that runs the Emacs daemon with the graphical session so `emacsclient` (see the `e` fish function) attaches instantly. The first start installs every package, so it can take a few minutes.
+- **`omarchy/hooks/`** — `emacs-sync`, linked into Omarchy's `theme-set.d` and `font-set.d` hooks; it tells a running Emacs to re-read the Omarchy theme and font.
 - **`htop/`, `pipewire/`** — present for reference/backup only, **not** wired to any `make` target:
   - `htop/htoprc` — htop UI/meter layout
   - `pipewire/pipewire.conf.d/99-input-denoising.conf` — adds an RNNoise-based "Noise Canceling source" filter-chain (via `librnnoise_ladspa.so`) for mic denoising
 
 ### Other top-level paths
 
-- **`.emacs.d/`** — Emacs config (elpaca-based, catppuccin-macchiato theme): `init.el`, `early-init.el`, `elpaca.el`
+- **`.emacs.d/`** — Emacs config (`package.el` + `use-package`): `init.el`, `early-init.el`, `lisp/omarchy.el`. Guia completo com atalhos em [`.emacs.d/README.md`](.emacs.d/README.md)
+  - **Omarchy** — `lisp/omarchy.el` builds the `omarchy` theme from `omarchy-theme-color` and takes the font from `omarchy-font-current`, so Emacs follows `omarchy theme set` / `omarchy font set` live. Without Omarchy it falls back to `modus-vivendi`.
+  - **Claude** — `C-c c` opens the [claude-code-ide](https://github.com/manzaltu/claude-code-ide.el) menu (Claude Code CLI in vterm, with Emacs as its IDE: selection, diagnostics, ediff for proposed edits, xref/imenu/tree-sitter tools). `C-c a` is the [gptel](https://github.com/karthink/gptel) prefix for Claude through the API (`ANTHROPIC_API_KEY` or an `api.anthropic.com` entry in `~/.authinfo.gpg`).
+  - **Editing** — vertico/orderless/consult/embark/corfu for completion, eglot + flymake for the language servers installed by `make arch`, magit, treemacs (`F8`), vterm (`C-c t`).
 - **`.gitconfig`** — personal git config (contains email/proxy settings; not for reuse elsewhere)
 - **`etc/`** — system configs symlinked to `/etc/` by `make arch` (pacman hooks, PackageKit, pulse, crontab)
 - **`dnf/`** — legacy Fedora `dnf` config
