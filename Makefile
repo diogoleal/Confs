@@ -2,10 +2,10 @@ DIR_CONF := $(HOME)/Workspace/Confs
 BIN := $(HOME)/bin
 LIB := $(HOME)/lib
 
-all: setup arch fish kubectl emacs kitty zellij virt
+all: setup arch fish kubectl emacs kitty zellij virt newsboat
 pacman: all
 
-.PHONY: all setup fish flatpak kubectl go emacs kitty zellij virt krew-install pacman ubuntu fedora arch clean
+.PHONY: all setup fish flatpak kubectl go emacs kitty zellij virt krew-install pacman ubuntu fedora arch clean newsboat
 
 krew-install:
 	@set -x; \
@@ -30,7 +30,7 @@ arch:
 		virt-manager nerdctl rootlesskit packagekit \
 		jami-qt discord telegram-desktop fluxcd aws-cli-v2 zellij \
 		cups cups-pk-helper kimageformats ddcutil \
-		i2c-tools qt6ct qt5ct kustomize nodejs
+		i2c-tools qt6ct qt5ct kustomize nodejs newsboat
 
 	yay -S --noconfirm --answerclean \
 		xfe cockatrice dsearch-bin
@@ -131,3 +131,8 @@ clean:
 	rm -f ~/.config/zellij/config.kdl
 	rm -f ~/.config/systemd/user/emacs.service
 	sudo rm -f /etc/pacman.d/hooks/clean-cache.hook
+
+newsboat:
+	mkdir -p ~/.config/newsboat
+	ln -sf $(DIR_CONF)/.config/newsboat/config ~/.config/newsboat/config
+	ln -sf $(DIR_CONF)/.config/newsboat/urls ~/.config/newsboat/urls

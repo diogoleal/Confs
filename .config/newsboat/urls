@@ -1,0 +1,8 @@
+# Um feed por linha: URL "~Nome opcional" tag1 tag2
+# Linhas "query:" criam feeds virtuais.
+"query:Não lidos:unread = \"yes\"" "---Visões---"
+
+https://github.com/basecamp/omarchy/releases.atom "~Omarchy releases" omarchy
+https://world.hey.com/dhh/feed.atom "~DHH" omarchy blogs
+https://archlinux.org/feeds/news/ "~Arch Linux news" linux
+https://hnrss.org/frontpage "~Hacker News" tech
