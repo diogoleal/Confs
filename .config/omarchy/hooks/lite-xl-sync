@@ -1,0 +1,5 @@
+#!/bin/bash
+# Linked into theme-set.d and font-set.d by `make lite-xl`.
+# Touches the stamp a running Lite XL polls (plugins/omarchy.lua), so it retints.
+stamp="${XDG_STATE_HOME:-$HOME/.local/state}/lite-xl/omarchy.stamp"
+mkdir -p "${stamp%/*}" && touch "$stamp"

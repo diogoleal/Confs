@@ -2,10 +2,10 @@ DIR_CONF := $(HOME)/Workspace/Confs
 BIN := $(HOME)/bin
 LIB := $(HOME)/lib
 
-all: setup arch fish kubectl emacs kitty zellij virt newsboat
+all: setup arch fish kubectl emacs kitty zellij virt newsboat lite-xl
 pacman: all
 
-.PHONY: all setup fish flatpak kubectl go emacs kitty zellij virt krew-install pacman ubuntu fedora arch clean newsboat
+.PHONY: all setup fish flatpak kubectl go emacs kitty zellij virt krew-install pacman ubuntu fedora arch clean newsboat lite-xl
 
 krew-install:
 	@set -x; \
@@ -130,9 +130,20 @@ clean:
 	rm -f ~/.config/kitty/kitty.conf
 	rm -f ~/.config/zellij/config.kdl
 	rm -f ~/.config/systemd/user/emacs.service
+	rm -f ~/.config/lite-xl/{init.lua,plugins/omarchy.lua}
+	rm -f ~/.config/omarchy/hooks/{theme-set.d,font-set.d}/lite-xl-sync
 	sudo rm -f /etc/pacman.d/hooks/clean-cache.hook
 
 newsboat:
 	mkdir -p ~/.config/newsboat
 	ln -sf $(DIR_CONF)/.config/newsboat/config ~/.config/newsboat/config
 	ln -sf $(DIR_CONF)/.config/newsboat/urls ~/.config/newsboat/urls
+
+lite-xl:
+	sudo pacman -S --needed --noconfirm lite-xl
+	mkdir -p ~/.config/lite-xl/plugins
+	mkdir -p ~/.config/omarchy/hooks/theme-set.d ~/.config/omarchy/hooks/font-set.d
+	ln -sf $(DIR_CONF)/.config/lite-xl/init.lua $(HOME)/.config/lite-xl/init.lua
+	ln -sf $(DIR_CONF)/.config/lite-xl/plugins/omarchy.lua $(HOME)/.config/lite-xl/plugins/omarchy.lua
+	ln -sf $(DIR_CONF)/.config/omarchy/hooks/lite-xl-sync $(HOME)/.config/omarchy/hooks/theme-set.d/lite-xl-sync
+	ln -sf $(DIR_CONF)/.config/omarchy/hooks/lite-xl-sync $(HOME)/.config/omarchy/hooks/font-set.d/lite-xl-sync
